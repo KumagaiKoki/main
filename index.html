@@ -39,14 +39,16 @@
       border: 1px solid #e5e7eb;
     }
 
-    .vertical-line {
+    .diagonal-line {
       position: absolute;
-      width: 2px; /* same as hatch border */
+      width: 2px;
+      height: 180px;
       background-color: #facc15; /* yellow-400 */
+      transform: rotate(-2deg);
+      transform-origin: top left;
+      top: 144px;
+      left: 325px;
       z-index: 10;
-      top: 120px; /* approximate vertical alignment */
-      left: 344px; /* right edge of homepage + offset */
-      height: 130px;
     }
   </style>
 </head>
@@ -60,8 +62,8 @@
          class="absolute top-[12px] left-[-12px] w-full h-full gray-hatch-bg border-thin border-gray-400 rounded-2xl shadow-inner transform -rotate-2 z-0 hidden">
     </div>
 
-    <!-- Yellow vertical line (initially hidden) -->
-    <div id="yellow-line" class="vertical-line hidden"></div>
+    <!-- Yellow diagonal line (initially hidden) -->
+    <div id="yellow-line" class="diagonal-line hidden"></div>
 
     <!-- Homepage Card -->
     <div id="homepage-card"
