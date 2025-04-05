@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ホーム + 光熱費タブ</title>
+  <title>ホーム + 電気代 Beep風</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100 min-h-screen flex items-start justify-center p-10 relative">
@@ -47,7 +47,7 @@
     </table>
   </div>
 
-  <!-- 新しいカードが出てくるスペース -->
+  <!-- 新しいカードが出るスペース -->
   <div id="new-cards" class="flex flex-wrap gap-5 ml-6"></div>
 
   <script>
@@ -56,7 +56,7 @@
       menu.classList.toggle("hidden");
     }
 
-    // カード外クリックでメニューを閉じる
+    // カード外クリックでメニュー閉じる
     document.addEventListener("click", function (e) {
       const menu = document.getElementById("menu1");
       const button = document.querySelector("button");
@@ -65,52 +65,86 @@
       }
     });
 
-    // 新しいカードを追加（光熱費 or 他の）
+    // 光熱費カードを表示
     function addCard(title) {
-      // すでにある場合は追加しない（オプション）
       if (document.getElementById(`card-${title}`)) return;
 
-      const newCard = document.createElement("div");
-      newCard.id = `card-${title}`;
-      newCard.classList.add("relative", "w-[500px]", "bg-white", "rounded-2xl", "shadow-xl", "border-2", "border-indigo-300", "z-10", "p-5");
+      const container = document.getElementById("new-cards");
+      const card = document.createElement("div");
+      card.id = `card-${title}`;
+      card.className = "w-[400px] bg-white rounded-2xl shadow-lg border border-gray-200 p-5 space-y-4 font-sans text-sm relative";
 
       if (title === "光熱費") {
-        newCard.innerHTML = `
-          <div class="font-semibold text-lg mb-4">${title}：電気代</div>
-
-          <!-- 入力フォーム -->
-          <div class="grid grid-cols-3 gap-3 mb-4 text-sm">
-            <input type="month" id="month" class="border rounded-md px-2 py-1" placeholder="年月" />
-            <input type="number" id="amount" class="border rounded-md px-2 py-1" placeholder="金額" />
-            <input type="date" id="inputDate" class="border rounded-md px-2 py-1" placeholder="入力日" />
+        card.innerHTML = `
+          <div class="flex items-center justify-between mb-3">
+            <div class="text-base font-semibold">電気代
+              <span class="ml-2 px-2 py-0.5 text-xs rounded-full bg-purple-100 text-purple-600">Energy</span>
+            </div>
+            <button onclick="removeCard(this)" class="text-red-500 text-xl">×</button>
           </div>
-          <button onclick="addElectricityRow(this)" class="mb-4 px-4 py-1 bg-indigo-500 text-white rounded hover:bg-indigo-600 transition">追加</button>
 
-          <!-- 表 -->
-          <table class="w-full text-sm text-gray-700 border-t border-gray-300">
-            <thead>
-              <tr class="bg-gray-100">
-                <th class="py-2">年月</th>
-                <th class="py-2">金額 (円)</th>
-                <th class="py-2">入力日</th>
-              </tr>
-            </thead>
-            <tbody class="electricity-table">
-              <!-- ここにデータ追加 -->
-            </tbody>
-          </table>
+          <!-- データ1 -->
+          <div class="flex justify-between border-t pt-2">
+            <div class="text-gray-500 flex gap-1">🧾 Type</div>
+            <div>電気代</div>
+          </div>
+          <div class="flex justify-between border-t pt-2">
+            <div class="text-gray-500 flex gap-1">💴 Amount</div>
+            <div>9,500 円</div>
+          </div>
+          <div class="flex justify-between border-t pt-2">
+            <div class="text-gray-500 flex gap-1">📅 Month</div>
+            <div>2025-03</div>
+          </div>
+          <div class="flex justify-between border-t pt-2">
+            <div class="text-gray-500 flex gap-1">🕘 入力日</div>
+            <div>2025-04-01</div>
+          </div>
 
-          <!-- 閉じる -->
-          <button class="absolute top-3 right-3 text-xl text-red-500" onclick="removeCard(this)">×</button>
+          <!-- データ2 -->
+          <div class="flex justify-between border-t pt-2">
+            <div class="text-gray-500 flex gap-1">🧾 Type</div>
+            <div>電気代</div>
+          </div>
+          <div class="flex justify-between border-t pt-2">
+            <div class="text-gray-500 flex gap-1">💴 Amount</div>
+            <div>8,200 円</div>
+          </div>
+          <div class="flex justify-between border-t pt-2">
+            <div class="text-gray-500 flex gap-1">📅 Month</div>
+            <div>2025-02</div>
+          </div>
+          <div class="flex justify-between border-t pt-2">
+            <div class="text-gray-500 flex gap-1">🕘 入力日</div>
+            <div>2025-03-01</div>
+          </div>
+
+          <!-- データ3 -->
+          <div class="flex justify-between border-t pt-2">
+            <div class="text-gray-500 flex gap-1">🧾 Type</div>
+            <div>電気代</div>
+          </div>
+          <div class="flex justify-between border-t pt-2">
+            <div class="text-gray-500 flex gap-1">💴 Amount</div>
+            <div>7,900 円</div>
+          </div>
+          <div class="flex justify-between border-t pt-2">
+            <div class="text-gray-500 flex gap-1">📅 Month</div>
+            <div>2025-01</div>
+          </div>
+          <div class="flex justify-between border-t pt-2">
+            <div class="text-gray-500 flex gap-1">🕘 入力日</div>
+            <div>2025-02-01</div>
+          </div>
         `;
       } else {
-        // その他のカード用（仮）
-        newCard.innerHTML = `
+        // 料理などの他カード（今は仮）
+        card.innerHTML = `
           <div class="font-semibold text-lg mb-2">${title} 詳細</div>
-          <div class="space-y-1 text-sm text-gray-700">
+          <div class="space-y-2 text-sm text-gray-700">
             <div class="flex justify-between">
               <span>データ入力</span>
-              <input type="text" class="form-input mt-1 w-full py-2 px-3 border border-gray-300 rounded-md" placeholder="データを入力" />
+              <input type="text" class="form-input w-full py-2 px-3 border border-gray-300 rounded-md" placeholder="データを入力" />
             </div>
             <div class="flex justify-between">
               <span>ログ出力</span>
@@ -121,43 +155,17 @@
         `;
       }
 
-      document.getElementById("new-cards").appendChild(newCard);
+      container.appendChild(card);
     }
 
-    // 表に電気代データを追加
-    function addElectricityRow(button) {
-      const card = button.closest("div");
-      const month = card.querySelector("#month").value;
-      const amount = card.querySelector("#amount").value;
-      const inputDate = card.querySelector("#inputDate").value;
-      const tableBody = card.querySelector(".electricity-table");
-
-      if (month && amount && inputDate) {
-        const row = document.createElement("tr");
-        row.innerHTML = `
-          <td class="py-2 text-center">${month}</td>
-          <td class="py-2 text-center">${parseInt(amount).toLocaleString()}</td>
-          <td class="py-2 text-center">${inputDate}</td>
-        `;
-        tableBody.appendChild(row);
-
-        // 入力リセット
-        card.querySelector("#month").value = "";
-        card.querySelector("#amount").value = "";
-        card.querySelector("#inputDate").value = "";
-      } else {
-        alert("すべての項目を入力してください");
-      }
-    }
-
-    // 任意ログ表示（他のカード向け）
+    // ログ出力仮処理
     function logData() {
-      alert("ログ表示機能です（仮）");
+      alert("ログ出力機能（仮）");
     }
 
     // カード削除
-    function removeCard(button) {
-      const card = button.closest('div');
+    function removeCard(btn) {
+      const card = btn.closest("div");
       card.remove();
     }
   </script>
