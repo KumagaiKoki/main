@@ -1,87 +1,61 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Connected Cards</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3D UI with Tailwind</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    /* カード座標を取得してSVG線を描画するための準備 */
-    .card {
-      width: 320px;
-      height: 150px;
-    }
-  </style>
 </head>
-<body class="relative bg-gray-100 min-h-screen flex items-start justify-center p-10">
+<body class="bg-gray-100 min-h-screen flex items-start justify-center p-10 relative">
 
-  <!-- SVG接続線 -->
-  <svg class="absolute inset-0 w-full h-full pointer-events-none z-0" id="connector">
-    <line id="line1" x1="0" y1="0" x2="0" y2="0" stroke="#888" stroke-width="2" marker-end="url(#arrow)" />
-    <line id="line2" x1="0" y1="0" x2="0" y2="0" stroke="#888" stroke-width="2" marker-end="url(#arrow)" />
-    <defs>
-      <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
-        <path d="M0,0 L0,6 L9,3 z" fill="#888" />
-      </marker>
-    </defs>
-  </svg>
+  <!-- カード -->
+  <div class="relative w-[320px] bg-white rounded-2xl shadow-xl border-2 border-indigo-300 transform -rotate-2 z-10 p-5">
 
-  <!-- カードたち -->
-  <div class="absolute left-[100px] top-[100px] card bg-white border-2 border-orange-300 shadow-lg rounded-2xl p-5 z-10" id="cardA">
-    <div class="font-bold mb-2">Beep <span class="text-xs text-orange-500 bg-orange-100 rounded px-2 py-0.5">Cache</span></div>
-    <div class="text-sm">
-      <div class="flex justify-between"><span>Type</span><span>KV Store</span></div>
-      <div class="flex justify-between"><span>Size</span><span>1 GB</span></div>
+    <!-- メニューボタン -->
+    <button class="absolute top-3 right-3 text-xl" onclick="toggleMenu()">
+      ⋯
+    </button>
+
+    <!-- コンテキストメニュー -->
+    <div id="menu1"
+         class="absolute top-12 right-3 bg-black text-white rounded-xl shadow-lg min-w-[180px] py-2 hidden z-50 flex-col space-y-1 text-sm">
+      <div class="px-4 py-2 hover:bg-gray-800 cursor-pointer">View credentials</div>
+      <div class="px-4 py-2 hover:bg-gray-800 cursor-pointer">Replace</div>
+      <div class="px-4 py-2 hover:bg-gray-800 cursor-pointer">Detach database</div>
     </div>
-  </div>
 
-  <div class="absolute left-[500px] top-[120px] card bg-white border-2 border-indigo-300 shadow-lg rounded-2xl p-5 z-10" id="cardB">
-    <div class="font-bold mb-2">Beep <span class="text-xs text-indigo-600 bg-indigo-100 rounded px-2 py-0.5">Compute</span></div>
-    <div class="text-sm">
-      <div class="flex justify-between"><span>Type</span><span>CPU</span></div>
-      <div class="flex justify-between"><span>Hibernate</span><span>300ms</span></div>
+    <!-- 内容 -->
+    <div class="font-semibold text-lg mb-2">
+      Beep
+      <span class="ml-2 text-purple-600 bg-purple-100 text-xs font-medium px-2 py-0.5 rounded-full">Cache</span>
     </div>
-  </div>
 
-  <div class="absolute left-[900px] top-[100px] card bg-white border-2 border-pink-300 shadow-lg rounded-2xl p-5 z-10" id="cardC">
-    <div class="font-bold mb-2">Beep <span class="text-xs text-pink-500 bg-pink-100 rounded px-2 py-0.5">Email</span></div>
-    <div class="text-sm">
-      <div class="flex justify-between"><span>User</span><span>diago@example.com</span></div>
-      <div class="flex justify-between"><span>Name</span><span>Del Diago</span></div>
+    <div class="space-y-1 text-sm text-gray-700">
+      <div class="flex justify-between">
+        <span>Type</span>
+        <span>KV Store</span>
+      </div>
+      <div class="flex justify-between">
+        <span>Size</span>
+        <span>1 GB</span>
+      </div>
     </div>
   </div>
 
   <script>
-    function connectCards(fromId, toId, lineId) {
-      const from = document.getElementById(fromId).getBoundingClientRect();
-      const to = document.getElementById(toId).getBoundingClientRect();
-      const svg = document.getElementById("connector").getBoundingClientRect();
-
-      const line = document.getElementById(lineId);
-      const x1 = from.left + from.width;
-      const y1 = from.top + from.height / 2;
-      const x2 = to.left;
-      const y2 = to.top + to.height / 2;
-
-      // SVGの絶対座標から相対座標に変換
-      line.setAttribute("x1", x1 - svg.left);
-      line.setAttribute("y1", y1 - svg.top);
-      line.setAttribute("x2", x2 - svg.left);
-      line.setAttribute("y2", y2 - svg.top);
+    function toggleMenu() {
+      const menu = document.getElementById("menu1");
+      menu.classList.toggle("hidden");
     }
 
-    // 初期描画
-    window.addEventListener("load", () => {
-      connectCards("cardA", "cardB", "line1");
-      connectCards("cardB", "cardC", "line2");
-    });
-
-    // リサイズ対応
-    window.addEventListener("resize", () => {
-      connectCards("cardA", "cardB", "line1");
-      connectCards("cardB", "cardC", "line2");
+    // カード外クリックで閉じる
+    document.addEventListener("click", function (e) {
+      const menu = document.getElementById("menu1");
+      const button = document.querySelector("button");
+      if (!menu.contains(e.target) && !button.contains(e.target)) {
+        menu.classList.add("hidden");
+      }
     });
   </script>
-
 </body>
 </html>
