@@ -5,42 +5,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>電気料金UI</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Rounded+Mplus+1c&display=swap" rel="stylesheet">
   <style>
     body {
       font-family: 'Rounded Mplus 1c', "Courier New", Consolas, monospace;
     }
-
     *:not(td):not(th):not(input):not(button) {
       font-family: 'Rounded Mplus 1c', sans-serif;
     }
-
     .hatch-bg {
-      background-image: repeating-linear-gradient(
-        -45deg,
-        #fde68a 0,
-        #fde68a 2px,
-        transparent 2px,
-        transparent 6px
-      );
+      background-image: repeating-linear-gradient(-45deg, #fde68a 0, #fde68a 2px, transparent 2px, transparent 6px);
       border: 1.5px solid #fdba74;
     }
-
     .gray-hatch-bg {
-      background-image: repeating-linear-gradient(
-        -45deg,
-        #d1d5db 0,
-        #d1d5db 2px,
-        transparent 2px,
-        transparent 6px
-      );
+      background-image: repeating-linear-gradient(-45deg, #d1d5db 0, #d1d5db 2px, transparent 2px, transparent 6px);
     }
-
-    table td,
-    table th {
+    table td, table th {
       border: 1px solid #e5e7eb;
     }
-
     input[type="text"] {
       border: 1px solid #ccc;
       border-radius: 0.25rem;
@@ -53,28 +36,19 @@
 
   <!-- ホーム + グレーハッチ -->
   <div id="homepage-wrapper" class="relative w-[320px] h-auto">
-    <!-- グレーハッチ -->
-    <div id="gray-hatch"
-         class="absolute top-[12px] left-[-12px] w-full h-full gray-hatch-bg border-[1.5px] border-gray-600 rounded-2xl shadow-inner transform -rotate-2 z-0 hidden">
-    </div>
+    <div id="gray-hatch" class="absolute top-[12px] left-[-12px] w-full h-full gray-hatch-bg border-[1.5px] border-gray-600 rounded-2xl shadow-inner transform -rotate-2 z-0 hidden"></div>
 
-    <!-- ホームページカード -->
-    <div id="homepage-card"
-         class="relative bg-white w-full rounded-2xl shadow-xl border-2 border-gray-600 transform -rotate-2 z-10 p-5">
-      <!-- メニューボタン -->
+    <div id="homepage-card" class="relative bg-white w-full rounded-2xl shadow-xl border-2 border-gray-600 transform -rotate-2 z-10 p-5">
       <button class="absolute top-3 right-3 text-xl" onclick="toggleMenu()">⋯</button>
-      <div id="menu1"
-           class="absolute top-12 right-3 bg-black text-white rounded-xl shadow-lg min-w-[180px] py-2 hidden z-50 flex-col space-y-1 text-sm">
+      <div id="menu1" class="absolute top-12 right-3 bg-black text-white rounded-xl shadow-lg min-w-[180px] py-2 hidden z-50 flex-col space-y-1 text-sm">
         <div class="px-4 py-2 hover:bg-gray-800 cursor-pointer">認証情報を表示</div>
         <div class="px-4 py-2 hover:bg-gray-800 cursor-pointer">置き換え</div>
         <div class="px-4 py-2 hover:bg-gray-800 cursor-pointer">データベースを切断</div>
       </div>
-
       <div class="font-semibold text-lg mb-2">
         ホームページ
         <span class="ml-2 text-purple-600 bg-purple-100 text-xs font-medium px-2 py-0.5 rounded-full">キャッシュ</span>
       </div>
-
       <table class="w-full text-sm text-gray-700">
         <tr class="border-b">
           <td class="py-2">光熱費</td>
@@ -92,21 +66,13 @@
     </div>
   </div>
 
-  <!-- 電気カードエリア -->
-  <div id="card-area" class="relative w-[480px] mt-[12px]"></div>
+  <!-- データカードとグラフ -->
+  <div id="card-area" class="flex gap-8 mt-[12px]"></div>
 
   <script>
     function toggleMenu() {
       document.getElementById("menu1").classList.toggle("hidden");
     }
-
-    document.addEventListener("click", function (e) {
-      const menu = document.getElementById("menu1");
-      const button = document.querySelector("button");
-      if (!menu.contains(e.target) && !button.contains(e.target)) {
-        menu.classList.add("hidden");
-      }
-    });
 
     function formatDate(date) {
       const yyyy = date.getFullYear();
@@ -125,25 +91,20 @@
     function addCard() {
       if (document.getElementById("card-wrapper")) return;
 
-      const grayHatch = document.getElementById("gray-hatch");
+      document.getElementById("gray-hatch").classList.remove("hidden");
       const area = document.getElementById("card-area");
-
-      grayHatch.classList.remove("hidden");
 
       const wrapper = document.createElement("div");
       wrapper.id = "card-wrapper";
       wrapper.className = "relative w-[480px]";
 
       const hatch = document.createElement("div");
-      hatch.id = "orange-hatch";
-      hatch.className =
-        "absolute top-[12px] left-[-12px] w-full h-full hatch-bg rounded-2xl shadow-inner transform -rotate-2 z-0";
+      hatch.className = "absolute top-[12px] left-[-12px] w-full h-full hatch-bg rounded-2xl shadow-inner transform -rotate-2 z-0";
       wrapper.appendChild(hatch);
       area.appendChild(wrapper);
 
       const card = document.createElement("div");
-      card.className =
-        "card-container relative bg-white w-full rounded-2xl shadow-xl border-2 border-gray-600 p-5 text-sm transform -rotate-2 z-10";
+      card.className = "card-container relative bg-white w-full rounded-2xl shadow-xl border-2 border-gray-600 p-5 text-sm transform -rotate-2 z-10";
 
       const today = new Date();
       const todayMonth = getTodayMonth();
@@ -151,8 +112,10 @@
 
       card.innerHTML = `
         <div class="flex items-center justify-between mb-4">
-          <div class="text-base font-semibold">電気代
-            <span class="ml-2 px-2 py-0.5 text-xs rounded-full bg-purple-100 text-purple-600">エネルギー</span>
+          <div class="text-base font-semibold flex items-center gap-2">
+            電気代
+            <button id="show-data" class="px-2 py-0.5 text-xs rounded-full bg-purple-100 text-purple-600">生データ</button>
+            <button id="show-graph" class="px-2 py-0.5 text-xs rounded-full bg-purple-100 text-purple-600">グラフ</button>
           </div>
           <button onclick="removeCard()" class="text-red-500 text-xl">×</button>
         </div>
@@ -177,15 +140,51 @@
       `;
       wrapper.appendChild(card);
 
-      // 🔽 JSONを読み込んでテーブルに追加
-      fetch("https://raw.githubusercontent.com/KumagaiKoki/main/main/data.json")  // ← ★URLを実際のものに変更してください
+      // グラフ部分
+      const chartCard = document.createElement("div");
+      chartCard.id = "chart-card";
+      chartCard.className = "relative bg-white w-[480px] rounded-2xl shadow-xl border-2 border-gray-600 p-5 text-sm transform -rotate-2";
+
+      chartCard.innerHTML = `
+        <div class="text-base font-semibold mb-4">電気代グラフ</div>
+        <canvas id="electricityChart" width="400" height="300"></canvas>
+      `;
+      area.appendChild(chartCard);
+
+      // JSON読み込み
+      fetch("https://raw.githubusercontent.com/KumagaiKoki/main/main/data.json")
         .then(res => res.json())
         .then(data => {
+          const months = [];
+          const costs = [];
           data.forEach(entry => {
             insertElectricRow(entry.month, entry.cost, entry.date);
+            months.push(entry.month);
+            costs.push(Number(entry.cost));
           });
-        })
-        .catch(err => console.error("データ読み込み失敗:", err));
+
+          const ctx = document.getElementById("electricityChart").getContext("2d");
+          new Chart(ctx, {
+            type: 'line',
+            data: {
+              labels: months,
+              datasets: [{
+                label: '電気代 (¥)',
+                data: costs,
+                borderColor: 'rgb(75, 192, 192)',
+                tension: 0.3
+              }]
+            },
+            options: {
+              responsive: false,
+              scales: {
+                y: {
+                  beginAtZero: false
+                }
+              }
+            }
+          });
+        });
     }
 
     function insertElectricRow(month, cost, date) {
@@ -203,6 +202,8 @@
     function removeCard() {
       const wrapper = document.getElementById("card-wrapper");
       if (wrapper) wrapper.remove();
+      const chartCard = document.getElementById("chart-card");
+      if (chartCard) chartCard.remove();
       document.getElementById("gray-hatch").classList.add("hidden");
     }
   </script>
