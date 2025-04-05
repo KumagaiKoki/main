@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ホーム + 電気代 Beep風</title>
+  <title>電気代 Beep風カード</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100 min-h-screen flex items-start justify-center p-10 relative">
@@ -12,9 +12,7 @@
   <div class="relative w-[320px] bg-white rounded-2xl shadow-xl border-2 border-indigo-300 transform -rotate-2 z-10 p-5">
 
     <!-- メニューボタン -->
-    <button class="absolute top-3 right-3 text-xl" onclick="toggleMenu()">
-      ⋯
-    </button>
+    <button class="absolute top-3 right-3 text-xl" onclick="toggleMenu()">⋯</button>
 
     <!-- コンテキストメニュー -->
     <div id="menu1"
@@ -56,7 +54,7 @@
       menu.classList.toggle("hidden");
     }
 
-    // カード外クリックでメニュー閉じる
+    // 外クリックでメニュー閉じる
     document.addEventListener("click", function (e) {
       const menu = document.getElementById("menu1");
       const button = document.querySelector("button");
@@ -65,7 +63,7 @@
       }
     });
 
-    // 光熱費カードを表示
+    // 光熱費カード追加（Beep風）
     function addCard(title) {
       if (document.getElementById(`card-${title}`)) return;
 
@@ -84,61 +82,49 @@
           </div>
 
           <!-- データ1 -->
-          <div class="flex justify-between border-t pt-2">
-            <div class="text-gray-500 flex gap-1">🧾 Type</div>
-            <div>電気代</div>
+          <div class="grid grid-cols-2 border-t pt-3">
+            <div class="text-gray-500 flex gap-2 items-center">📅 年月</div>
+            <div class="text-right">2025-03</div>
           </div>
-          <div class="flex justify-between border-t pt-2">
-            <div class="text-gray-500 flex gap-1">💴 Amount</div>
-            <div>9,500 円</div>
+          <div class="grid grid-cols-2 border-t pt-3">
+            <div class="text-gray-500 flex gap-2 items-center">💴 金額</div>
+            <div class="text-right">9,500 円</div>
           </div>
-          <div class="flex justify-between border-t pt-2">
-            <div class="text-gray-500 flex gap-1">📅 Month</div>
-            <div>2025-03</div>
-          </div>
-          <div class="flex justify-between border-t pt-2">
-            <div class="text-gray-500 flex gap-1">🕘 入力日</div>
-            <div>2025-04-01</div>
+          <div class="grid grid-cols-2 border-t pt-3">
+            <div class="text-gray-500 flex gap-2 items-center">🕘 入力日</div>
+            <div class="text-right">2025-04-01</div>
           </div>
 
           <!-- データ2 -->
-          <div class="flex justify-between border-t pt-2">
-            <div class="text-gray-500 flex gap-1">🧾 Type</div>
-            <div>電気代</div>
+          <div class="grid grid-cols-2 border-t pt-3">
+            <div class="text-gray-500 flex gap-2 items-center">📅 年月</div>
+            <div class="text-right">2025-02</div>
           </div>
-          <div class="flex justify-between border-t pt-2">
-            <div class="text-gray-500 flex gap-1">💴 Amount</div>
-            <div>8,200 円</div>
+          <div class="grid grid-cols-2 border-t pt-3">
+            <div class="text-gray-500 flex gap-2 items-center">💴 金額</div>
+            <div class="text-right">8,200 円</div>
           </div>
-          <div class="flex justify-between border-t pt-2">
-            <div class="text-gray-500 flex gap-1">📅 Month</div>
-            <div>2025-02</div>
-          </div>
-          <div class="flex justify-between border-t pt-2">
-            <div class="text-gray-500 flex gap-1">🕘 入力日</div>
-            <div>2025-03-01</div>
+          <div class="grid grid-cols-2 border-t pt-3">
+            <div class="text-gray-500 flex gap-2 items-center">🕘 入力日</div>
+            <div class="text-right">2025-03-01</div>
           </div>
 
           <!-- データ3 -->
-          <div class="flex justify-between border-t pt-2">
-            <div class="text-gray-500 flex gap-1">🧾 Type</div>
-            <div>電気代</div>
+          <div class="grid grid-cols-2 border-t pt-3">
+            <div class="text-gray-500 flex gap-2 items-center">📅 年月</div>
+            <div class="text-right">2025-01</div>
           </div>
-          <div class="flex justify-between border-t pt-2">
-            <div class="text-gray-500 flex gap-1">💴 Amount</div>
-            <div>7,900 円</div>
+          <div class="grid grid-cols-2 border-t pt-3">
+            <div class="text-gray-500 flex gap-2 items-center">💴 金額</div>
+            <div class="text-right">7,900 円</div>
           </div>
-          <div class="flex justify-between border-t pt-2">
-            <div class="text-gray-500 flex gap-1">📅 Month</div>
-            <div>2025-01</div>
-          </div>
-          <div class="flex justify-between border-t pt-2">
-            <div class="text-gray-500 flex gap-1">🕘 入力日</div>
-            <div>2025-02-01</div>
+          <div class="grid grid-cols-2 border-t pt-3">
+            <div class="text-gray-500 flex gap-2 items-center">🕘 入力日</div>
+            <div class="text-right">2025-02-01</div>
           </div>
         `;
       } else {
-        // 料理などの他カード（今は仮）
+        // その他のカード
         card.innerHTML = `
           <div class="font-semibold text-lg mb-2">${title} 詳細</div>
           <div class="space-y-2 text-sm text-gray-700">
@@ -158,15 +144,13 @@
       container.appendChild(card);
     }
 
-    // ログ出力仮処理
-    function logData() {
-      alert("ログ出力機能（仮）");
-    }
-
-    // カード削除
     function removeCard(btn) {
       const card = btn.closest("div");
       card.remove();
+    }
+
+    function logData() {
+      alert("ログ出力（仮）");
     }
   </script>
 </body>
