@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>電気料金UI</title>
+  <title>電気代UI</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Rounded+Mplus+1c&display=swap" rel="stylesheet">
@@ -11,242 +11,125 @@
     body {
       font-family: 'Rounded Mplus 1c', sans-serif;
     }
-    canvas {
-      font-family: 'Rounded Mplus 1c', sans-serif !important;
-    }
     .hatch-bg {
-      background-image: repeating-linear-gradient(-45deg, #fde68a 0, #fde68a 2px, transparent 2px, transparent 6px);
-      border: 1.5px solid #fdba74;
-    }
-    .gray-hatch-bg {
-      background-image: repeating-linear-gradient(-45deg, #d1d5db 0, #d1d5db 2px, transparent 2px, transparent 6px);
-    }
-    table td, table th {
-      border: 1px solid #e5e7eb;
-    }
-    input[type='text'] {
-      border: 1px solid #ccc;
-      border-radius: 0.25rem;
-      padding: 0.25rem 0.5rem;
-      font-size: 0.875rem;
+      background-image: repeating-linear-gradient(
+        -45deg,
+        #fde68a 0,
+        #fde68a 2px,
+        transparent 2px,
+        transparent 6px
+      );
     }
   </style>
 </head>
-<body class="bg-gray-100 min-h-screen flex items-start justify-center p-10 gap-10">
+<body class="bg-gray-100 min-h-screen flex items-center justify-center p-6">
 
-  <div id="homepage-wrapper" class="relative w-[320px] h-auto">
-    <div id="gray-hatch"
-         class="absolute top-[12px] left-[-12px] w-full h-full gray-hatch-bg border-[1.5px] border-gray-600 rounded-2xl shadow-inner transform -rotate-2 z-0 hidden"></div>
+  <div class="bg-white border border-gray-400 rounded-2xl w-[500px] p-4 shadow-md">
+    <h2 class="text-xl font-semibold mb-4">電気代</h2>
 
-    <div id="homepage-card"
-         class="relative bg-white w-full rounded-2xl shadow-xl border-2 border-gray-600 transform -rotate-2 z-10 p-5">
-      <div class="font-semibold text-lg mb-2">
-        ホームページ
-        <span class="ml-2 text-purple-600 bg-purple-100 text-xs font-medium px-2 py-0.5 rounded-full">キャッシュ</span>
+    <!-- 生データセクション -->
+    <div class="relative bg-white border border-gray-400 rounded-xl mb-4 p-4">
+      <div class="absolute inset-0 hatch-bg rounded-xl -z-10"></div>
+      <h3 class="text-base font-semibold mb-2">生データ</h3>
+      <div class="overflow-x-auto">
+        <table class="min-w-full text-sm text-left text-gray-700 border-collapse">
+          <thead class="bg-gray-100">
+            <tr>
+              <th class="px-3 py-2 border">年月</th>
+              <th class="px-3 py-2 border">金額</th>
+              <th class="px-3 py-2 border">入力日</th>
+            </tr>
+          </thead>
+          <tbody id="electricity-tbody" class="bg-white">
+            <!-- JavaScriptで行が追加される -->
+          </tbody>
+        </table>
       </div>
-      <table class="w-full text-sm text-gray-700">
-        <tr class="border-b">
-          <td class="py-2">光熱費</td>
-          <td class="py-2 text-right">
-            <button class="text-blue-500 hover:underline" onclick="addCard()">詳細</button>
-          </td>
-        </tr>
-        <tr class="border-b">
-          <td class="py-2">料理</td>
-          <td class="py-2 text-right">
-            <button class="text-blue-500 hover:underline">詳細</button>
-          </td>
-        </tr>
-      </table>
+    </div>
+
+    <!-- グラフセクション -->
+    <div class="relative bg-white border border-gray-400 rounded-xl p-4">
+      <div class="absolute inset-0 hatch-bg rounded-xl -z-10"></div>
+      <h3 class="text-base font-semibold mb-2">グラフ</h3>
+      <div>
+        <canvas id="electricityChart" width="400" height="250"></canvas>
+      </div>
+      <div id="graph-legend" class="flex flex-wrap gap-3 text-xs font-semibold mt-2"></div>
     </div>
   </div>
 
-  <div id="card-area" class="flex flex-col gap-6 mt-[12px]"></div>
-
   <script>
-    function formatDate(date) {
-      const yyyy = date.getFullYear();
-      const mm = String(date.getMonth() + 1).padStart(2, '0');
-      const dd = String(date.getDate()).padStart(2, '0');
-      return `${yyyy}/${mm}/${dd}`;
-    }
+    fetch("https://raw.githubusercontent.com/KumagaiKoki/main/main/data.json")
+      .then(res => res.json())
+      .then(data => {
+        const tbody = document.getElementById("electricity-tbody");
+        const yearly = {};
+        const colorPalette = ['#f87171', '#60a5fa', '#34d399', '#fbbf24', '#a78bfa', '#fb7185'];
+        let colorIndex = 0;
 
-    function getTodayMonth() {
-      const date = new Date();
-      const yyyy = date.getFullYear();
-      const mm = String(date.getMonth() + 1).padStart(2, '0');
-      return `${yyyy}/${mm}`;
-    }
+        data.forEach(entry => {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+            <td class="px-3 py-1 border">${entry.month}</td>
+            <td class="px-3 py-1 border">¥${entry.cost}</td>
+            <td class="px-3 py-1 border">${entry.date}</td>
+          `;
+          tbody.appendChild(row);
 
-    function addCard() {
-      if (document.getElementById("card-wrapper")) return;
-
-      document.getElementById("gray-hatch").classList.remove("hidden");
-      const area = document.getElementById("card-area");
-
-      const wrapper = document.createElement("div");
-      wrapper.id = "card-wrapper";
-      wrapper.className = "relative w-[480px]";
-
-      const hatch = document.createElement("div");
-      hatch.className = "absolute top-[12px] left-[-12px] w-full h-full hatch-bg rounded-2xl shadow-inner transform -rotate-2 z-0";
-      wrapper.appendChild(hatch);
-      area.appendChild(wrapper);
-
-      const card = document.createElement("div");
-      card.className = "relative bg-white w-full rounded-2xl shadow-xl border-2 border-gray-600 p-5 text-sm transform -rotate-2 z-10";
-
-      const todayMonth = getTodayMonth();
-      const todayDate = formatDate(new Date());
-
-      card.innerHTML = `
-        <div class="flex items-center justify-between mb-4">
-          <div class="text-base font-semibold flex items-center gap-2">
-            電気代
-            <button id="show-graph" class="px-2 py-0.5 text-xs rounded-full bg-purple-100 text-purple-600">グラフ</button>
-          </div>
-          <button onclick="removeCard()" class="text-red-500 text-xl">×</button>
-        </div>
-        <div class="overflow-x-auto">
-          <table class="min-w-full text-gray-700 border-collapse table-fixed">
-            <thead class="bg-gray-50 text-gray-600 font-medium">
-              <tr class="table w-full table-fixed">
-                <th class="py-2 px-3 text-left w-1/3">📅 年月</th>
-                <th class="py-2 px-3 text-left w-1/3">💴 金額</th>
-                <th class="py-2 px-3 text-left w-1/3">🕘 入力日</th>
-              </tr>
-            </thead>
-            <tbody id="electricity-tbody" class="block max-h-[240px] overflow-y-auto bg-white w-full">
-              <tr class="flex w-full">
-                <td class="py-2 px-3 w-1/3"><input type="text" class="w-full" value="${todayMonth}" /></td>
-                <td class="py-2 px-3 w-1/3"><input type="text" class="w-full" placeholder="¥0" /></td>
-                <td class="py-2 px-3 w-1/3"><input type="text" class="w-full" value="${todayDate}" /></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      `;
-      wrapper.appendChild(card);
-
-      fetch("https://raw.githubusercontent.com/KumagaiKoki/main/main/data.json")
-        .then(res => res.json())
-        .then(data => {
-          data.forEach(entry => {
-            insertElectricRow(entry.month, entry.cost, entry.date);
-          });
-          document.getElementById("show-graph").addEventListener("click", () => showGraph(data));
+          const [year, month] = entry.month.split("/").map(Number);
+          if (!yearly[year]) yearly[year] = new Array(12).fill(null);
+          yearly[year][month - 1] = Number(entry.cost);
         });
-    }
 
-    function insertElectricRow(month, cost, date) {
-      const tbody = document.querySelector("#electricity-tbody");
-      const tr = document.createElement("tr");
-      tr.className = "flex w-full";
-      tr.innerHTML = `
-        <td class="py-2 px-3 w-1/3">${month}</td>
-        <td class="py-2 px-3 w-1/3">¥${cost}</td>
-        <td class="py-2 px-3 w-1/3">${date}</td>
-      `;
-      tbody.appendChild(tr);
-    }
+        const ctx = document.getElementById("electricityChart").getContext("2d");
+        const legend = document.getElementById("graph-legend");
 
-    function showGraph(data) {
-      if (document.getElementById("chart-card")) return;
+        const datasets = Object.entries(yearly).map(([year, costArray]) => {
+          const color = colorPalette[colorIndex % colorPalette.length];
+          const label = document.createElement("span");
+          label.textContent = `${year}年`;
+          label.style.color = color;
+          legend.appendChild(label);
+          colorIndex++;
 
-      const area = document.getElementById("card-area");
-      const chartCard = document.createElement("div");
-      chartCard.id = "chart-card";
-      chartCard.className = "relative bg-white w-[480px] rounded-2xl shadow-xl border-2 border-gray-600 p-5 text-sm transform -rotate-2";
+          return {
+            label: `${year}年`,
+            data: costArray,
+            borderColor: color,
+            borderWidth: 2,
+            pointRadius: 0,
+            tension: 0.3
+          };
+        });
 
-      const legendEl = document.createElement("div");
-      legendEl.id = "graph-legend";
-      legendEl.className = "flex flex-wrap gap-3 text-xs font-semibold mb-2";
-
-      const canvas = document.createElement("canvas");
-      canvas.id = "electricityChart";
-      canvas.width = 400;
-      canvas.height = 300;
-
-      chartCard.innerHTML = `
-        <div class="flex items-center justify-between mb-2">
-          <div class="text-base font-semibold">電気代グラフ</div>
-          <button onclick="removeGraph()" class="text-red-500 text-xl">×</button>
-        </div>
-      `;
-      chartCard.appendChild(legendEl);
-      chartCard.appendChild(canvas);
-      area.appendChild(chartCard);
-
-      const ctx = canvas.getContext("2d");
-
-      const yearly = {};
-      data.forEach(({ month, cost }) => {
-        const [y, m] = month.split('/').map(Number);
-        if (!yearly[y]) yearly[y] = new Array(12).fill(null);
-        yearly[y][m - 1] = Number(cost);
-      });
-
-      const colorPalette = ['#f87171', '#60a5fa', '#34d399', '#fbbf24', '#a78bfa', '#fb7185'];
-      let colorIndex = 0;
-
-      const datasets = Object.entries(yearly).map(([year, costArray]) => {
-        const color = colorPalette[colorIndex % colorPalette.length];
-        const legendItem = document.createElement("span");
-        legendItem.textContent = `${year}年`;
-        legendItem.style.color = color;
-        legendItem.style.fontWeight = "bold";
-        legendItem.style.fontSize = "0.85rem";
-        legendEl.appendChild(legendItem);
-
-        colorIndex++;
-        return {
-          label: `${year}年`,
-          data: costArray,
-          borderColor: color,
-          borderWidth: 2,
-          pointRadius: 0,
-          tension: 0.3
-        };
-      });
-
-      new Chart(ctx, {
-        type: 'line',
-        data: {
-          labels: ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'],
-          datasets: datasets
-        },
-        options: {
-          plugins: {
-            legend: { display: false }
+        new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'],
+            datasets: datasets
           },
-          scales: {
-            y: {
-              beginAtZero: true,
-              ticks: {
-                stepSize: 4000,
-                font: { family: 'Rounded Mplus 1c' }
-              }
+          options: {
+            plugins: {
+              legend: { display: false }
             },
-            x: {
-              ticks: {
-                callback: (val, i) => (i + 1) % 2 === 0 ? `${i + 1}月` : '',
-                font: { family: 'Rounded Mplus 1c' }
+            scales: {
+              y: {
+                beginAtZero: true,
+                ticks: {
+                  stepSize: 4000,
+                  font: { family: 'Rounded Mplus 1c' }
+                }
+              },
+              x: {
+                ticks: {
+                  callback: (val, i) => (i + 1) % 2 === 0 ? `${i + 1}月` : '',
+                  font: { family: 'Rounded Mplus 1c' }
+                }
               }
             }
           }
-        }
+        });
       });
-    }
-
-    function removeCard() {
-      document.getElementById("card-wrapper")?.remove();
-      removeGraph();
-      document.getElementById("gray-hatch").classList.add("hidden");
-    }
-
-    function removeGraph() {
-      document.getElementById("chart-card")?.remove();
-    }
   </script>
 </body>
 </html>
