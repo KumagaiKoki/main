@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>EElectricity UI</title>
+  <title>Electricity UI</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body {
@@ -47,7 +47,7 @@
 
     <!-- Gray Hatch -->
     <div id="gray-hatch"
-         class="absolute top-[6px] left-[6px] w-full h-full gray-hatch-bg border-thin border-gray-400 rounded-2xl shadow-inner transform -rotate-2 z-0 hidden">
+         class="absolute top-[12px] left-[12px] w-full h-full gray-hatch-bg border-thin border-gray-400 rounded-2xl shadow-inner transform -rotate-2 z-0 hidden">
     </div>
 
     <!-- Homepage Card -->
@@ -87,7 +87,7 @@
   </div>
 
   <!-- Electricity Card Area -->
-  <div id="card-area" class="relative w-[480px]"></div>
+  <div id="card-area" class="relative w-[480px] mt-[12px]"></div>
 
   <script>
     function toggleMenu() {
@@ -117,7 +117,7 @@
       // Orange hatch background
       const hatch = document.createElement("div");
       hatch.className =
-        "absolute top-2 right-2 w-full h-full hatch-bg border-thin border-orange-300 rounded-2xl shadow-inner transform -rotate-2 z-0";
+        "absolute top-[12px] left-[12px] w-full h-full hatch-bg border-thin border-orange-300 rounded-2xl shadow-inner transform -rotate-2 z-0";
       wrapper.appendChild(hatch);
 
       // Electricity card
