@@ -24,7 +24,7 @@
         transparent 2px,
         transparent 6px
       );
-      border: 1.5px solid #fdba74;
+      border: 2.5px solid #d97706;
     }
 
     .gray-hatch-bg {
@@ -35,7 +35,7 @@
         transparent 2px,
         transparent 6px
       );
-      border: 1.5px solid #6b7280;
+      border: 2px solid #4b5563;
     }
 
     table td,
@@ -62,7 +62,7 @@
   <div id="homepage-wrapper" class="relative w-[320px] h-auto">
     <!-- グレーのハッチ背景 -->
     <div id="gray-hatch"
-         class="absolute top-[20px] left-[-12px] w-full h-full gray-hatch-bg rounded-2xl shadow-inner transform -rotate-2 z-0 hidden">
+         class="absolute top-[12px] left-[-12px] w-full h-full gray-hatch-bg rounded-2xl shadow-inner transform -rotate-2 z-0 hidden">
     </div>
 
     <div id="homepage-card"
@@ -89,7 +89,7 @@
   </div>
 
   <!-- 電気代カード -->
-  <div id="card-area" class="relative w-[480px] mt-[12px] flex justify-center"></div>
+  <div id="card-area" class="relative w-full flex justify-center mt-[12px]"></div>
 
   <script>
     function addCard() {
@@ -113,8 +113,8 @@
 
         <!-- テーブル -->
         <div class="relative mb-6">
-          <div class="absolute top-[20px] left-[-12px] w-full h-full hatch-bg rounded-2xl shadow-inner z-0"></div>
-          <div class="relative bg-white rounded-2xl border border-gray-300 p-4 z-10">
+          <div class="absolute top-[12px] left-[-12px] w-full h-full hatch-bg rounded-2xl shadow-inner z-0"></div>
+          <div class="relative bg-white rounded-2xl border-[2.5px] border-gray-500 p-4 z-10">
             <div class="text-sm font-semibold mb-2">テーブル</div>
             <div class="overflow-x-auto max-h-[240px] overflow-y-auto">
               <table class="min-w-full text-gray-700 text-sm border-collapse">
@@ -132,9 +132,9 @@
         </div>
 
         <!-- グラフ -->
-        <div class="relative">
-          <div class="absolute top-[20px] left-[-12px] w-full h-full hatch-bg rounded-2xl shadow-inner z-0"></div>
-          <div class="relative bg-white rounded-2xl border border-gray-300 p-4 z-10">
+        <div class="relative mt-[3px]">
+          <div class="absolute top-[15px] left-[-12px] w-full h-full hatch-bg rounded-2xl shadow-inner z-0"></div>
+          <div class="relative bg-white rounded-2xl border-[2.5px] border-gray-500 p-4 z-10">
             <div class="text-sm font-semibold mb-2">グラフ</div>
             <div id="graph-legend" class="flex flex-wrap gap-3 text-xs font-semibold mb-2"></div>
             <canvas id="electricityChart" width="400" height="250"></canvas>
