@@ -27,6 +27,17 @@
       border: 1.5px solid #fdba74;
     }
 
+    .gray-hatch-bg {
+      background-image: repeating-linear-gradient(
+        -45deg,
+        #d1d5db 0,
+        #d1d5db 2px,
+        transparent 2px,
+        transparent 6px
+      );
+      border: 1.5px solid #6b7280;
+    }
+
     table td,
     table th {
       border: 1px solid #e5e7eb;
@@ -49,6 +60,11 @@
 
   <!-- ホームページカード -->
   <div id="homepage-wrapper" class="relative w-[320px] h-auto">
+    <!-- グレーのハッチ背景 -->
+    <div id="gray-hatch"
+         class="absolute top-[12px] left-[-12px] w-full h-full gray-hatch-bg rounded-2xl shadow-inner transform -rotate-2 z-0 hidden">
+    </div>
+
     <div id="homepage-card"
          class="relative bg-white w-full rounded-2xl shadow-xl border-2 border-gray-600 transform -rotate-2 z-10 p-5">
       <div class="font-semibold text-lg mb-2">
@@ -73,16 +89,18 @@
   </div>
 
   <!-- 電気代カード -->
-  <div id="card-area" class="relative w-[480px] mt-[12px]"></div>
+  <div id="card-area" class="relative w-[480px] mt-[12px] flex justify-center"></div>
 
   <script>
     function addCard() {
       if (document.getElementById("card-wrapper")) return;
 
+      document.getElementById("gray-hatch").classList.remove("hidden");
+
       const area = document.getElementById("card-area");
       const wrapper = document.createElement("div");
       wrapper.id = "card-wrapper";
-      wrapper.className = "relative w-full";
+      wrapper.className = "relative max-w-[480px]";
 
       const card = document.createElement("div");
       card.className = "relative bg-white w-full rounded-2xl shadow-xl border-2 border-gray-600 p-5 text-sm transform -rotate-2 z-10";
@@ -97,7 +115,6 @@
         <div class="relative mb-6">
           <div class="absolute top-[12px] left-[-12px] w-full h-full hatch-bg rounded-2xl shadow-inner z-0"></div>
           <div class="relative bg-white rounded-2xl border border-gray-300 p-4 z-10">
-            <div id="graph-legend" class="flex flex-wrap gap-3 text-xs font-semibold mb-2"></div>
             <div class="text-sm font-semibold mb-2">テーブル</div>
             <div class="overflow-x-auto max-h-[240px] overflow-y-auto">
               <table class="min-w-full text-gray-700 text-sm border-collapse">
@@ -119,6 +136,7 @@
           <div class="absolute top-[12px] left-[-12px] w-full h-full hatch-bg rounded-2xl shadow-inner z-0"></div>
           <div class="relative bg-white rounded-2xl border border-gray-300 p-4 z-10">
             <div class="text-sm font-semibold mb-2">グラフ</div>
+            <div id="graph-legend" class="flex flex-wrap gap-3 text-xs font-semibold mb-2"></div>
             <canvas id="electricityChart" width="400" height="250"></canvas>
           </div>
         </div>
@@ -200,6 +218,7 @@
 
     function removeCard() {
       document.getElementById("card-wrapper")?.remove();
+      document.getElementById("gray-hatch").classList.add("hidden");
     }
   </script>
 </body>
