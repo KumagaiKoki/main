@@ -66,8 +66,8 @@
     </div>
   </div>
 
-  <!-- データカードとグラフ -->
-  <div id="card-area" class="flex gap-8 mt-[12px]"></div>
+  <!-- 電気カードエリア -->
+  <div id="card-area" class="flex flex-col gap-6 mt-[12px]"></div>
 
   <script>
     function toggleMenu() {
@@ -114,7 +114,6 @@
         <div class="flex items-center justify-between mb-4">
           <div class="text-base font-semibold flex items-center gap-2">
             電気代
-            <button id="show-data" class="px-2 py-0.5 text-xs rounded-full bg-purple-100 text-purple-600">生データ</button>
             <button id="show-graph" class="px-2 py-0.5 text-xs rounded-full bg-purple-100 text-purple-600">グラフ</button>
           </div>
           <button onclick="removeCard()" class="text-red-500 text-xl">×</button>
@@ -140,50 +139,14 @@
       `;
       wrapper.appendChild(card);
 
-      // グラフ部分
-      const chartCard = document.createElement("div");
-      chartCard.id = "chart-card";
-      chartCard.className = "relative bg-white w-[480px] rounded-2xl shadow-xl border-2 border-gray-600 p-5 text-sm transform -rotate-2";
-
-      chartCard.innerHTML = `
-        <div class="text-base font-semibold mb-4">電気代グラフ</div>
-        <canvas id="electricityChart" width="400" height="300"></canvas>
-      `;
-      area.appendChild(chartCard);
-
-      // JSON読み込み
       fetch("https://raw.githubusercontent.com/KumagaiKoki/main/main/data.json")
         .then(res => res.json())
         .then(data => {
-          const months = [];
-          const costs = [];
           data.forEach(entry => {
             insertElectricRow(entry.month, entry.cost, entry.date);
-            months.push(entry.month);
-            costs.push(Number(entry.cost));
           });
 
-          const ctx = document.getElementById("electricityChart").getContext("2d");
-          new Chart(ctx, {
-            type: 'line',
-            data: {
-              labels: months,
-              datasets: [{
-                label: '電気代 (¥)',
-                data: costs,
-                borderColor: 'rgb(75, 192, 192)',
-                tension: 0.3
-              }]
-            },
-            options: {
-              responsive: false,
-              scales: {
-                y: {
-                  beginAtZero: false
-                }
-              }
-            }
-          });
+          document.getElementById("show-graph").addEventListener("click", () => showGraph(data));
         });
     }
 
@@ -199,12 +162,58 @@
       tbody.appendChild(tr);
     }
 
+    function showGraph(data) {
+      if (document.getElementById("chart-card")) return;
+
+      const area = document.getElementById("card-area");
+
+      const chartCard = document.createElement("div");
+      chartCard.id = "chart-card";
+      chartCard.className = "relative bg-white w-[480px] rounded-2xl shadow-xl border-2 border-gray-600 p-5 text-sm transform -rotate-2";
+
+      chartCard.innerHTML = `
+        <div class="flex items-center justify-between mb-4">
+          <div class="text-base font-semibold">電気代グラフ</div>
+          <button onclick="removeGraph()" class="text-red-500 text-xl">×</button>
+        </div>
+        <canvas id="electricityChart" width="400" height="300"></canvas>
+      `;
+      area.appendChild(chartCard);
+
+      const months = data.map(e => e.month);
+      const costs = data.map(e => Number(e.cost));
+
+      const ctx = document.getElementById("electricityChart").getContext("2d");
+      new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: months,
+          datasets: [{
+            label: '電気代 (¥)',
+            data: costs,
+            borderColor: 'rgb(75, 192, 192)',
+            tension: 0.3
+          }]
+        },
+        options: {
+          responsive: false,
+          scales: {
+            y: {
+              beginAtZero: false
+            }
+          }
+        }
+      });
+    }
+
     function removeCard() {
-      const wrapper = document.getElementById("card-wrapper");
-      if (wrapper) wrapper.remove();
-      const chartCard = document.getElementById("chart-card");
-      if (chartCard) chartCard.remove();
+      document.getElementById("card-wrapper")?.remove();
+      removeGraph();
       document.getElementById("gray-hatch").classList.add("hidden");
+    }
+
+    function removeGraph() {
+      document.getElementById("chart-card")?.remove();
     }
   </script>
 </body>
