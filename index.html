@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>電気代 Beep風カード</title>
+  <title>電気代表（Beep風）</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100 min-h-screen flex items-start justify-center p-10 relative">
@@ -45,7 +45,7 @@
     </table>
   </div>
 
-  <!-- 新しいカードが出るスペース -->
+  <!-- 表示用カードスペース -->
   <div id="new-cards" class="flex flex-wrap gap-5 ml-6"></div>
 
   <script>
@@ -54,7 +54,7 @@
       menu.classList.toggle("hidden");
     }
 
-    // 外クリックでメニュー閉じる
+    // メニュー閉じる処理
     document.addEventListener("click", function (e) {
       const menu = document.getElementById("menu1");
       const button = document.querySelector("button");
@@ -63,68 +63,57 @@
       }
     });
 
-    // 光熱費カード追加（Beep風）
+    // 光熱費カードを追加
     function addCard(title) {
       if (document.getElementById(`card-${title}`)) return;
 
       const container = document.getElementById("new-cards");
       const card = document.createElement("div");
       card.id = `card-${title}`;
-      card.className = "w-[400px] bg-white rounded-2xl shadow-lg border border-gray-200 p-5 space-y-4 font-sans text-sm relative";
+      card.className = "w-[480px] bg-white rounded-2xl shadow-lg border border-gray-200 p-5 font-sans text-sm relative";
 
       if (title === "光熱費") {
         card.innerHTML = `
-          <div class="flex items-center justify-between mb-3">
+          <div class="flex items-center justify-between mb-4">
             <div class="text-base font-semibold">電気代
               <span class="ml-2 px-2 py-0.5 text-xs rounded-full bg-purple-100 text-purple-600">Energy</span>
             </div>
             <button onclick="removeCard(this)" class="text-red-500 text-xl">×</button>
           </div>
 
-          <!-- データ1 -->
-          <div class="grid grid-cols-2 border-t pt-3">
-            <div class="text-gray-500 flex gap-2 items-center">📅 年月</div>
-            <div class="text-right">2025-03</div>
-          </div>
-          <div class="grid grid-cols-2 border-t pt-3">
-            <div class="text-gray-500 flex gap-2 items-center">💴 金額</div>
-            <div class="text-right">9,500 円</div>
-          </div>
-          <div class="grid grid-cols-2 border-t pt-3">
-            <div class="text-gray-500 flex gap-2 items-center">🕘 入力日</div>
-            <div class="text-right">2025-04-01</div>
-          </div>
-
-          <!-- データ2 -->
-          <div class="grid grid-cols-2 border-t pt-3">
-            <div class="text-gray-500 flex gap-2 items-center">📅 年月</div>
-            <div class="text-right">2025-02</div>
-          </div>
-          <div class="grid grid-cols-2 border-t pt-3">
-            <div class="text-gray-500 flex gap-2 items-center">💴 金額</div>
-            <div class="text-right">8,200 円</div>
-          </div>
-          <div class="grid grid-cols-2 border-t pt-3">
-            <div class="text-gray-500 flex gap-2 items-center">🕘 入力日</div>
-            <div class="text-right">2025-03-01</div>
-          </div>
-
-          <!-- データ3 -->
-          <div class="grid grid-cols-2 border-t pt-3">
-            <div class="text-gray-500 flex gap-2 items-center">📅 年月</div>
-            <div class="text-right">2025-01</div>
-          </div>
-          <div class="grid grid-cols-2 border-t pt-3">
-            <div class="text-gray-500 flex gap-2 items-center">💴 金額</div>
-            <div class="text-right">7,900 円</div>
-          </div>
-          <div class="grid grid-cols-2 border-t pt-3">
-            <div class="text-gray-500 flex gap-2 items-center">🕘 入力日</div>
-            <div class="text-right">2025-02-01</div>
-          </div>
+          <table class="w-full text-sm text-gray-700 border-t">
+            <thead class="bg-gray-50 text-gray-500 text-left">
+              <tr>
+                <th class="py-2 px-2">📅 年月</th>
+                <th class="py-2 px-2">💴 金額</th>
+                <th class="py-2 px-2">🕘 入力日</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-t">
+                <td class="py-2 px-2">2025/3</td>
+                <td class="py-2 px-2">¥8,500</td>
+                <td class="py-2 px-2">2025/3/12</td>
+              </tr>
+              <tr class="border-t">
+                <td class="py-2 px-2">2025/3</td>
+                <td class="py-2 px-2">¥8,500</td>
+                <td class="py-2 px-2">2025/3/12</td>
+              </tr>
+              <tr class="border-t">
+                <td class="py-2 px-2">2025/3</td>
+                <td class="py-2 px-2">¥8,500</td>
+                <td class="py-2 px-2">2025/3/12</td>
+              </tr>
+              <tr class="border-t">
+                <td class="py-2 px-2">2025/3</td>
+                <td class="py-2 px-2">¥8,500</td>
+                <td class="py-2 px-2">2025/3/12</td>
+              </tr>
+            </tbody>
+          </table>
         `;
       } else {
-        // その他のカード
         card.innerHTML = `
           <div class="font-semibold text-lg mb-2">${title} 詳細</div>
           <div class="space-y-2 text-sm text-gray-700">
