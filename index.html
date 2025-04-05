@@ -3,45 +3,98 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>シンプルWebページ</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>3D風 UI</title>
   <style>
-    .rounded-box {
-      width: 300px;
-      height: 150px;
-      background-color: #3b6fc4; /* 青系カラー */
-      border-radius: 20px;        /* 角丸 */
-      border: 1px solid #000;     /* 黒い枠線 */
-      margin: 40px auto;          /* 中央寄せ */
+    body {
+      background-color: #f5f7fa;
+      font-family: "Segoe UI", sans-serif;
+      padding: 50px;
+    }
+
+    .card {
+      position: relative;
+      width: 320px;
+      padding: 20px;
+      border-radius: 16px;
+      background-color: #ffffff;
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+      border: 2px solid #f0f0f0;
+    }
+
+    .card-title {
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      font-size: 12px;
+      color: #a855f7;
+      background-color: #f3e8ff;
+      border-radius: 8px;
+      margin-left: 6px;
+    }
+
+    .table {
+      margin-top: 10px;
+    }
+
+    .table-row {
+      display: flex;
+      justify-content: space-between;
+      margin: 4px 0;
+      font-size: 14px;
+    }
+
+    .context-menu {
+      position: absolute;
+      top: 0;
+      right: -200px;
+      width: 180px;
+      background-color: #111;
+      border-radius: 12px;
+      overflow: hidden;
+      color: white;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    }
+
+    .menu-item {
+      padding: 12px 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+    }
+
+    .menu-item:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .menu-item:last-child {
+      border-bottom: none;
+    }
+
+    .menu-icon {
+      margin-right: 10px;
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>My Web Page</h1>
-    <nav>
-      <ul>
-        <li><a href="#">ホーム</a></li>
-        <li><a href="#">製品</a></li>
-        <li><a href="#">お問い合わせ</a></li>
-      </ul>
-    </nav>
-  </header>
 
-  <main>
-    <section class="hero">
-      <h2>デザイン</h2>
-      <p>シンプルで美しいWeb体験を。</p>
-      <a href="#" class="btn">詳しく見る</a>
-    </section>
+  <div class="card">
+    <div class="card-title">Beep <span class="badge">Cache</span></div>
+    <div class="table">
+      <div class="table-row"><span>Type</span><span>KV Store</span></div>
+      <div class="table-row"><span>Size</span><span>1 GB</span></div>
+    </div>
 
-    <!-- 👇 ここが角丸ボックス -->
-    <div class="rounded-box"></div>
+    <div class="context-menu">
+      <div class="menu-item"><span class="menu-icon">🔐</span> View credentials</div>
+      <div class="menu-item"><span class="menu-icon">♻️</span> Replace</div>
+      <div class="menu-item"><span class="menu-icon">🔌</span> Detach database</div>
+    </div>
+  </div>
 
-  </main>
-
-  <footer>
-    <p>&copy; 2025 My Website</p>
-  </footer>
 </body>
 </html>
