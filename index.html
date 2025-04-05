@@ -50,7 +50,7 @@
     }
   </style>
 </head>
-<body class="bg-gray-100 min-h-screen flex items-start justify-center p-10 gap-10">
+<body class="bg-gray-100 min-h-screen flex items-start justify-center p-10 gap-6">
 
   <!-- ホームページカード -->
   <div id="homepage-wrapper" class="relative w-[320px] h-auto">
@@ -59,13 +59,22 @@
          class="absolute top-[20px] left-[-12px] w-full h-full gray-hatch-bg rounded-2xl shadow-inner transform -rotate-2 z-0 hidden">
     </div>
 
-    <!-- ホームページ本体 -->
     <div id="homepage-card"
          class="relative bg-white w-full rounded-2xl shadow-xl border-2 border-gray-600 transform -rotate-2 z-10 p-5">
+      <!-- 三点メニュー -->
+      <button class="absolute top-3 right-3 text-xl" onclick="toggleMenu()">⋯</button>
+      <div id="menu1"
+           class="absolute top-12 right-3 bg-black text-white rounded-xl shadow-lg min-w-[180px] py-2 hidden z-50 flex-col space-y-1 text-sm">
+        <div class="px-4 py-2 hover:bg-gray-800 cursor-pointer">認証情報を表示</div>
+        <div class="px-4 py-2 hover:bg-gray-800 cursor-pointer">置き換え</div>
+        <div class="px-4 py-2 hover:bg-gray-800 cursor-pointer">データベースを切断</div>
+      </div>
+
       <div class="font-semibold text-lg mb-2">
         ホームページ
         <span class="ml-2 text-purple-600 bg-purple-100 text-xs font-medium px-2 py-0.5 rounded-full">キャッシュ</span>
       </div>
+
       <table class="w-full text-sm text-gray-700">
         <tr class="border-b">
           <td class="py-2">光熱費</td>
@@ -84,9 +93,21 @@
   </div>
 
   <!-- 電気代カード -->
-  <div id="card-area" class="relative w-full flex justify-center mt-[12px]"></div>
+  <div id="card-area" class="relative w-full flex justify-center mt-[0px]"></div>
 
   <script>
+    function toggleMenu() {
+      document.getElementById("menu1").classList.toggle("hidden");
+    }
+
+    document.addEventListener("click", function (e) {
+      const menu = document.getElementById("menu1");
+      const button = document.querySelector("button");
+      if (!menu.contains(e.target) && !button.contains(e.target)) {
+        menu.classList.add("hidden");
+      }
+    });
+
     function addCard() {
       if (document.getElementById("card-wrapper")) return;
       document.getElementById("gray-hatch").classList.remove("hidden");
@@ -107,8 +128,8 @@
 
         <!-- テーブル -->
         <div class="relative mb-6">
-          <div class="absolute top-0 left-0 w-full h-full hatch-bg rounded-2xl shadow-inner z-0"></div>
-          <div class="relative bg-white rounded-2xl border border-gray-400 p-4 z-10 translate-x-[12px] -translate-y-[20px]">
+          <div class="absolute top-[10px] left-0 w-full h-full hatch-bg rounded-2xl shadow-inner z-0"></div>
+          <div class="relative bg-white rounded-2xl border border-gray-400 p-4 z-10 translate-x-[12px] -translate-y-[10px]">
             <div class="text-sm font-semibold mb-2">テーブル</div>
             <div class="overflow-x-auto max-h-[240px] overflow-y-auto">
               <table class="min-w-full text-gray-700 text-sm border-collapse">
@@ -127,8 +148,8 @@
 
         <!-- グラフ -->
         <div class="relative mt-[3px]">
-          <div class="absolute top-0 left-0 w-full h-full hatch-bg rounded-2xl shadow-inner z-0"></div>
-          <div class="relative bg-white rounded-2xl border border-gray-400 p-4 z-10 translate-x-[12px] -translate-y-[20px]">
+          <div class="absolute top-[10px] left-0 w-full h-full hatch-bg rounded-2xl shadow-inner z-0"></div>
+          <div class="relative bg-white rounded-2xl border border-gray-400 p-4 z-10 translate-x-[12px] -translate-y-[10px]">
             <div class="text-sm font-semibold mb-2">グラフ</div>
             <div id="graph-legend" class="flex flex-wrap gap-3 text-xs font-semibold mb-2"></div>
             <canvas id="electricityChart" width="400" height="250"></canvas>
