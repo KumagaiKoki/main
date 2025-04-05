@@ -31,51 +31,25 @@
       <span class="ml-2 text-purple-600 bg-purple-100 text-xs font-medium px-2 py-0.5 rounded-full">Cache</span>
     </div>
 
-    <!-- 光熱費詳細ボタン -->
-    <button onclick="showUtilityDetails()" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">
-      光熱費詳細
-    </button>
-
+    <!-- 表 -->
+    <table class="w-full text-sm text-gray-700">
+      <tr class="border-b">
+        <td class="py-2">光熱費</td>
+        <td class="py-2 text-right">
+          <button class="text-blue-500 hover:underline" onclick="addCard('光熱費')">詳細</button>
+        </td>
+      </tr>
+      <tr class="border-b">
+        <td class="py-2">料理</td>
+        <td class="py-2 text-right">
+          <button class="text-blue-500 hover:underline" onclick="addCard('料理')">詳細</button>
+        </td>
+      </tr>
+    </table>
   </div>
 
-  <!-- 光熱費詳細フォーム -->
-  <div id="utility-details" class="hidden fixed top-0 left-0 w-full h-full bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
-    <div class="bg-white p-6 rounded-xl shadow-lg w-[320px]">
-      <h3 class="text-xl font-semibold mb-4">光熱費詳細入力</h3>
-
-      <!-- 日付入力 -->
-      <div class="mb-4">
-        <label for="date" class="block text-sm font-medium text-gray-700">入力日</label>
-        <input type="text" id="date" class="flatpickr form-input mt-1 w-full py-2 px-3 border border-gray-300 rounded-md" placeholder="日付を選択" />
-      </div>
-
-      <!-- 光熱費選択 -->
-      <div class="mb-4">
-        <label for="utility" class="block text-sm font-medium text-gray-700">光熱費</label>
-        <select id="utility" class="form-select mt-1 w-full py-2 px-3 border border-gray-300 rounded-md">
-          <option value="水道">水道</option>
-          <option value="ガス">ガス</option>
-          <option value="電気">電気</option>
-        </select>
-      </div>
-
-      <!-- 金額入力 -->
-      <div class="mb-4">
-        <label for="amount" class="block text-sm font-medium text-gray-700">金額</label>
-        <input type="number" id="amount" class="form-input mt-1 w-full py-2 px-3 border border-gray-300 rounded-md" placeholder="金額を入力" />
-      </div>
-
-      <!-- 保存ボタン -->
-      <div class="flex justify-between">
-        <button onclick="saveUtilityData()" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">
-          保存
-        </button>
-        <button onclick="closeUtilityDetails()" class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600">
-          閉じる
-        </button>
-      </div>
-    </div>
-  </div>
+  <!-- 新しいカード用 -->
+  <div id="new-cards" class="flex flex-wrap gap-5 mt-10"></div>
 
   <script>
     function toggleMenu() {
@@ -92,28 +66,46 @@
       }
     });
 
-    // カレンダー初期化
-    flatpickr("#date", {
-      dateFormat: "Y-m-d",
-    });
+    // 新しいカードを追加
+    function addCard(title) {
+      const newCard = document.createElement("div");
+      newCard.classList.add("relative", "w-[320px]", "bg-white", "rounded-2xl", "shadow-xl", "border-2", "border-indigo-300", "transform", "-rotate-2", "z-10", "p-5");
 
-    // 光熱費詳細フォームを表示
-    function showUtilityDetails() {
-      document.getElementById("utility-details").classList.remove("hidden");
+      // 内容
+      newCard.innerHTML = `
+        <div class="font-semibold text-lg mb-2">${title} 詳細</div>
+        <div class="space-y-1 text-sm text-gray-700">
+          <div class="flex justify-between">
+            <span>データ入力</span>
+            <input type="text" id="data-input" class="form-input mt-1 w-full py-2 px-3 border border-gray-300 rounded-md" placeholder="データを入力" />
+          </div>
+          <div class="flex justify-between">
+            <span>ログ出力</span>
+            <button class="text-blue-500 hover:underline" onclick="logData()">ログ表示</button>
+          </div>
+        </div>
+        <!-- 閉じるボタン -->
+        <button class="absolute top-3 right-3 text-xl text-red-500" onclick="removeCard(this)">×</button>
+      `;
+
+      // 新しいカードを追加
+      document.getElementById("new-cards").appendChild(newCard);
     }
 
-    // 光熱費詳細フォームを閉じる
-    function closeUtilityDetails() {
-      document.getElementById("utility-details").classList.add("hidden");
+    // カードを削除する関数
+    function removeCard(button) {
+      const card = button.closest('div');
+      card.remove();
     }
 
-    // 光熱費データ保存
-    function saveUtilityData() {
-      const date = document.getElementById("date").value;
-      const utility = document.getElementById("utility").value;
-      const amount = document.getElementById("amount").value;
-      alert(`保存しました:\n日付: ${date}\n光熱費: ${utility}\n金額: ¥${amount}`);
-      closeUtilityDetails();
+    // ログ出力
+    function logData() {
+      const inputData = document.getElementById("data-input").value;
+      if(inputData) {
+        alert("ログ: " + inputData);
+      } else {
+        alert("データが入力されていません");
+      }
     }
   </script>
 </body>
