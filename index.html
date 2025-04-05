@@ -47,7 +47,7 @@
 
     <!-- Gray Hatch -->
     <div id="gray-hatch"
-         class="absolute top-[12px] left-[12px] w-full h-full gray-hatch-bg border-thin border-gray-400 rounded-2xl shadow-inner transform -rotate-2 z-0 hidden">
+         class="absolute top-[12px] left-[-12px] w-full h-full gray-hatch-bg border-thin border-gray-400 rounded-2xl shadow-inner transform -rotate-2 z-0 hidden">
     </div>
 
     <!-- Homepage Card -->
@@ -68,7 +68,6 @@
         <span class="ml-2 text-purple-600 bg-purple-100 text-xs font-medium px-2 py-0.5 rounded-full">Cache</span>
       </div>
 
-      <!-- Table -->
       <table class="w-full text-sm text-gray-700">
         <tr class="border-b">
           <td class="py-2">Utilities</td>
@@ -105,7 +104,7 @@
     function addCard() {
       if (document.getElementById("card-wrapper")) return;
 
-      // Show gray hatch under homepage
+      // Show gray hatch
       document.getElementById("gray-hatch").classList.remove("hidden");
 
       const area = document.getElementById("card-area");
@@ -114,10 +113,10 @@
       wrapper.id = "card-wrapper";
       wrapper.className = "relative w-full";
 
-      // Orange hatch background
+      // Orange hatch background (now on left-bottom side)
       const hatch = document.createElement("div");
       hatch.className =
-        "absolute top-[12px] left-[12px] w-full h-full hatch-bg border-thin border-orange-300 rounded-2xl shadow-inner transform -rotate-2 z-0";
+        "absolute top-[12px] left-[-12px] w-full h-full hatch-bg border-thin border-orange-300 rounded-2xl shadow-inner transform -rotate-2 z-0";
       wrapper.appendChild(hatch);
 
       // Electricity card
