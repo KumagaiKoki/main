@@ -41,7 +41,7 @@
       border: 1px solid #e5e7eb;
     }
 
-    select, input[type="text"], input[type="date"] {
+    input[type="text"] {
       border: 1px solid #ccc;
       border-radius: 0.25rem;
       padding: 0.25rem 0.5rem;
@@ -53,7 +53,6 @@
 
   <!-- ホーム + グレーハッチ -->
   <div id="homepage-wrapper" class="relative w-[320px] h-auto">
-
     <!-- グレーハッチ -->
     <div id="gray-hatch"
          class="absolute top-[12px] left-[-12px] w-full h-full gray-hatch-bg border-[1.5px] border-gray-600 rounded-2xl shadow-inner transform -rotate-2 z-0 hidden">
@@ -110,6 +109,20 @@
       }
     });
 
+    function formatDate(date) {
+      const yyyy = date.getFullYear();
+      const mm = String(date.getMonth() + 1).padStart(2, '0');
+      const dd = String(date.getDate()).padStart(2, '0');
+      return `${yyyy}/${mm}/${dd}`;
+    }
+
+    function getTodayMonth() {
+      const date = new Date();
+      const yyyy = date.getFullYear();
+      const mm = String(date.getMonth() + 1).padStart(2, '0');
+      return `${yyyy}/${mm}`;
+    }
+
     function addCard() {
       if (document.getElementById("card-wrapper")) return;
 
@@ -133,6 +146,10 @@
       card.className =
         "card-container relative bg-white max-w-md rounded-2xl shadow-xl border-2 border-gray-600 p-5 text-sm transform -rotate-2 z-10";
 
+      const today = new Date();
+      const todayMonth = getTodayMonth();
+      const todayDate = formatDate(today);
+
       card.innerHTML = `
         <div class="flex items-center justify-between mb-4">
           <div class="text-base font-semibold">電気代
@@ -151,39 +168,25 @@
             </thead>
             <tbody class="bg-white">
               <tr>
-                <td class="py-2 px-3 flex gap-1">
-                  <select class="w-[72px]">
-                    <option>2025</option>
-                    <option>2024</option>
-                  </select>
-                  <select class="w-[60px]">
-                    <option>01月</option>
-                    <option>02月</option>
-                    <option>03月</option>
-                    <option>04月</option>
-                  </select>
+                <td class="py-2 px-3">
+                  <input type="text" class="w-24" value="${todayMonth}" />
                 </td>
                 <td class="py-2 px-3">
                   <input type="text" class="w-24" placeholder="¥0" />
                 </td>
                 <td class="py-2 px-3">
-                  <input type="date" class="text-sm" />
+                  <input type="text" class="w-32" value="${todayDate}" />
                 </td>
               </tr>
               <tr>
                 <td class="py-2 px-3">2025/03</td>
                 <td class="py-2 px-3">¥8,500</td>
-                <td class="py-2 px-3">2025-03-12</td>
+                <td class="py-2 px-3">2025/03/12</td>
               </tr>
               <tr>
                 <td class="py-2 px-3">2025/03</td>
                 <td class="py-2 px-3">¥8,500</td>
-                <td class="py-2 px-3">2025-03-12</td>
-              </tr>
-              <tr>
-                <td class="py-2 px-3">2025/03</td>
-                <td class="py-2 px-3">¥8,500</td>
-                <td class="py-2 px-3">2025-03-12</td>
+                <td class="py-2 px-3">2025/03/12</td>
               </tr>
             </tbody>
           </table>
