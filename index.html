@@ -6,12 +6,8 @@
   <title>電気料金UI</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Rounded+Mplus+1c&display=swap" rel="stylesheet">
   <style>
     body {
-      font-family: 'Rounded Mplus 1c', "Courier New", Consolas, monospace;
-    }
-    *:not(td):not(th):not(input):not(button) {
       font-family: 'Rounded Mplus 1c', sans-serif;
     }
     .hatch-bg {
@@ -34,17 +30,11 @@
 </head>
 <body class="bg-gray-100 min-h-screen flex items-start justify-center p-10 gap-10">
 
-  <!-- ホーム + グレーハッチ -->
   <div id="homepage-wrapper" class="relative w-[320px] h-auto">
     <div id="gray-hatch" class="absolute top-[12px] left-[-12px] w-full h-full gray-hatch-bg border-[1.5px] border-gray-600 rounded-2xl shadow-inner transform -rotate-2 z-0 hidden"></div>
 
     <div id="homepage-card" class="relative bg-white w-full rounded-2xl shadow-xl border-2 border-gray-600 transform -rotate-2 z-10 p-5">
       <button class="absolute top-3 right-3 text-xl" onclick="toggleMenu()">⋯</button>
-      <div id="menu1" class="absolute top-12 right-3 bg-black text-white rounded-xl shadow-lg min-w-[180px] py-2 hidden z-50 flex-col space-y-1 text-sm">
-        <div class="px-4 py-2 hover:bg-gray-800 cursor-pointer">認証情報を表示</div>
-        <div class="px-4 py-2 hover:bg-gray-800 cursor-pointer">置き換え</div>
-        <div class="px-4 py-2 hover:bg-gray-800 cursor-pointer">データベースを切断</div>
-      </div>
       <div class="font-semibold text-lg mb-2">
         ホームページ
         <span class="ml-2 text-purple-600 bg-purple-100 text-xs font-medium px-2 py-0.5 rounded-full">キャッシュ</span>
@@ -56,24 +46,13 @@
             <button class="text-blue-500 hover:underline" onclick="addCard()">詳細</button>
           </td>
         </tr>
-        <tr class="border-b">
-          <td class="py-2">料理</td>
-          <td class="py-2 text-right">
-            <button class="text-blue-500 hover:underline">詳細</button>
-          </td>
-        </tr>
       </table>
     </div>
   </div>
 
-  <!-- 電気カードエリア -->
   <div id="card-area" class="flex flex-col gap-6 mt-[12px]"></div>
 
   <script>
-    function toggleMenu() {
-      document.getElementById("menu1").classList.toggle("hidden");
-    }
-
     function formatDate(date) {
       const yyyy = date.getFullYear();
       const mm = String(date.getMonth() + 1).padStart(2, '0');
@@ -91,9 +70,10 @@
     function addCard() {
       if (document.getElementById("card-wrapper")) return;
 
-      document.getElementById("gray-hatch").classList.remove("hidden");
-      const area = document.getElementById("card-area");
+      const grayHatch = document.getElementById("gray-hatch");
+      grayHatch.classList.remove("hidden");
 
+      const area = document.getElementById("card-area");
       const wrapper = document.createElement("div");
       wrapper.id = "card-wrapper";
       wrapper.className = "relative w-[480px]";
@@ -104,7 +84,7 @@
       area.appendChild(wrapper);
 
       const card = document.createElement("div");
-      card.className = "card-container relative bg-white w-full rounded-2xl shadow-xl border-2 border-gray-600 p-5 text-sm transform -rotate-2 z-10";
+      card.className = "relative bg-white w-full rounded-2xl shadow-xl border-2 border-gray-600 p-5 text-sm transform -rotate-2 z-10";
 
       const today = new Date();
       const todayMonth = getTodayMonth();
@@ -145,7 +125,6 @@
           data.forEach(entry => {
             insertElectricRow(entry.month, entry.cost, entry.date);
           });
-
           document.getElementById("show-graph").addEventListener("click", () => showGraph(data));
         });
     }
@@ -180,30 +159,45 @@
       `;
       area.appendChild(chartCard);
 
-      const months = data.map(e => e.month);
-      const costs = data.map(e => Number(e.cost));
-
       const ctx = document.getElementById("electricityChart").getContext("2d");
+
+      // 年ごとに12カ月分データを集める
+      const yearly = {};
+      data.forEach(({ month, cost }) => {
+        const [y, m] = month.split('/').map(Number);
+        if (!yearly[y]) yearly[y] = new Array(12).fill(null);
+        yearly[y][m - 1] = Number(cost);
+      });
+
+      const datasets = Object.entries(yearly).map(([year, costArray]) => ({
+        label: year,
+        data: costArray,
+        borderWidth: 2,
+        borderColor: getRandomColor(),
+        pointRadius: 0
+      }));
+
       new Chart(ctx, {
         type: 'line',
         data: {
-          labels: months,
-          datasets: [{
-            label: '電気代 (¥)',
-            data: costs,
-            borderColor: 'rgb(75, 192, 192)',
-            tension: 0.3
-          }]
+          labels: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
+          datasets: datasets
         },
         options: {
-          responsive: false,
+          plugins: {
+            legend: { display: false }
+          },
           scales: {
-            y: {
-              beginAtZero: false
-            }
+            y: { beginAtZero: false },
+            x: { title: { display: true, text: '月' } }
           }
         }
       });
+    }
+
+    function getRandomColor() {
+      const r = () => Math.floor(Math.random() * 200 + 30);
+      return `rgb(${r()},${r()},${r()})`;
     }
 
     function removeCard() {
