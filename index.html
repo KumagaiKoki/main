@@ -17,12 +17,12 @@
     .hatch-bg {
       background-image: repeating-linear-gradient(
         -45deg,
-        #d97706 0,
-        #d97706 2px,
+        #fde68a 0,
+        #fde68a 2px,
         transparent 2px,
         transparent 6px
       );
-      border: 2.5px solid #d97706;
+      border: 2.5px solid #fdba74;
     }
     .gray-hatch-bg {
       background-image: repeating-linear-gradient(
@@ -34,16 +34,22 @@
       );
       border: 2px solid #4b5563;
     }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
     table td,
     table th {
       border: 1px solid #e5e7eb;
       padding: 0.5rem;
+      text-align: left;
     }
     input[type="text"] {
       border: 1px solid #ccc;
       border-radius: 0.25rem;
       padding: 0.25rem 0.5rem;
       font-size: 0.875rem;
+      width: 100%;
     }
     canvas {
       font-family: 'Rounded Mplus 1c', sans-serif !important;
@@ -52,7 +58,6 @@
 </head>
 <body class="bg-gray-100 min-h-screen flex items-start justify-center p-10 gap-6">
 
-  <!-- ホームページカード -->
   <div id="homepage-wrapper" class="relative w-[320px] h-auto">
     <div id="gray-hatch"
          class="absolute top-[20px] left-[-12px] w-full h-full gray-hatch-bg rounded-2xl shadow-inner transform -rotate-2 z-0 hidden"></div>
@@ -72,7 +77,7 @@
         <span class="ml-2 text-purple-600 bg-purple-100 text-xs font-medium px-2 py-0.5 rounded-full">キャッシュ</span>
       </div>
 
-      <table class="w-full text-sm text-gray-700">
+      <table class="text-sm text-gray-700">
         <tr class="border-b">
           <td class="py-2">光熱費</td>
           <td class="py-2 text-right">
@@ -89,8 +94,7 @@
     </div>
   </div>
 
-  <!-- 電気代カード -->
-  <div id="card-area" class="relative w-full flex justify-center mt-[0px]"></div>
+  <div id="card-area" class="relative w-full flex justify-center mt-0"></div>
 
   <script>
     function toggleMenu() {
@@ -133,11 +137,11 @@
 
         <!-- テーブル -->
         <div class="relative mb-6">
-          <div class="absolute top-[15px] left-0 w-full h-full hatch-bg rounded-2xl shadow-inner z-0"></div>
-          <div class="relative bg-white rounded-2xl border border-gray-400 p-4 z-10 translate-x-[12px] -translate-y-[15px]">
+          <div class="absolute top-[20px] left-0 w-full h-full hatch-bg rounded-2xl shadow-inner z-0"></div>
+          <div class="relative bg-white rounded-2xl border border-gray-400 p-4 z-10 translate-x-[12px] -translate-y-[20px]">
             <div class="text-sm font-semibold mb-2">テーブル</div>
             <div class="overflow-x-auto max-h-[240px] overflow-y-auto">
-              <table class="min-w-full text-gray-700 text-sm border-collapse">
+              <table class="text-sm text-gray-700">
                 <thead>
                   <tr class="bg-gray-50 text-gray-600 font-medium">
                     <th>年月</th>
@@ -146,10 +150,10 @@
                   </tr>
                 </thead>
                 <tbody id="electricity-tbody" class="bg-white">
-                  <tr class="flex w-full">
-                    <td class="py-2 px-3 w-1/3"><input type="text" class="w-full" value="${todayMonth}" /></td>
-                    <td class="py-2 px-3 w-1/3"><input type="text" class="w-full" placeholder="¥0" /></td>
-                    <td class="py-2 px-3 w-1/3"><input type="text" class="w-full" value="${todayDate}" /></td>
+                  <tr>
+                    <td><input type="text" value="${todayMonth}" /></td>
+                    <td><input type="text" placeholder="¥0" /></td>
+                    <td><input type="text" value="${todayDate}" /></td>
                   </tr>
                 </tbody>
               </table>
@@ -158,9 +162,9 @@
         </div>
 
         <!-- グラフ -->
-        <div class="relative mt-[3px]">
-          <div class="absolute top-[15px] left-0 w-full h-full hatch-bg rounded-2xl shadow-inner z-0"></div>
-          <div class="relative bg-white rounded-2xl border border-gray-400 p-4 z-10 translate-x-[12px] -translate-y-[15px]">
+        <div class="relative mt-[8px]">
+          <div class="absolute top-[20px] left-0 w-full h-full hatch-bg rounded-2xl shadow-inner z-0"></div>
+          <div class="relative bg-white rounded-2xl border border-gray-400 p-4 z-10 translate-x-[12px] -translate-y-[20px]">
             <div class="text-sm font-semibold mb-2">グラフ</div>
             <div id="graph-legend" class="flex flex-wrap gap-3 text-xs font-semibold mb-2"></div>
             <canvas id="electricityChart" width="400" height="250"></canvas>
@@ -181,11 +185,10 @@
 
           data.forEach(entry => {
             const row = document.createElement("tr");
-            row.className = "flex w-full";
             row.innerHTML = `
-              <td class="py-2 px-3 w-1/3">${entry.month}</td>
-              <td class="py-2 px-3 w-1/3">¥${entry.cost}</td>
-              <td class="py-2 px-3 w-1/3">${entry.date}</td>
+              <td>${entry.month}</td>
+              <td>¥${entry.cost}</td>
+              <td>${entry.date}</td>
             `;
             tbody.appendChild(row);
 
