@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Utilities UI</title>
+  <title>Utilities UI - 3D Hatch Style</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body {
       font-family: Consolas, monospace;
     }
 
-    /* Light orange hatch background with thick border */
+    /* Hatch background pattern */
     .hatch-bg {
       background-image: repeating-linear-gradient(
         45deg,
@@ -19,6 +19,11 @@
         transparent 2px,
         transparent 6px
       );
+    }
+
+    /* Slightly thinner border (1.5px) */
+    .border-thin {
+      border-width: 1.5px;
     }
 
     table td, table th {
@@ -63,13 +68,57 @@
     </table>
   </div>
 
-  <!-- Hatch Background + Card Container -->
-  <div class="relative ml-6 flex flex-col items-start">
-    <!-- Hatch BG -->
-    <div class="absolute top-6 left-6 w-[500px] h-full hatch-bg rounded-2xl border-4 border-orange-300 shadow-inner z-0 rotate-1"></div>
+  <!-- Hatch background + Electricity card -->
+  <div class="relative w-[500px] h-[350px] ml-10 mt-10">
+    
+    <!-- Hatch background: behind the card, tilted -->
+    <div class="absolute top-[-20px] left-[40px] w-full h-full hatch-bg border-thin border-orange-300 rounded-2xl shadow-inner transform rotate-2 z-0"></div>
 
-    <!-- Cards -->
-    <div id="new-cards" class="relative z-10"></div>
+    <!-- Electricity card: slightly overlapping, tilted -->
+    <div id="card-utilities" class="absolute top-0 left-0 w-full bg-white rounded-2xl shadow-xl border border-gray-200 p-5 text-sm transform rotate-2 z-10 card-container">
+
+      <div class="flex items-center justify-between mb-4">
+        <div class="text-base font-semibold">Electricity
+          <span class="ml-2 px-2 py-0.5 text-xs rounded-full bg-purple-100 text-purple-600">Energy</span>
+        </div>
+        <button onclick="removeCard(this)" class="text-red-500 text-xl">×</button>
+      </div>
+
+      <!-- Table -->
+      <div class="overflow-x-auto">
+        <table class="w-full text-gray-700 border-collapse">
+          <thead class="bg-gray-50 text-gray-600 font-medium">
+            <tr>
+              <th class="py-2 px-3 text-left">📅 Month</th>
+              <th class="py-2 px-3 text-left">💴 Amount</th>
+              <th class="py-2 px-3 text-left">🕘 Entry Date</th>
+            </tr>
+          </thead>
+          <tbody class="bg-white">
+            <tr>
+              <td class="py-2 px-3">2025/3</td>
+              <td class="py-2 px-3">¥8,500</td>
+              <td class="py-2 px-3">2025/3/12</td>
+            </tr>
+            <tr>
+              <td class="py-2 px-3">2025/3</td>
+              <td class="py-2 px-3">¥8,500</td>
+              <td class="py-2 px-3">2025/3/12</td>
+            </tr>
+            <tr>
+              <td class="py-2 px-3">2025/3</td>
+              <td class="py-2 px-3">¥8,500</td>
+              <td class="py-2 px-3">2025/3/12</td>
+            </tr>
+            <tr>
+              <td class="py-2 px-3">2025/3</td>
+              <td class="py-2 px-3">¥8,500</td>
+              <td class="py-2 px-3">2025/3/12</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
 
   <script>
@@ -86,66 +135,15 @@
       }
     });
 
-    function addCard(title) {
-      if (document.getElementById(`card-${title}`)) return;
-
-      const container = document.getElementById("new-cards");
-      const card = document.createElement("div");
-      card.id = `card-${title}`;
-      card.className = "card-container w-[480px] bg-white rounded-xl shadow-md border border-gray-200 p-5 text-sm relative mb-5";
-
-      if (title === "utilities") {
-        card.innerHTML = `
-          <div class="flex items-center justify-between mb-4">
-            <div class="text-base font-semibold">Electricity
-              <span class="ml-2 px-2 py-0.5 text-xs rounded-full bg-purple-100 text-purple-600">Energy</span>
-            </div>
-            <button onclick="removeCard(this)" class="text-red-500 text-xl">×</button>
-          </div>
-
-          <!-- Table -->
-          <div class="overflow-x-auto">
-            <table class="w-full text-gray-700 border-collapse">
-              <thead class="bg-gray-50 text-gray-600 font-medium">
-                <tr>
-                  <th class="py-2 px-3 text-left">📅 Month</th>
-                  <th class="py-2 px-3 text-left">💴 Amount</th>
-                  <th class="py-2 px-3 text-left">🕘 Entry Date</th>
-                </tr>
-              </thead>
-              <tbody class="bg-white">
-                <tr>
-                  <td class="py-2 px-3">2025/3</td>
-                  <td class="py-2 px-3">¥8,500</td>
-                  <td class="py-2 px-3">2025/3/12</td>
-                </tr>
-                <tr>
-                  <td class="py-2 px-3">2025/3</td>
-                  <td class="py-2 px-3">¥8,500</td>
-                  <td class="py-2 px-3">2025/3/12</td>
-                </tr>
-                <tr>
-                  <td class="py-2 px-3">2025/3</td>
-                  <td class="py-2 px-3">¥8,500</td>
-                  <td class="py-2 px-3">2025/3/12</td>
-                </tr>
-                <tr>
-                  <td class="py-2 px-3">2025/3</td>
-                  <td class="py-2 px-3">¥8,500</td>
-                  <td class="py-2 px-3">2025/3/12</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        `;
-      }
-
-      container.appendChild(card);
-    }
-
     function removeCard(btn) {
       const card = btn.closest(".card-container");
       if (card) card.remove();
+    }
+
+    function addCard(title) {
+      const existing = document.getElementById(`card-${title}`);
+      if (existing) return;
+      location.reload(); // for simplicity: re-add the card with hatch
     }
   </script>
 </body>
