@@ -41,7 +41,7 @@
       border: 1px solid #e5e7eb;
     }
 
-    select, input[type="text"] {
+    select, input[type="text"], input[type="date"] {
       border: 1px solid #ccc;
       border-radius: 0.25rem;
       padding: 0.25rem 0.5rem;
@@ -131,7 +131,7 @@
 
       const card = document.createElement("div");
       card.className =
-        "card-container relative bg-white w-full rounded-2xl shadow-xl border-2 border-gray-600 p-5 text-sm transform -rotate-2 z-10";
+        "card-container relative bg-white max-w-md rounded-2xl shadow-xl border-2 border-gray-600 p-5 text-sm transform -rotate-2 z-10";
 
       card.innerHTML = `
         <div class="flex items-center justify-between mb-4">
@@ -141,61 +141,52 @@
           <button onclick="removeCard()" class="text-red-500 text-xl">×</button>
         </div>
         <div class="overflow-x-auto">
-          <table class="w-full text-gray-700 border-collapse">
-    <thead class="bg-gray-50 text-gray-600 font-medium">
-      <tr>
-        <th class="py-2 px-3 text-left">📅 年月</th>
-        <th class="py-2 px-3 text-left">💴 金額</th>
-        <th class="py-2 px-3 text-left">🕘 入力日</th>
-      </tr>
-    </thead>
-    <tbody class="bg-white">
-      <!-- 入力行 -->
-      <tr>
-        <td class="py-2 px-3">
-          <select>
-            <option>2025/1</option>
-            <option>2025/2</option>
-            <option>2025/3</option>
-            <option>2025/4</option>
-          </select>
-        </td>
-        <td class="py-2 px-3">
-          <input type="text" placeholder="¥0" />
-        </td>
-        <td class="py-2 px-3">
-          <select>
-            <option>2025/1/10</option>
-            <option>2025/2/10</option>
-            <option>2025/3/12</option>
-            <option>2025/4/15</option>
-          </select>
-        </td>
-      </tr>
-
-      <!-- 既存データ行 -->
-      <tr>
-        <td class="py-2 px-3">2025/3</td>
-        <td class="py-2 px-3">¥8,500</td>
-        <td class="py-2 px-3">2025/3/12</td>
-      </tr>
-      <tr>
-        <td class="py-2 px-3">2025/3</td>
-        <td class="py-2 px-3">¥8,500</td>
-        <td class="py-2 px-3">2025/3/12</td>
-      </tr>
-      <tr>
-        <td class="py-2 px-3">2025/3</td>
-        <td class="py-2 px-3">¥8,500</td>
-        <td class="py-2 px-3">2025/3/12</td>
-      </tr>
-      <tr>
-        <td class="py-2 px-3">2025/3</td>
-        <td class="py-2 px-3">¥8,500</td>
-        <td class="py-2 px-3">2025/3/12</td>
-      </tr>
-    </tbody>
-  </table>
+          <table class="min-w-full text-gray-700 border-collapse">
+            <thead class="bg-gray-50 text-gray-600 font-medium">
+              <tr>
+                <th class="py-2 px-3 text-left">📅 年月</th>
+                <th class="py-2 px-3 text-left">💴 金額</th>
+                <th class="py-2 px-3 text-left">🕘 入力日</th>
+              </tr>
+            </thead>
+            <tbody class="bg-white">
+              <tr>
+                <td class="py-2 px-3 flex gap-1">
+                  <select class="w-[72px]">
+                    <option>2025</option>
+                    <option>2024</option>
+                  </select>
+                  <select class="w-[60px]">
+                    <option>01月</option>
+                    <option>02月</option>
+                    <option>03月</option>
+                    <option>04月</option>
+                  </select>
+                </td>
+                <td class="py-2 px-3">
+                  <input type="text" class="w-24" placeholder="¥0" />
+                </td>
+                <td class="py-2 px-3">
+                  <input type="date" class="text-sm" />
+                </td>
+              </tr>
+              <tr>
+                <td class="py-2 px-3">2025/03</td>
+                <td class="py-2 px-3">¥8,500</td>
+                <td class="py-2 px-3">2025-03-12</td>
+              </tr>
+              <tr>
+                <td class="py-2 px-3">2025/03</td>
+                <td class="py-2 px-3">¥8,500</td>
+                <td class="py-2 px-3">2025-03-12</td>
+              </tr>
+              <tr>
+                <td class="py-2 px-3">2025/03</td>
+                <td class="py-2 px-3">¥8,500</td>
+                <td class="py-2 px-3">2025-03-12</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       `;
       wrapper.appendChild(card);
