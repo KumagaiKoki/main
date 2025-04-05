@@ -17,8 +17,8 @@
     .hatch-bg {
       background-image: repeating-linear-gradient(
         -45deg,
-        #fde68a 0,
-        #fde68a 2px,
+        #d97706 0,
+        #d97706 2px,
         transparent 2px,
         transparent 6px
       );
@@ -54,14 +54,11 @@
 
   <!-- ホームページカード -->
   <div id="homepage-wrapper" class="relative w-[320px] h-auto">
-    <!-- グレーハッチ -->
     <div id="gray-hatch"
-         class="absolute top-[20px] left-[-12px] w-full h-full gray-hatch-bg rounded-2xl shadow-inner transform -rotate-2 z-0 hidden">
-    </div>
+         class="absolute top-[20px] left-[-12px] w-full h-full gray-hatch-bg rounded-2xl shadow-inner transform -rotate-2 z-0 hidden"></div>
 
     <div id="homepage-card"
          class="relative bg-white w-full rounded-2xl shadow-xl border-2 border-gray-600 transform -rotate-2 z-10 p-5">
-      <!-- 三点メニュー -->
       <button class="absolute top-3 right-3 text-xl" onclick="toggleMenu()">⋯</button>
       <div id="menu1"
            class="absolute top-12 right-3 bg-black text-white rounded-xl shadow-lg min-w-[180px] py-2 hidden z-50 flex-col space-y-1 text-sm">
@@ -110,12 +107,20 @@
 
     function addCard() {
       if (document.getElementById("card-wrapper")) return;
+
       document.getElementById("gray-hatch").classList.remove("hidden");
 
       const area = document.getElementById("card-area");
       const wrapper = document.createElement("div");
       wrapper.id = "card-wrapper";
-      wrapper.className = "relative max-w-[480px] mx-auto";
+      wrapper.className = "relative max-w-[480px] mx-auto mb-[10px]";
+
+      const today = new Date();
+      const yyyy = today.getFullYear();
+      const mm = String(today.getMonth() + 1).padStart(2, '0');
+      const dd = String(today.getDate()).padStart(2, '0');
+      const todayMonth = `${yyyy}/${mm}`;
+      const todayDate = `${yyyy}/${mm}/${dd}`;
 
       const card = document.createElement("div");
       card.className = "relative bg-gray-100 w-full rounded-2xl shadow-xl border border-gray-400 p-5 text-sm transform -rotate-2 z-10";
@@ -123,13 +128,13 @@
       card.innerHTML = `
         <div class="flex items-center justify-between mb-2 -mt-2">
           <div class="text-base font-semibold">電気代</div>
-          <button onclick="removeCard()" class="text-red-500 text-xl">×</button>
+          <button onclick="removeCard()" class="text-black text-xl">×</button>
         </div>
 
         <!-- テーブル -->
         <div class="relative mb-6">
-          <div class="absolute top-[10px] left-0 w-full h-full hatch-bg rounded-2xl shadow-inner z-0"></div>
-          <div class="relative bg-white rounded-2xl border border-gray-400 p-4 z-10 translate-x-[12px] -translate-y-[10px]">
+          <div class="absolute top-[15px] left-0 w-full h-full hatch-bg rounded-2xl shadow-inner z-0"></div>
+          <div class="relative bg-white rounded-2xl border border-gray-400 p-4 z-10 translate-x-[12px] -translate-y-[15px]">
             <div class="text-sm font-semibold mb-2">テーブル</div>
             <div class="overflow-x-auto max-h-[240px] overflow-y-auto">
               <table class="min-w-full text-gray-700 text-sm border-collapse">
@@ -140,7 +145,13 @@
                     <th>入力日</th>
                   </tr>
                 </thead>
-                <tbody id="electricity-tbody" class="bg-white"></tbody>
+                <tbody id="electricity-tbody" class="bg-white">
+                  <tr class="flex w-full">
+                    <td class="py-2 px-3 w-1/3"><input type="text" class="w-full" value="${todayMonth}" /></td>
+                    <td class="py-2 px-3 w-1/3"><input type="text" class="w-full" placeholder="¥0" /></td>
+                    <td class="py-2 px-3 w-1/3"><input type="text" class="w-full" value="${todayDate}" /></td>
+                  </tr>
+                </tbody>
               </table>
             </div>
           </div>
@@ -148,8 +159,8 @@
 
         <!-- グラフ -->
         <div class="relative mt-[3px]">
-          <div class="absolute top-[10px] left-0 w-full h-full hatch-bg rounded-2xl shadow-inner z-0"></div>
-          <div class="relative bg-white rounded-2xl border border-gray-400 p-4 z-10 translate-x-[12px] -translate-y-[10px]">
+          <div class="absolute top-[15px] left-0 w-full h-full hatch-bg rounded-2xl shadow-inner z-0"></div>
+          <div class="relative bg-white rounded-2xl border border-gray-400 p-4 z-10 translate-x-[12px] -translate-y-[15px]">
             <div class="text-sm font-semibold mb-2">グラフ</div>
             <div id="graph-legend" class="flex flex-wrap gap-3 text-xs font-semibold mb-2"></div>
             <canvas id="electricityChart" width="400" height="250"></canvas>
@@ -170,10 +181,11 @@
 
           data.forEach(entry => {
             const row = document.createElement("tr");
+            row.className = "flex w-full";
             row.innerHTML = `
-              <td>${entry.month}</td>
-              <td>¥${entry.cost}</td>
-              <td>${entry.date}</td>
+              <td class="py-2 px-3 w-1/3">${entry.month}</td>
+              <td class="py-2 px-3 w-1/3">¥${entry.cost}</td>
+              <td class="py-2 px-3 w-1/3">${entry.date}</td>
             `;
             tbody.appendChild(row);
 
