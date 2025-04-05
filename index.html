@@ -10,15 +10,19 @@
       font-family: Consolas, monospace;
     }
 
-    /* Orange hatch background */
+    /* Light orange hatch background with thick border */
     .hatch-bg {
       background-image: repeating-linear-gradient(
         45deg,
-        #f97316 0,
-        #f97316 2px,
+        #fde68a 0,
+        #fde68a 2px,
         transparent 2px,
         transparent 6px
       );
+    }
+
+    table td, table th {
+      border: 1px solid #e5e7eb;
     }
   </style>
 </head>
@@ -59,12 +63,12 @@
     </table>
   </div>
 
-  <!-- New Cards & 3D Hatch Background -->
+  <!-- Hatch Background + Card Container -->
   <div class="relative ml-6 flex flex-col items-start">
-    <!-- Orange Hatch BG -->
-    <div class="absolute top-6 left-6 w-[500px] h-full hatch-bg rounded-2xl shadow-inner z-0 rotate-1"></div>
+    <!-- Hatch BG -->
+    <div class="absolute top-6 left-6 w-[500px] h-full hatch-bg rounded-2xl border-4 border-orange-300 shadow-inner z-0 rotate-1"></div>
 
-    <!-- Utility Card will go here -->
+    <!-- Cards -->
     <div id="new-cards" class="relative z-10"></div>
   </div>
 
@@ -88,7 +92,7 @@
       const container = document.getElementById("new-cards");
       const card = document.createElement("div");
       card.id = `card-${title}`;
-      card.className = "w-[480px] bg-white rounded-xl shadow-md border border-gray-200 p-5 text-sm relative";
+      card.className = "card-container w-[480px] bg-white rounded-xl shadow-md border border-gray-200 p-5 text-sm relative mb-5";
 
       if (title === "utilities") {
         card.innerHTML = `
@@ -140,8 +144,8 @@
     }
 
     function removeCard(btn) {
-      const card = btn.closest("div");
-      card.remove();
+      const card = btn.closest(".card-container");
+      if (card) card.remove();
     }
   </script>
 </body>
