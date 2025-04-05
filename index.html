@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>3D風 UI Step 2</title>
+  <title>3D UI with Menu</title>
   <style>
     body {
       background-color: #f6f8fa;
@@ -27,25 +27,48 @@
     .card:nth-child(1) {
       top: 0;
       left: 0;
-      z-index: 3;
-      border-color: #fb923c; /* orange */
-      transform: rotate(-2deg) translate(0, 0);
-    }
-
-    .card:nth-child(2) {
-      top: 40px;
-      left: 40px;
       z-index: 2;
-      border-color: #818cf8; /* blue */
-      transform: rotate(1deg) translate(0, 0);
+      border-color: #818cf8;
+      transform: rotate(-2deg);
     }
 
-    .card:nth-child(3) {
-      top: 80px;
-      left: 80px;
-      z-index: 1;
-      border-color: #f472b6; /* pink */
-      transform: rotate(-1.5deg) translate(0, 0);
+    .menu-button {
+      position: absolute;
+      top: 12px;
+      right: 16px;
+      font-size: 20px;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    .context-menu {
+      position: absolute;
+      top: 40px;
+      right: 20px;
+      background-color: #111;
+      color: white;
+      border-radius: 12px;
+      padding: 8px 0;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      display: none;
+      flex-direction: column;
+      min-width: 180px;
+      z-index: 10;
+    }
+
+    .context-menu.show {
+      display: flex;
+    }
+
+    .context-menu-item {
+      padding: 10px 16px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .context-menu-item:hover {
+      background-color: #333;
     }
 
     .card-title {
@@ -77,7 +100,13 @@
 </head>
 <body>
 
-  <div class="card">
+  <div class="card" id="card1">
+    <button class="menu-button" onclick="toggleMenu()">⋯</button>
+    <div class="context-menu" id="menu1">
+      <div class="context-menu-item">View credentials</div>
+      <div class="context-menu-item">Replace</div>
+      <div class="context-menu-item">Detach database</div>
+    </div>
     <div class="card-title">Beep <span class="badge">Cache</span></div>
     <div class="table">
       <div class="table-row"><span>Type</span><span>KV Store</span></div>
@@ -85,21 +114,21 @@
     </div>
   </div>
 
-  <div class="card">
-    <div class="card-title">Beep <span class="badge">Compute</span></div>
-    <div class="table">
-      <div class="table-row"><span>Type</span><span>CPU</span></div>
-      <div class="table-row"><span>Hibernate</span><span>300ms</span></div>
-    </div>
-  </div>
+  <script>
+    function toggleMenu() {
+      const menu = document.getElementById('menu1');
+      menu.classList.toggle('show');
+    }
 
-  <div class="card">
-    <div class="card-title">Beep <span class="badge">Email</span></div>
-    <div class="table">
-      <div class="table-row"><span>User</span><span>diago@example.com</span></div>
-      <div class="table-row"><span>Name</span><span>Del Diago</span></div>
-    </div>
-  </div>
+    // 外クリックでメニュー閉じる
+    document.addEventListener('click', function(e) {
+      const menu = document.getElementById('menu1');
+      const button = document.querySelector('.menu-button');
+      if (!menu.contains(e.target) && !button.contains(e.target)) {
+        menu.classList.remove('show');
+      }
+    });
+  </script>
 
 </body>
 </html>
