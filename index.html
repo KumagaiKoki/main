@@ -83,10 +83,18 @@
             <span>詳細</span>
           </div>
         </div>
+        <!-- 閉じるボタン -->
+        <button class="absolute top-3 right-3 text-xl text-red-500" onclick="removeCard(this)">×</button>
       `;
 
       // 新しいカードを追加
       document.getElementById("new-cards").appendChild(newCard);
+    }
+
+    // カードを削除する関数
+    function removeCard(button) {
+      const card = button.closest('div');
+      card.remove();
     }
   </script>
 </body>
