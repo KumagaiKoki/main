@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>EElectricity UI</title>
+  <title>Electricity UI</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body {
@@ -45,8 +45,8 @@
       background-color: #facc15; /* yellow-400 */
       z-index: 10;
       left: calc(320px + 24px); /* homepage width + margin */
-      top: 180px;
-      height: 80px;
+      top: 210px;
+      height: 100px;
       border-radius: 4px;
     }
   </style>
@@ -61,11 +61,14 @@
          class="absolute top-[12px] left-[-12px] w-full h-full gray-hatch-bg border-thin border-gray-400 rounded-2xl shadow-inner transform -rotate-2 z-0 hidden">
     </div>
 
+    <!-- Yellow vertical line (initially hidden) -->
+    <div id="yellow-line" class="vertical-line hidden"></div>
+
     <!-- Homepage Card -->
     <div id="homepage-card"
          class="relative bg-white w-full rounded-2xl shadow-xl border-2 border-gray-600 transform -rotate-2 z-10 p-5">
 
-      <!-- Menu -->
+      <!-- Menu Button -->
       <button class="absolute top-3 right-3 text-xl" onclick="toggleMenu()">⋯</button>
       <div id="menu1"
            class="absolute top-12 right-3 bg-black text-white rounded-xl shadow-lg min-w-[180px] py-2 hidden z-50 flex-col space-y-1 text-sm">
@@ -115,8 +118,8 @@
     function addCard() {
       if (document.getElementById("card-wrapper")) return;
 
-      // Show gray hatch behind homepage
       document.getElementById("gray-hatch").classList.remove("hidden");
+      document.getElementById("yellow-line").classList.remove("hidden");
 
       const area = document.getElementById("card-area");
 
@@ -124,19 +127,11 @@
       wrapper.id = "card-wrapper";
       wrapper.className = "relative w-full";
 
-      // Yellow connecting line
-      const line = document.createElement("div");
-      line.className = "vertical-line";
-      line.id = "yellow-line";
-      wrapper.appendChild(line);
-
-      // Orange hatch background
       const hatch = document.createElement("div");
       hatch.className =
         "absolute top-[12px] left-[-12px] w-full h-full hatch-bg border-thin border-orange-300 rounded-2xl shadow-inner transform -rotate-2 z-0";
       wrapper.appendChild(hatch);
 
-      // Electricity card
       const card = document.createElement("div");
       card.className =
         "card-container relative bg-white w-full rounded-2xl shadow-xl border-2 border-gray-600 p-5 text-sm transform -rotate-2 z-10";
@@ -190,6 +185,7 @@
       const wrapper = document.getElementById("card-wrapper");
       if (wrapper) wrapper.remove();
       document.getElementById("gray-hatch").classList.add("hidden");
+      document.getElementById("yellow-line").classList.add("hidden");
     }
   </script>
 </body>
