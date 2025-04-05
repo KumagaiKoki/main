@@ -1,134 +1,61 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>3D UI with Menu</title>
-  <style>
-    body {
-      background-color: #f6f8fa;
-      font-family: "Segoe UI", sans-serif;
-      padding: 60px;
-      position: relative;
-      height: 100vh;
-    }
-
-    .card {
-      position: absolute;
-      width: 320px;
-      padding: 20px;
-      border-radius: 16px;
-      background-color: #ffffff;
-      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
-      border: 2px solid #ddd;
-      transition: transform 0.3s ease;
-    }
-
-    .card:nth-child(1) {
-      top: 0;
-      left: 0;
-      z-index: 2;
-      border-color: #818cf8;
-      transform: rotate(-2deg);
-    }
-
-    .menu-button {
-      position: absolute;
-      top: 12px;
-      right: 16px;
-      font-size: 20px;
-      background: none;
-      border: none;
-      cursor: pointer;
-    }
-
-    .context-menu {
-      position: absolute;
-      top: 40px;
-      right: 20px;
-      background-color: #111;
-      color: white;
-      border-radius: 12px;
-      padding: 8px 0;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-      display: none;
-      flex-direction: column;
-      min-width: 180px;
-      z-index: 10;
-    }
-
-    .context-menu.show {
-      display: flex;
-    }
-
-    .context-menu-item {
-      padding: 10px 16px;
-      cursor: pointer;
-      white-space: nowrap;
-    }
-
-    .context-menu-item:hover {
-      background-color: #333;
-    }
-
-    .card-title {
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
-
-    .badge {
-      display: inline-block;
-      padding: 2px 8px;
-      font-size: 12px;
-      color: #a855f7;
-      background-color: #f3e8ff;
-      border-radius: 8px;
-      margin-left: 6px;
-    }
-
-    .table {
-      margin-top: 10px;
-    }
-
-    .table-row {
-      display: flex;
-      justify-content: space-between;
-      margin: 4px 0;
-      font-size: 14px;
-    }
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3D UI with Tailwind</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
+<body class="bg-gray-100 min-h-screen flex items-start justify-center p-10 relative">
 
-  <div class="card" id="card1">
-    <button class="menu-button" onclick="toggleMenu()">⋯</button>
-    <div class="context-menu" id="menu1">
-      <div class="context-menu-item">View credentials</div>
-      <div class="context-menu-item">Replace</div>
-      <div class="context-menu-item">Detach database</div>
+  <!-- カード -->
+  <div class="relative w-[320px] bg-white rounded-2xl shadow-xl border-2 border-indigo-300 transform -rotate-2 z-10 p-5">
+
+    <!-- メニューボタン -->
+    <button class="absolute top-3 right-3 text-xl" onclick="toggleMenu()">
+      ⋯
+    </button>
+
+    <!-- コンテキストメニュー -->
+    <div id="menu1"
+         class="absolute top-12 right-3 bg-black text-white rounded-xl shadow-lg min-w-[180px] py-2 hidden z-50 flex-col space-y-1 text-sm">
+      <div class="px-4 py-2 hover:bg-gray-800 cursor-pointer">View credentials</div>
+      <div class="px-4 py-2 hover:bg-gray-800 cursor-pointer">Replace</div>
+      <div class="px-4 py-2 hover:bg-gray-800 cursor-pointer">Detach database</div>
     </div>
-    <div class="card-title">Beep <span class="badge">Cache</span></div>
-    <div class="table">
-      <div class="table-row"><span>Type</span><span>KV Store</span></div>
-      <div class="table-row"><span>Size</span><span>1 GB</span></div>
+
+    <!-- 内容 -->
+    <div class="font-semibold text-lg mb-2">
+      Beep
+      <span class="ml-2 text-purple-600 bg-purple-100 text-xs font-medium px-2 py-0.5 rounded-full">Cache</span>
+    </div>
+
+    <div class="space-y-1 text-sm text-gray-700">
+      <div class="flex justify-between">
+        <span>Type</span>
+        <span>KV Store</span>
+      </div>
+      <div class="flex justify-between">
+        <span>Size</span>
+        <span>1 GB</span>
+      </div>
     </div>
   </div>
 
   <script>
     function toggleMenu() {
-      const menu = document.getElementById('menu1');
-      menu.classList.toggle('show');
+      const menu = document.getElementById("menu1");
+      menu.classList.toggle("hidden");
     }
 
-    // 外クリックでメニュー閉じる
-    document.addEventListener('click', function(e) {
-      const menu = document.getElementById('menu1');
-      const button = document.querySelector('.menu-button');
+    // カード外クリックで閉じる
+    document.addEventListener("click", function (e) {
+      const menu = document.getElementById("menu1");
+      const button = document.querySelector("button");
       if (!menu.contains(e.target) && !button.contains(e.target)) {
-        menu.classList.remove('show');
+        menu.classList.add("hidden");
       }
     });
   </script>
-
 </body>
 </html>
