@@ -3,21 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>3D UI with Tailwind</title>
+  <title>3D UI with Tailwind - 電気代</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script> <!-- カレンダーライブラリ -->
 </head>
 <body class="bg-gray-100 min-h-screen flex items-start justify-center p-10 relative">
 
-  <!-- ホームページカード -->
-  <div class="relative w-[320px] bg-white rounded-2xl shadow-xl border-2 border-indigo-300 transform -rotate-2 z-10 p-5">
+  <!-- メインカード -->
+  <div class="relative w-[500px] bg-white rounded-2xl shadow-xl border-2 border-indigo-300 z-10 p-5">
 
-    <!-- メニューボタン -->
+    <!-- メニュー -->
     <button class="absolute top-3 right-3 text-xl" onclick="toggleMenu()">
       ⋯
     </button>
-
-    <!-- コンテキストメニュー -->
     <div id="menu1"
          class="absolute top-12 right-3 bg-black text-white rounded-xl shadow-lg min-w-[180px] py-2 hidden z-50 flex-col space-y-1 text-sm">
       <div class="px-4 py-2 hover:bg-gray-800 cursor-pointer">View credentials</div>
@@ -25,39 +22,41 @@
       <div class="px-4 py-2 hover:bg-gray-800 cursor-pointer">Detach database</div>
     </div>
 
-    <!-- 内容 -->
-    <div class="font-semibold text-lg mb-2">
-      ホームページ
-      <span class="ml-2 text-purple-600 bg-purple-100 text-xs font-medium px-2 py-0.5 rounded-full">Cache</span>
+    <!-- タイトル -->
+    <div class="font-semibold text-lg mb-4">光熱費：電気代</div>
+
+    <!-- 入力フォーム -->
+    <div class="grid grid-cols-3 gap-3 mb-4 text-sm">
+      <input type="month" id="month" class="border rounded-md px-2 py-1" placeholder="年月" />
+      <input type="number" id="amount" class="border rounded-md px-2 py-1" placeholder="金額" />
+      <input type="date" id="inputDate" class="border rounded-md px-2 py-1" placeholder="入力日" />
     </div>
+    <button onclick="addElectricityRow()" class="mb-4 px-4 py-1 bg-indigo-500 text-white rounded hover:bg-indigo-600 transition">追加</button>
 
     <!-- 表 -->
-    <table class="w-full text-sm text-gray-700">
-      <tr class="border-b">
-        <td class="py-2">光熱費</td>
-        <td class="py-2 text-right">
-          <button class="text-blue-500 hover:underline" onclick="addCard('光熱費')">詳細</button>
-        </td>
-      </tr>
-      <tr class="border-b">
-        <td class="py-2">料理</td>
-        <td class="py-2 text-right">
-          <button class="text-blue-500 hover:underline" onclick="addCard('料理')">詳細</button>
-        </td>
-      </tr>
+    <table class="w-full text-sm text-gray-700 border-t border-gray-300">
+      <thead>
+        <tr class="bg-gray-100">
+          <th class="py-2">年月</th>
+          <th class="py-2">金額 (円)</th>
+          <th class="py-2">入力日</th>
+        </tr>
+      </thead>
+      <tbody id="electricity-table">
+        <!-- データがここに入る -->
+      </tbody>
     </table>
+
   </div>
 
-  <!-- 新しいカード用 -->
-  <div id="new-cards" class="flex flex-wrap gap-5 mt-10"></div>
-
+  <!-- スクリプト -->
   <script>
     function toggleMenu() {
       const menu = document.getElementById("menu1");
       menu.classList.toggle("hidden");
     }
 
-    // カード外クリックで閉じる
+    // メニュー閉じる処理
     document.addEventListener("click", function (e) {
       const menu = document.getElementById("menu1");
       const button = document.querySelector("button");
@@ -66,45 +65,28 @@
       }
     });
 
-    // 新しいカードを追加
-    function addCard(title) {
-      const newCard = document.createElement("div");
-      newCard.classList.add("relative", "w-[320px]", "bg-white", "rounded-2xl", "shadow-xl", "border-2", "border-indigo-300", "transform", "-rotate-2", "z-10", "p-5");
+    // 表に行を追加
+    function addElectricityRow() {
+      const month = document.getElementById("month").value;
+      const amount = document.getElementById("amount").value;
+      const inputDate = document.getElementById("inputDate").value;
+      const tableBody = document.getElementById("electricity-table");
 
-      // 内容
-      newCard.innerHTML = `
-        <div class="font-semibold text-lg mb-2">${title} 詳細</div>
-        <div class="space-y-1 text-sm text-gray-700">
-          <div class="flex justify-between">
-            <span>データ入力</span>
-            <input type="text" id="data-input" class="form-input mt-1 w-full py-2 px-3 border border-gray-300 rounded-md" placeholder="データを入力" />
-          </div>
-          <div class="flex justify-between">
-            <span>ログ出力</span>
-            <button class="text-blue-500 hover:underline" onclick="logData()">ログ表示</button>
-          </div>
-        </div>
-        <!-- 閉じるボタン -->
-        <button class="absolute top-3 right-3 text-xl text-red-500" onclick="removeCard(this)">×</button>
-      `;
+      if (month && amount && inputDate) {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td class="py-2 text-center">${month}</td>
+          <td class="py-2 text-center">${parseInt(amount).toLocaleString()}</td>
+          <td class="py-2 text-center">${inputDate}</td>
+        `;
+        tableBody.appendChild(row);
 
-      // 新しいカードを追加
-      document.getElementById("new-cards").appendChild(newCard);
-    }
-
-    // カードを削除する関数
-    function removeCard(button) {
-      const card = button.closest('div');
-      card.remove();
-    }
-
-    // ログ出力
-    function logData() {
-      const inputData = document.getElementById("data-input").value;
-      if(inputData) {
-        alert("ログ: " + inputData);
+        // 入力クリア
+        document.getElementById("month").value = "";
+        document.getElementById("amount").value = "";
+        document.getElementById("inputDate").value = "";
       } else {
-        alert("データが入力されていません");
+        alert("すべての項目を入力してください");
       }
     }
   </script>
