@@ -23,8 +23,8 @@
     .gray-hatch-bg {
       background-image: repeating-linear-gradient(
         45deg,
-        #e5e7eb 0,
-        #e5e7eb 2px,
+        #d1d5db 0,
+        #d1d5db 2px,
         transparent 2px,
         transparent 6px
       );
@@ -42,11 +42,11 @@
 </head>
 <body class="bg-gray-100 min-h-screen flex items-start justify-center p-10 relative">
 
-  <!-- Homepage Card -->
-  <div class="relative w-[320px] bg-white rounded-2xl shadow-xl border-2 border-indigo-300 transform -rotate-2 z-20 p-5" id="homepage-card">
+  <!-- Gray hatch background (behind homepage) -->
+  <div id="gray-hatch" class="absolute top-[38px] left-[38px] w-[320px] h-[225px] gray-hatch-bg border-thin border-gray-400 rounded-2xl shadow-inner transform -rotate-2 z-[-10] hidden"></div>
 
-    <!-- Gray hatch (behind homepage when shown) -->
-    <div id="gray-hatch" class="absolute top-4 left-4 w-full h-full gray-hatch-bg border-thin border-gray-300 rounded-2xl shadow-inner transform -rotate-2 z-[-1] hidden"></div>
+  <!-- Homepage Card -->
+  <div id="homepage-card" class="relative w-[320px] bg-white rounded-2xl shadow-xl border-2 border-indigo-300 transform -rotate-2 z-10 p-5">
 
     <!-- Menu -->
     <button class="absolute top-3 right-3 text-xl" onclick="toggleMenu()">⋯</button>
@@ -66,6 +66,12 @@
         <td class="py-2">Utilities</td>
         <td class="py-2 text-right">
           <button class="text-blue-500 hover:underline" onclick="addCard()">Details</button>
+        </td>
+      </tr>
+      <tr class="border-b">
+        <td class="py-2">Cooking</td>
+        <td class="py-2 text-right">
+          <button class="text-blue-500 hover:underline">Details</button>
         </td>
       </tr>
     </table>
