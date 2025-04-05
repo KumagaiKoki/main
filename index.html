@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Electricity Card with Hatch</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Electricity UI</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body {
@@ -20,11 +20,22 @@
       );
     }
 
+    .gray-hatch-bg {
+      background-image: repeating-linear-gradient(
+        45deg,
+        #e5e7eb 0,
+        #e5e7eb 2px,
+        transparent 2px,
+        transparent 6px
+      );
+    }
+
     .border-thin {
       border-width: 1.5px;
     }
 
-    table td, table th {
+    table td,
+    table th {
       border: 1px solid #e5e7eb;
     }
   </style>
@@ -32,97 +43,40 @@
 <body class="bg-gray-100 min-h-screen flex items-start justify-center p-10 relative">
 
   <!-- Homepage Card -->
-  <div class="relative w-[320px] bg-white rounded-2xl shadow-xl border-2 border-indigo-300 transform -rotate-2 z-10 p-5">
+  <div class="relative w-[320px] bg-white rounded-2xl shadow-xl border-2 border-indigo-300 transform -rotate-2 z-20 p-5" id="homepage-card">
 
-    <!-- Menu Button -->
+    <!-- Gray hatch (behind homepage when shown) -->
+    <div id="gray-hatch" class="absolute top-4 left-4 w-full h-full gray-hatch-bg border-thin border-gray-300 rounded-2xl shadow-inner transform -rotate-2 z-[-1] hidden"></div>
+
+    <!-- Menu -->
     <button class="absolute top-3 right-3 text-xl" onclick="toggleMenu()">⋯</button>
-    <div id="menu1"
-         class="absolute top-12 right-3 bg-black text-white rounded-xl shadow-lg min-w-[180px] py-2 hidden z-50 flex-col space-y-1 text-sm">
+    <div id="menu1" class="absolute top-12 right-3 bg-black text-white rounded-xl shadow-lg min-w-[180px] py-2 hidden z-50 flex-col space-y-1 text-sm">
       <div class="px-4 py-2 hover:bg-gray-800 cursor-pointer">View credentials</div>
       <div class="px-4 py-2 hover:bg-gray-800 cursor-pointer">Replace</div>
       <div class="px-4 py-2 hover:bg-gray-800 cursor-pointer">Detach database</div>
     </div>
 
-    <!-- Title -->
     <div class="font-semibold text-lg mb-2">
       Homepage
       <span class="ml-2 text-purple-600 bg-purple-100 text-xs font-medium px-2 py-0.5 rounded-full">Cache</span>
     </div>
 
-    <!-- Table -->
     <table class="w-full text-sm text-gray-700">
       <tr class="border-b">
         <td class="py-2">Utilities</td>
         <td class="py-2 text-right">
-          <button class="text-blue-500 hover:underline" onclick="addCard('utilities')">Details</button>
-        </td>
-      </tr>
-      <tr class="border-b">
-        <td class="py-2">Cooking</td>
-        <td class="py-2 text-right">
-          <button class="text-blue-500 hover:underline">Details</button>
+          <button class="text-blue-500 hover:underline" onclick="addCard()">Details</button>
         </td>
       </tr>
     </table>
   </div>
 
   <!-- Card Area -->
-  <div class="relative ml-10 mt-10 w-[480px]">
-
-    <!-- Hatch background (underneath and slightly offset) -->
-    <div class="absolute top-2 left-2 w-full h-full hatch-bg border-thin border-orange-300 rounded-2xl shadow-inner transform -rotate-2 z-0"></div>
-
-    <!-- Electricity Card -->
-    <div id="card-utilities" class="card-container relative bg-white w-full rounded-2xl shadow-xl border border-gray-200 p-5 text-sm transform -rotate-2 z-10">
-
-      <div class="flex items-center justify-between mb-4">
-        <div class="text-base font-semibold">Electricity
-          <span class="ml-2 px-2 py-0.5 text-xs rounded-full bg-purple-100 text-purple-600">Energy</span>
-        </div>
-        <button onclick="removeCard(this)" class="text-red-500 text-xl">×</button>
-      </div>
-
-      <!-- Table -->
-      <div class="overflow-x-auto">
-        <table class="w-full text-gray-700 border-collapse">
-          <thead class="bg-gray-50 text-gray-600 font-medium">
-            <tr>
-              <th class="py-2 px-3 text-left">📅 Month</th>
-              <th class="py-2 px-3 text-left">💴 Amount</th>
-              <th class="py-2 px-3 text-left">🕘 Entry Date</th>
-            </tr>
-          </thead>
-          <tbody class="bg-white">
-            <tr>
-              <td class="py-2 px-3">2025/3</td>
-              <td class="py-2 px-3">¥8,500</td>
-              <td class="py-2 px-3">2025/3/12</td>
-            </tr>
-            <tr>
-              <td class="py-2 px-3">2025/3</td>
-              <td class="py-2 px-3">¥8,500</td>
-              <td class="py-2 px-3">2025/3/12</td>
-            </tr>
-            <tr>
-              <td class="py-2 px-3">2025/3</td>
-              <td class="py-2 px-3">¥8,500</td>
-              <td class="py-2 px-3">2025/3/12</td>
-            </tr>
-            <tr>
-              <td class="py-2 px-3">2025/3</td>
-              <td class="py-2 px-3">¥8,500</td>
-              <td class="py-2 px-3">2025/3/12</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
+  <div id="card-area" class="relative ml-10 mt-10 w-[480px]"></div>
 
   <script>
     function toggleMenu() {
-      const menu = document.getElementById("menu1");
-      menu.classList.toggle("hidden");
+      document.getElementById("menu1").classList.toggle("hidden");
     }
 
     document.addEventListener("click", function (e) {
@@ -133,15 +87,81 @@
       }
     });
 
-    function removeCard(btn) {
-      const card = btn.closest(".card-container");
-      if (card) card.remove();
+    function addCard() {
+      // Prevent multiple cards
+      if (document.getElementById("card-wrapper")) return;
+
+      // Show gray hatch under homepage
+      document.getElementById("gray-hatch").classList.remove("hidden");
+
+      const area = document.getElementById("card-area");
+
+      const wrapper = document.createElement("div");
+      wrapper.id = "card-wrapper";
+      wrapper.className = "relative w-full";
+
+      // Orange hatch background
+      const hatch = document.createElement("div");
+      hatch.className =
+        "absolute top-2 right-2 w-full h-full hatch-bg border-thin border-orange-300 rounded-2xl shadow-inner transform -rotate-2 z-0";
+      wrapper.appendChild(hatch);
+
+      // Electricity card
+      const card = document.createElement("div");
+      card.className =
+        "card-container relative bg-white w-full rounded-2xl shadow-xl border border-gray-200 p-5 text-sm transform -rotate-2 z-10";
+
+      card.innerHTML = `
+        <div class="flex items-center justify-between mb-4">
+          <div class="text-base font-semibold">Electricity
+            <span class="ml-2 px-2 py-0.5 text-xs rounded-full bg-purple-100 text-purple-600">Energy</span>
+          </div>
+          <button onclick="removeCard()" class="text-red-500 text-xl">×</button>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-gray-700 border-collapse">
+            <thead class="bg-gray-50 text-gray-600 font-medium">
+              <tr>
+                <th class="py-2 px-3 text-left">📅 Month</th>
+                <th class="py-2 px-3 text-left">💴 Amount</th>
+                <th class="py-2 px-3 text-left">🕘 Entry Date</th>
+              </tr>
+            </thead>
+            <tbody class="bg-white">
+              <tr>
+                <td class="py-2 px-3">2025/3</td>
+                <td class="py-2 px-3">¥8,500</td>
+                <td class="py-2 px-3">2025/3/12</td>
+              </tr>
+              <tr>
+                <td class="py-2 px-3">2025/3</td>
+                <td class="py-2 px-3">¥8,500</td>
+                <td class="py-2 px-3">2025/3/12</td>
+              </tr>
+              <tr>
+                <td class="py-2 px-3">2025/3</td>
+                <td class="py-2 px-3">¥8,500</td>
+                <td class="py-2 px-3">2025/3/12</td>
+              </tr>
+              <tr>
+                <td class="py-2 px-3">2025/3</td>
+                <td class="py-2 px-3">¥8,500</td>
+                <td class="py-2 px-3">2025/3/12</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      `;
+      wrapper.appendChild(card);
+      area.appendChild(wrapper);
     }
 
-    function addCard(title) {
-      const existing = document.getElementById(`card-${title}`);
-      if (existing) return;
-      location.reload(); // for demo simplicity
+    function removeCard() {
+      const wrapper = document.getElementById("card-wrapper");
+      if (wrapper) wrapper.remove();
+
+      // Also hide the gray hatch
+      document.getElementById("gray-hatch").classList.add("hidden");
     }
   </script>
 </body>
