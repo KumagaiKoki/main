@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Electricity UI</title>
+  <title>EElectricity UI</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body {
@@ -40,45 +40,54 @@
     }
   </style>
 </head>
-<body class="bg-gray-100 min-h-screen flex items-start justify-center p-10 relative">
+<body class="bg-gray-100 min-h-screen flex items-start justify-center p-10 gap-10">
 
-  <!-- Gray hatch background (behind homepage) -->
-  <div id="gray-hatch" class="absolute top-[38px] left-[38px] w-[320px] h-[225px] gray-hatch-bg border-thin border-gray-400 rounded-2xl shadow-inner transform -rotate-2 z-[-10] hidden"></div>
+  <!-- Homepage + Gray Hatch -->
+  <div id="homepage-wrapper" class="relative w-[320px] h-auto">
 
-  <!-- Homepage Card -->
-  <div id="homepage-card" class="relative w-[320px] bg-white rounded-2xl shadow-xl border-2 border-indigo-300 transform -rotate-2 z-10 p-5">
-
-    <!-- Menu -->
-    <button class="absolute top-3 right-3 text-xl" onclick="toggleMenu()">⋯</button>
-    <div id="menu1" class="absolute top-12 right-3 bg-black text-white rounded-xl shadow-lg min-w-[180px] py-2 hidden z-50 flex-col space-y-1 text-sm">
-      <div class="px-4 py-2 hover:bg-gray-800 cursor-pointer">View credentials</div>
-      <div class="px-4 py-2 hover:bg-gray-800 cursor-pointer">Replace</div>
-      <div class="px-4 py-2 hover:bg-gray-800 cursor-pointer">Detach database</div>
+    <!-- Gray Hatch -->
+    <div id="gray-hatch"
+         class="absolute top-[6px] left-[6px] w-full h-full gray-hatch-bg border-thin border-gray-400 rounded-2xl shadow-inner transform -rotate-2 z-0 hidden">
     </div>
 
-    <div class="font-semibold text-lg mb-2">
-      Homepage
-      <span class="ml-2 text-purple-600 bg-purple-100 text-xs font-medium px-2 py-0.5 rounded-full">Cache</span>
-    </div>
+    <!-- Homepage Card -->
+    <div id="homepage-card"
+         class="relative bg-white w-full rounded-2xl shadow-xl border-2 border-indigo-300 transform -rotate-2 z-10 p-5">
 
-    <table class="w-full text-sm text-gray-700">
-      <tr class="border-b">
-        <td class="py-2">Utilities</td>
-        <td class="py-2 text-right">
-          <button class="text-blue-500 hover:underline" onclick="addCard()">Details</button>
-        </td>
-      </tr>
-      <tr class="border-b">
-        <td class="py-2">Cooking</td>
-        <td class="py-2 text-right">
-          <button class="text-blue-500 hover:underline">Details</button>
-        </td>
-      </tr>
-    </table>
+      <!-- Menu Button -->
+      <button class="absolute top-3 right-3 text-xl" onclick="toggleMenu()">⋯</button>
+      <div id="menu1"
+           class="absolute top-12 right-3 bg-black text-white rounded-xl shadow-lg min-w-[180px] py-2 hidden z-50 flex-col space-y-1 text-sm">
+        <div class="px-4 py-2 hover:bg-gray-800 cursor-pointer">View credentials</div>
+        <div class="px-4 py-2 hover:bg-gray-800 cursor-pointer">Replace</div>
+        <div class="px-4 py-2 hover:bg-gray-800 cursor-pointer">Detach database</div>
+      </div>
+
+      <div class="font-semibold text-lg mb-2">
+        Homepage
+        <span class="ml-2 text-purple-600 bg-purple-100 text-xs font-medium px-2 py-0.5 rounded-full">Cache</span>
+      </div>
+
+      <!-- Table -->
+      <table class="w-full text-sm text-gray-700">
+        <tr class="border-b">
+          <td class="py-2">Utilities</td>
+          <td class="py-2 text-right">
+            <button class="text-blue-500 hover:underline" onclick="addCard()">Details</button>
+          </td>
+        </tr>
+        <tr class="border-b">
+          <td class="py-2">Cooking</td>
+          <td class="py-2 text-right">
+            <button class="text-blue-500 hover:underline">Details</button>
+          </td>
+        </tr>
+      </table>
+    </div>
   </div>
 
-  <!-- Card Area -->
-  <div id="card-area" class="relative ml-10 mt-10 w-[480px]"></div>
+  <!-- Electricity Card Area -->
+  <div id="card-area" class="relative w-[480px]"></div>
 
   <script>
     function toggleMenu() {
@@ -94,7 +103,6 @@
     });
 
     function addCard() {
-      // Prevent multiple cards
       if (document.getElementById("card-wrapper")) return;
 
       // Show gray hatch under homepage
@@ -165,8 +173,6 @@
     function removeCard() {
       const wrapper = document.getElementById("card-wrapper");
       if (wrapper) wrapper.remove();
-
-      // Also hide the gray hatch
       document.getElementById("gray-hatch").classList.add("hidden");
     }
   </script>
