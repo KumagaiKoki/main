@@ -18,6 +18,7 @@
         transparent 2px,
         transparent 6px
       );
+      border: 1.5px solid #fdba74;
     }
 
     .gray-hatch-bg {
@@ -28,21 +29,6 @@
         transparent 2px,
         transparent 6px
       );
-    }
-
-    .border-thin {
-      border-width: 1.5px;
-    }
-
-    .fade-in {
-      opacity: 0;
-      transform: translateY(10px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
-    }
-
-    .fade-in.show {
-      opacity: 1;
-      transform: translateY(0);
     }
 
     table td,
@@ -58,7 +44,7 @@
 
     <!-- Gray Hatch -->
     <div id="gray-hatch"
-         class="absolute top-[12px] left-[-12px] w-full h-full gray-hatch-bg border-thin border-gray-400 rounded-2xl shadow-inner transform -rotate-2 z-0 hidden fade-in">
+         class="absolute top-[12px] left-[-12px] w-full h-full gray-hatch-bg border-[1.5px] border-gray-600 rounded-2xl shadow-inner transform -rotate-2 z-0 hidden">
     </div>
 
     <!-- Homepage Card -->
@@ -83,7 +69,7 @@
         <tr class="border-b">
           <td class="py-2">Utilities</td>
           <td class="py-2 text-right">
-            <button class="text-blue-500 hover:underline" onclick="addCardAnimated()">Details</button>
+            <button class="text-blue-500 hover:underline" onclick="addCard()">Details</button>
           </td>
         </tr>
         <tr class="border-b">
@@ -112,79 +98,71 @@
       }
     });
 
-    function addCardAnimated() {
+    function addCard() {
       if (document.getElementById("card-wrapper")) return;
 
       const grayHatch = document.getElementById("gray-hatch");
       const area = document.getElementById("card-area");
 
       grayHatch.classList.remove("hidden");
-      requestAnimationFrame(() => grayHatch.classList.add("show"));
 
-      setTimeout(() => {
-        const wrapper = document.createElement("div");
-        wrapper.id = "card-wrapper";
-        wrapper.className = "relative w-full";
+      const wrapper = document.createElement("div");
+      wrapper.id = "card-wrapper";
+      wrapper.className = "relative w-full";
 
-        const hatch = document.createElement("div");
-        hatch.id = "orange-hatch";
-        hatch.className =
-          "absolute top-[12px] left-[-12px] w-full h-full hatch-bg rounded-2xl shadow-inner transform -rotate-2 z-0 fade-in";
-        wrapper.appendChild(hatch);
-        area.appendChild(wrapper);
+      const hatch = document.createElement("div");
+      hatch.id = "orange-hatch";
+      hatch.className =
+        "absolute top-[12px] left-[-12px] w-full h-full hatch-bg rounded-2xl shadow-inner transform -rotate-2 z-0";
+      wrapper.appendChild(hatch);
+      area.appendChild(wrapper);
 
-        requestAnimationFrame(() => hatch.classList.add("show"));
+      const card = document.createElement("div");
+      card.className =
+        "card-container relative bg-white w-full rounded-2xl shadow-xl border-2 border-gray-600 p-5 text-sm transform -rotate-2 z-10";
 
-        setTimeout(() => {
-          const card = document.createElement("div");
-          card.className =
-            "card-container relative bg-white w-full rounded-2xl shadow-xl border-2 border-gray-600 p-5 text-sm transform -rotate-2 z-10 fade-in";
-
-          card.innerHTML = `
-            <div class="flex items-center justify-between mb-4">
-              <div class="text-base font-semibold">Electricity
-                <span class="ml-2 px-2 py-0.5 text-xs rounded-full bg-purple-100 text-purple-600">Energy</span>
-              </div>
-              <button onclick="removeCard()" class="text-red-500 text-xl">×</button>
-            </div>
-            <div class="overflow-x-auto">
-              <table class="w-full text-gray-700 border-collapse">
-                <thead class="bg-gray-50 text-gray-600 font-medium">
-                  <tr>
-                    <th class="py-2 px-3 text-left">📅 Month</th>
-                    <th class="py-2 px-3 text-left">💴 Amount</th>
-                    <th class="py-2 px-3 text-left">🕘 Entry Date</th>
-                  </tr>
-                </thead>
-                <tbody class="bg-white">
-                  <tr>
-                    <td class="py-2 px-3">2025/3</td>
-                    <td class="py-2 px-3">¥8,500</td>
-                    <td class="py-2 px-3">2025/3/12</td>
-                  </tr>
-                  <tr>
-                    <td class="py-2 px-3">2025/3</td>
-                    <td class="py-2 px-3">¥8,500</td>
-                    <td class="py-2 px-3">2025/3/12</td>
-                  </tr>
-                  <tr>
-                    <td class="py-2 px-3">2025/3</td>
-                    <td class="py-2 px-3">¥8,500</td>
-                    <td class="py-2 px-3">2025/3/12</td>
-                  </tr>
-                  <tr>
-                    <td class="py-2 px-3">2025/3</td>
-                    <td class="py-2 px-3">¥8,500</td>
-                    <td class="py-2 px-3">2025/3/12</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          `;
-          wrapper.appendChild(card);
-          requestAnimationFrame(() => card.classList.add("show"));
-        }, 400);
-      }, 300);
+      card.innerHTML = `
+        <div class="flex items-center justify-between mb-4">
+          <div class="text-base font-semibold">Electricity
+            <span class="ml-2 px-2 py-0.5 text-xs rounded-full bg-purple-100 text-purple-600">Energy</span>
+          </div>
+          <button onclick="removeCard()" class="text-red-500 text-xl">×</button>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-gray-700 border-collapse">
+            <thead class="bg-gray-50 text-gray-600 font-medium">
+              <tr>
+                <th class="py-2 px-3 text-left">📅 Month</th>
+                <th class="py-2 px-3 text-left">💴 Amount</th>
+                <th class="py-2 px-3 text-left">🕘 Entry Date</th>
+              </tr>
+            </thead>
+            <tbody class="bg-white">
+              <tr>
+                <td class="py-2 px-3">2025/3</td>
+                <td class="py-2 px-3">¥8,500</td>
+                <td class="py-2 px-3">2025/3/12</td>
+              </tr>
+              <tr>
+                <td class="py-2 px-3">2025/3</td>
+                <td class="py-2 px-3">¥8,500</td>
+                <td class="py-2 px-3">2025/3/12</td>
+              </tr>
+              <tr>
+                <td class="py-2 px-3">2025/3</td>
+                <td class="py-2 px-3">¥8,500</td>
+                <td class="py-2 px-3">2025/3/12</td>
+              </tr>
+              <tr>
+                <td class="py-2 px-3">2025/3</td>
+                <td class="py-2 px-3">¥8,500</td>
+                <td class="py-2 px-3">2025/3/12</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      `;
+      wrapper.appendChild(card);
     }
 
     function removeCard() {
