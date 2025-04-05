@@ -5,6 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>シンプルWebページ</title>
   <link rel="stylesheet" href="style.css" />
+  <style>
+    .rounded-box {
+      width: 300px;
+      height: 150px;
+      background-color: #3b6fc4; /* 青系カラー */
+      border-radius: 20px;        /* 角丸 */
+      border: 1px solid #000;     /* 黒い枠線 */
+      margin: 40px auto;          /* 中央寄せ */
+    }
+  </style>
 </head>
 <body>
   <header>
@@ -24,16 +34,10 @@
       <p>シンプルで美しいWeb体験を。</p>
       <a href="#" class="btn">詳しく見る</a>
     </section>
-    <title>角丸ボックス</title>
-  <style>
-    .rounded-box {
-      width: 300px;
-      height: 150px;
-      background-color: #3b6fc4; /* 青系カラー */
-      border-radius: 20px;        /* 角丸 */
-      border: 1px solid #000;     /* 黒い枠線 */
-    }
-  </style>
+
+    <!-- 👇 ここが角丸ボックス -->
+    <div class="rounded-box"></div>
+
   </main>
 
   <footer>
