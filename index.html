@@ -58,6 +58,7 @@
 </head>
 <body class="bg-gray-100 min-h-screen flex items-start justify-center p-10 gap-6">
 
+  <!-- ホームカード -->
   <div id="homepage-wrapper" class="relative w-[320px] h-auto">
     <div id="gray-hatch"
          class="absolute top-[20px] left-[-12px] w-full h-full gray-hatch-bg rounded-2xl shadow-inner transform -rotate-2 z-0 hidden"></div>
@@ -94,6 +95,7 @@
     </div>
   </div>
 
+  <!-- 電気代カード -->
   <div id="card-area" class="relative w-full flex justify-center mt-0"></div>
 
   <script>
@@ -138,7 +140,7 @@
         <!-- テーブル -->
         <div class="relative mb-6">
           <div class="absolute top-[20px] left-0 w-full h-full hatch-bg rounded-2xl shadow-inner z-0"></div>
-          <div class="relative bg-white rounded-2xl border border-gray-400 p-4 z-10 translate-x-[12px] -translate-y-[20px]">
+          <div class="relative bg-white rounded-2xl border border-gray-400 p-4 z-10 translate-x-[12px] -translate-y-[30px]">
             <div class="text-sm font-semibold mb-2">テーブル</div>
             <div class="overflow-x-auto max-h-[240px] overflow-y-auto">
               <table class="text-sm text-gray-700">
@@ -164,7 +166,7 @@
         <!-- グラフ -->
         <div class="relative mt-[8px]">
           <div class="absolute top-[20px] left-0 w-full h-full hatch-bg rounded-2xl shadow-inner z-0"></div>
-          <div class="relative bg-white rounded-2xl border border-gray-400 p-4 z-10 translate-x-[12px] -translate-y-[20px]">
+          <div class="relative bg-white rounded-2xl border border-gray-400 p-4 z-10 translate-x-[12px] -translate-y-[30px]">
             <div class="text-sm font-semibold mb-2">グラフ</div>
             <div id="graph-legend" class="flex flex-wrap gap-3 text-xs font-semibold mb-2"></div>
             <canvas id="electricityChart" width="400" height="250"></canvas>
