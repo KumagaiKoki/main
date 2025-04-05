@@ -62,8 +62,7 @@
   <div id="homepage-wrapper" class="relative w-[320px] h-auto">
     <!-- グレーのハッチ背景 -->
     <div id="gray-hatch"
-         class="absolute top-[12px] left-[-12px] w-full h-full gray-hatch-bg rounded-2xl shadow-inner transform -rotate-2 z-0 hidden">
-    </div>
+         class="absolute top-[12px] left-[-12px] w-full h-full gray-hatch-bg rounded-2xl shadow-inner transform -rotate-2 z-0 hidden"></div>
 
     <div id="homepage-card"
          class="relative bg-white w-full rounded-2xl shadow-xl border-2 border-gray-600 transform -rotate-2 z-10 p-5">
@@ -100,7 +99,11 @@
       const area = document.getElementById("card-area");
       const wrapper = document.createElement("div");
       wrapper.id = "card-wrapper";
-      wrapper.className = "relative max-w-[480px]";
+      wrapper.className = "relative max-w-[480px] mx-auto";
+
+      const hatch = document.createElement("div");
+      hatch.className = "absolute top-[20px] left-1/2 -translate-x-1/2 w-full h-full hatch-bg rounded-2xl shadow-inner z-0";
+      wrapper.appendChild(hatch);
 
       const card = document.createElement("div");
       card.className = "relative bg-white w-full rounded-2xl shadow-xl border-2 border-gray-600 p-5 text-sm transform -rotate-2 z-10";
@@ -113,7 +116,7 @@
 
         <!-- テーブル -->
         <div class="relative mb-6">
-          <div class="absolute top-[12px] left-[-12px] w-full h-full hatch-bg rounded-2xl shadow-inner z-0"></div>
+          <div class="absolute top-[20px] left-1/2 -translate-x-1/2 w-full h-full hatch-bg rounded-2xl shadow-inner z-0"></div>
           <div class="relative bg-white rounded-2xl border-[2.5px] border-gray-500 p-4 z-10">
             <div class="text-sm font-semibold mb-2">テーブル</div>
             <div class="overflow-x-auto max-h-[240px] overflow-y-auto">
@@ -133,7 +136,7 @@
 
         <!-- グラフ -->
         <div class="relative mt-[3px]">
-          <div class="absolute top-[15px] left-[-12px] w-full h-full hatch-bg rounded-2xl shadow-inner z-0"></div>
+          <div class="absolute top-[20px] left-1/2 -translate-x-1/2 w-full h-full hatch-bg rounded-2xl shadow-inner z-0"></div>
           <div class="relative bg-white rounded-2xl border-[2.5px] border-gray-500 p-4 z-10">
             <div class="text-sm font-semibold mb-2">グラフ</div>
             <div id="graph-legend" class="flex flex-wrap gap-3 text-xs font-semibold mb-2"></div>
