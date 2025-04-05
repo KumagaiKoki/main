@@ -26,21 +26,29 @@
 
     <!-- 内容 -->
     <div class="font-semibold text-lg mb-2">
-      Beep
+      ホームページ
       <span class="ml-2 text-purple-600 bg-purple-100 text-xs font-medium px-2 py-0.5 rounded-full">Cache</span>
     </div>
 
-    <div class="space-y-1 text-sm text-gray-700">
-      <div class="flex justify-between">
-        <span>Type</span>
-        <span>KV Store</span>
-      </div>
-      <div class="flex justify-between">
-        <span>Size</span>
-        <span>1 GB</span>
-      </div>
-    </div>
+    <!-- 表 -->
+    <table class="w-full text-sm text-gray-700">
+      <tr class="border-b">
+        <td class="py-2">光熱費</td>
+        <td class="py-2 text-right">
+          <button class="text-blue-500 hover:underline" onclick="addCard('光熱費')">詳細</button>
+        </td>
+      </tr>
+      <tr class="border-b">
+        <td class="py-2">料理</td>
+        <td class="py-2 text-right">
+          <button class="text-blue-500 hover:underline" onclick="addCard('料理')">詳細</button>
+        </td>
+      </tr>
+    </table>
   </div>
+
+  <!-- 新しいカード用 -->
+  <div id="new-cards" class="flex flex-wrap gap-5 mt-10"></div>
 
   <script>
     function toggleMenu() {
@@ -56,6 +64,30 @@
         menu.classList.add("hidden");
       }
     });
+
+    // 新しいカードを追加
+    function addCard(title) {
+      const newCard = document.createElement("div");
+      newCard.classList.add("relative", "w-[320px]", "bg-white", "rounded-2xl", "shadow-xl", "border-2", "border-indigo-300", "transform", "-rotate-2", "z-10", "p-5");
+
+      // 内容
+      newCard.innerHTML = `
+        <div class="font-semibold text-lg mb-2">${title} 詳細</div>
+        <div class="space-y-1 text-sm text-gray-700">
+          <div class="flex justify-between">
+            <span>タイプ</span>
+            <span>情報</span>
+          </div>
+          <div class="flex justify-between">
+            <span>サイズ</span>
+            <span>詳細</span>
+          </div>
+        </div>
+      `;
+
+      // 新しいカードを追加
+      document.getElementById("new-cards").appendChild(newCard);
+    }
   </script>
 </body>
 </html>
