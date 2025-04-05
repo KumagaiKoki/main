@@ -40,6 +40,13 @@
     table th {
       border: 1px solid #e5e7eb;
     }
+
+    select, input[type="text"] {
+      border: 1px solid #ccc;
+      border-radius: 0.25rem;
+      padding: 0.25rem 0.5rem;
+      font-size: 0.875rem;
+    }
   </style>
 </head>
 <body class="bg-gray-100 min-h-screen flex items-start justify-center p-10 gap-10">
@@ -135,36 +142,60 @@
         </div>
         <div class="overflow-x-auto">
           <table class="w-full text-gray-700 border-collapse">
-            <thead class="bg-gray-50 text-gray-600 font-medium">
-              <tr>
-                <th class="py-2 px-3 text-left">📅 年月</th>
-                <th class="py-2 px-3 text-left">💴 金額</th>
-                <th class="py-2 px-3 text-left">🕘 入力日</th>
-              </tr>
-            </thead>
-            <tbody class="bg-white">
-              <tr>
-                <td class="py-2 px-3">2025/3</td>
-                <td class="py-2 px-3">¥8,500</td>
-                <td class="py-2 px-3">2025/3/12</td>
-              </tr>
-              <tr>
-                <td class="py-2 px-3">2025/3</td>
-                <td class="py-2 px-3">¥8,500</td>
-                <td class="py-2 px-3">2025/3/12</td>
-              </tr>
-              <tr>
-                <td class="py-2 px-3">2025/3</td>
-                <td class="py-2 px-3">¥8,500</td>
-                <td class="py-2 px-3">2025/3/12</td>
-              </tr>
-              <tr>
-                <td class="py-2 px-3">2025/3</td>
-                <td class="py-2 px-3">¥8,500</td>
-                <td class="py-2 px-3">2025/3/12</td>
-              </tr>
-            </tbody>
-          </table>
+    <thead class="bg-gray-50 text-gray-600 font-medium">
+      <tr>
+        <th class="py-2 px-3 text-left">📅 年月</th>
+        <th class="py-2 px-3 text-left">💴 金額</th>
+        <th class="py-2 px-3 text-left">🕘 入力日</th>
+      </tr>
+    </thead>
+    <tbody class="bg-white">
+      <!-- 入力行 -->
+      <tr>
+        <td class="py-2 px-3">
+          <select>
+            <option>2025/1</option>
+            <option>2025/2</option>
+            <option>2025/3</option>
+            <option>2025/4</option>
+          </select>
+        </td>
+        <td class="py-2 px-3">
+          <input type="text" placeholder="¥0" />
+        </td>
+        <td class="py-2 px-3">
+          <select>
+            <option>2025/1/10</option>
+            <option>2025/2/10</option>
+            <option>2025/3/12</option>
+            <option>2025/4/15</option>
+          </select>
+        </td>
+      </tr>
+
+      <!-- 既存データ行 -->
+      <tr>
+        <td class="py-2 px-3">2025/3</td>
+        <td class="py-2 px-3">¥8,500</td>
+        <td class="py-2 px-3">2025/3/12</td>
+      </tr>
+      <tr>
+        <td class="py-2 px-3">2025/3</td>
+        <td class="py-2 px-3">¥8,500</td>
+        <td class="py-2 px-3">2025/3/12</td>
+      </tr>
+      <tr>
+        <td class="py-2 px-3">2025/3</td>
+        <td class="py-2 px-3">¥8,500</td>
+        <td class="py-2 px-3">2025/3/12</td>
+      </tr>
+      <tr>
+        <td class="py-2 px-3">2025/3</td>
+        <td class="py-2 px-3">¥8,500</td>
+        <td class="py-2 px-3">2025/3/12</td>
+      </tr>
+    </tbody>
+  </table>
         </div>
       `;
       wrapper.appendChild(card);
