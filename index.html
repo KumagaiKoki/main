@@ -34,13 +34,20 @@
       border-width: 1.5px;
     }
 
+    .fade-in {
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .fade-in.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
     table td,
     table th {
       border: 1px solid #e5e7eb;
-    }
-
-    svg line {
-      transition: all 0.3s ease;
     }
   </style>
 </head>
@@ -51,7 +58,7 @@
 
     <!-- Gray Hatch -->
     <div id="gray-hatch"
-         class="absolute top-[12px] left-[-12px] w-full h-full gray-hatch-bg border-thin border-gray-400 rounded-2xl shadow-inner transform -rotate-2 z-0 hidden">
+         class="absolute top-[12px] left-[-12px] w-full h-full gray-hatch-bg border-thin border-gray-400 rounded-2xl shadow-inner transform -rotate-2 z-0 hidden fade-in">
     </div>
 
     <!-- Homepage Card -->
@@ -76,7 +83,7 @@
         <tr class="border-b">
           <td class="py-2">Utilities</td>
           <td class="py-2 text-right">
-            <button class="text-blue-500 hover:underline" onclick="addCard()">Details</button>
+            <button class="text-blue-500 hover:underline" onclick="addCardAnimated()">Details</button>
           </td>
         </tr>
         <tr class="border-b">
@@ -88,11 +95,6 @@
       </table>
     </div>
   </div>
-
-  <!-- SVG connector line -->
-  <svg id="yellow-line" class="absolute top-0 left-0 w-full h-full pointer-events-none hidden z-10">
-    <line id="connector-line" x1="0" y1="0" x2="0" y2="0" stroke="#facc15" stroke-width="2" />
-  </svg>
 
   <!-- Electricity Card Area -->
   <div id="card-area" class="relative w-[480px] mt-[12px]"></div>
@@ -110,97 +112,85 @@
       }
     });
 
-    function addCard() {
+    function addCardAnimated() {
       if (document.getElementById("card-wrapper")) return;
 
       const grayHatch = document.getElementById("gray-hatch");
-      const yellowLine = document.getElementById("yellow-line");
-      const connector = document.getElementById("connector-line");
-
-      grayHatch.classList.remove("hidden");
-      yellowLine.classList.remove("hidden");
-
       const area = document.getElementById("card-area");
 
-      const wrapper = document.createElement("div");
-      wrapper.id = "card-wrapper";
-      wrapper.className = "relative w-full";
+      grayHatch.classList.remove("hidden");
+      requestAnimationFrame(() => grayHatch.classList.add("show"));
 
-      const hatch = document.createElement("div");
-      hatch.id = "orange-hatch";
-      hatch.className =
-        "absolute top-[12px] left-[-12px] w-full h-full hatch-bg border-thin border-orange-300 rounded-2xl shadow-inner transform -rotate-2 z-0";
-      wrapper.appendChild(hatch);
+      setTimeout(() => {
+        const wrapper = document.createElement("div");
+        wrapper.id = "card-wrapper";
+        wrapper.className = "relative w-full";
 
-      const card = document.createElement("div");
-      card.className =
-        "card-container relative bg-white w-full rounded-2xl shadow-xl border-2 border-gray-600 p-5 text-sm transform -rotate-2 z-10";
+        const hatch = document.createElement("div");
+        hatch.id = "orange-hatch";
+        hatch.className =
+          "absolute top-[12px] left-[-12px] w-full h-full hatch-bg rounded-2xl shadow-inner transform -rotate-2 z-0 fade-in";
+        wrapper.appendChild(hatch);
+        area.appendChild(wrapper);
 
-      card.innerHTML = `
-        <div class="flex items-center justify-between mb-4">
-          <div class="text-base font-semibold">Electricity
-            <span class="ml-2 px-2 py-0.5 text-xs rounded-full bg-purple-100 text-purple-600">Energy</span>
-          </div>
-          <button onclick="removeCard()" class="text-red-500 text-xl">×</button>
-        </div>
-        <div class="overflow-x-auto">
-          <table class="w-full text-gray-700 border-collapse">
-            <thead class="bg-gray-50 text-gray-600 font-medium">
-              <tr>
-                <th class="py-2 px-3 text-left">📅 Month</th>
-                <th class="py-2 px-3 text-left">💴 Amount</th>
-                <th class="py-2 px-3 text-left">🕘 Entry Date</th>
-              </tr>
-            </thead>
-            <tbody class="bg-white">
-              <tr>
-                <td class="py-2 px-3">2025/3</td>
-                <td class="py-2 px-3">¥8,500</td>
-                <td class="py-2 px-3">2025/3/12</td>
-              </tr>
-              <tr>
-                <td class="py-2 px-3">2025/3</td>
-                <td class="py-2 px-3">¥8,500</td>
-                <td class="py-2 px-3">2025/3/12</td>
-              </tr>
-              <tr>
-                <td class="py-2 px-3">2025/3</td>
-                <td class="py-2 px-3">¥8,500</td>
-                <td class="py-2 px-3">2025/3/12</td>
-              </tr>
-              <tr>
-                <td class="py-2 px-3">2025/3</td>
-                <td class="py-2 px-3">¥8,500</td>
-                <td class="py-2 px-3">2025/3/12</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      `;
-      wrapper.appendChild(card);
-      area.appendChild(wrapper);
+        requestAnimationFrame(() => hatch.classList.add("show"));
 
-      requestAnimationFrame(() => {
-        const gray = document.getElementById("gray-hatch").getBoundingClientRect();
-        const orange = document.getElementById("orange-hatch").getBoundingClientRect();
+        setTimeout(() => {
+          const card = document.createElement("div");
+          card.className =
+            "card-container relative bg-white w-full rounded-2xl shadow-xl border-2 border-gray-600 p-5 text-sm transform -rotate-2 z-10 fade-in";
 
-        const x1 = gray.left + gray.width / 2;
-        const y1 = gray.top + gray.height / 2;
-        const x2 = orange.left + orange.width / 2;
-        const y2 = orange.top + orange.height / 2;
-
-        connector.setAttribute("x1", x1);
-        connector.setAttribute("y1", y1);
-        connector.setAttribute("x2", x2);
-        connector.setAttribute("y2", y2);
-      });
+          card.innerHTML = `
+            <div class="flex items-center justify-between mb-4">
+              <div class="text-base font-semibold">Electricity
+                <span class="ml-2 px-2 py-0.5 text-xs rounded-full bg-purple-100 text-purple-600">Energy</span>
+              </div>
+              <button onclick="removeCard()" class="text-red-500 text-xl">×</button>
+            </div>
+            <div class="overflow-x-auto">
+              <table class="w-full text-gray-700 border-collapse">
+                <thead class="bg-gray-50 text-gray-600 font-medium">
+                  <tr>
+                    <th class="py-2 px-3 text-left">📅 Month</th>
+                    <th class="py-2 px-3 text-left">💴 Amount</th>
+                    <th class="py-2 px-3 text-left">🕘 Entry Date</th>
+                  </tr>
+                </thead>
+                <tbody class="bg-white">
+                  <tr>
+                    <td class="py-2 px-3">2025/3</td>
+                    <td class="py-2 px-3">¥8,500</td>
+                    <td class="py-2 px-3">2025/3/12</td>
+                  </tr>
+                  <tr>
+                    <td class="py-2 px-3">2025/3</td>
+                    <td class="py-2 px-3">¥8,500</td>
+                    <td class="py-2 px-3">2025/3/12</td>
+                  </tr>
+                  <tr>
+                    <td class="py-2 px-3">2025/3</td>
+                    <td class="py-2 px-3">¥8,500</td>
+                    <td class="py-2 px-3">2025/3/12</td>
+                  </tr>
+                  <tr>
+                    <td class="py-2 px-3">2025/3</td>
+                    <td class="py-2 px-3">¥8,500</td>
+                    <td class="py-2 px-3">2025/3/12</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          `;
+          wrapper.appendChild(card);
+          requestAnimationFrame(() => card.classList.add("show"));
+        }, 400);
+      }, 300);
     }
 
     function removeCard() {
       const wrapper = document.getElementById("card-wrapper");
       if (wrapper) wrapper.remove();
       document.getElementById("gray-hatch").classList.add("hidden");
-      document.getElementById("yellow-line").classList.add("hidden");
     }
   </script>
 </body>
