@@ -1,26 +1,33 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>電気代表（Consolasフォント）</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Utilities UI</title>
   <script src="https://cdn.tailwindcss.com"></script>
-
   <style>
     body {
       font-family: Consolas, monospace;
     }
-    table td, table th {
-      border: 1px solid #e5e7eb; /* Tailwind gray-200 */
+
+    /* Orange hatch background */
+    .hatch-bg {
+      background-image: repeating-linear-gradient(
+        45deg,
+        #f97316 0,
+        #f97316 2px,
+        transparent 2px,
+        transparent 6px
+      );
     }
   </style>
 </head>
 <body class="bg-gray-100 min-h-screen flex items-start justify-center p-10 relative">
 
-  <!-- ホームページカード -->
+  <!-- Homepage Card -->
   <div class="relative w-[320px] bg-white rounded-2xl shadow-xl border-2 border-indigo-300 transform -rotate-2 z-10 p-5">
 
-    <!-- メニュー -->
+    <!-- Menu Button -->
     <button class="absolute top-3 right-3 text-xl" onclick="toggleMenu()">⋯</button>
     <div id="menu1"
          class="absolute top-12 right-3 bg-black text-white rounded-xl shadow-lg min-w-[180px] py-2 hidden z-50 flex-col space-y-1 text-sm">
@@ -29,31 +36,37 @@
       <div class="px-4 py-2 hover:bg-gray-800 cursor-pointer">Detach database</div>
     </div>
 
-    <!-- 内容 -->
+    <!-- Title -->
     <div class="font-semibold text-lg mb-2">
-      ホームページ
+      Homepage
       <span class="ml-2 text-purple-600 bg-purple-100 text-xs font-medium px-2 py-0.5 rounded-full">Cache</span>
     </div>
 
-    <!-- 表 -->
+    <!-- Table -->
     <table class="w-full text-sm text-gray-700">
       <tr class="border-b">
-        <td class="py-2">光熱費</td>
+        <td class="py-2">Utilities</td>
         <td class="py-2 text-right">
-          <button class="text-blue-500 hover:underline" onclick="addCard('光熱費')">詳細</button>
+          <button class="text-blue-500 hover:underline" onclick="addCard('utilities')">Details</button>
         </td>
       </tr>
       <tr class="border-b">
-        <td class="py-2">料理</td>
+        <td class="py-2">Cooking</td>
         <td class="py-2 text-right">
-          <button class="text-blue-500 hover:underline" onclick="addCard('料理')">詳細</button>
+          <button class="text-blue-500 hover:underline">Details</button>
         </td>
       </tr>
     </table>
   </div>
 
-  <!-- 光熱費カード -->
-  <div id="new-cards" class="flex flex-wrap gap-5 ml-6"></div>
+  <!-- New Cards & 3D Hatch Background -->
+  <div class="relative ml-6 flex flex-col items-start">
+    <!-- Orange Hatch BG -->
+    <div class="absolute top-6 left-6 w-[500px] h-full hatch-bg rounded-2xl shadow-inner z-0 rotate-1"></div>
+
+    <!-- Utility Card will go here -->
+    <div id="new-cards" class="relative z-10"></div>
+  </div>
 
   <script>
     function toggleMenu() {
@@ -77,23 +90,23 @@
       card.id = `card-${title}`;
       card.className = "w-[480px] bg-white rounded-xl shadow-md border border-gray-200 p-5 text-sm relative";
 
-      if (title === "光熱費") {
+      if (title === "utilities") {
         card.innerHTML = `
           <div class="flex items-center justify-between mb-4">
-            <div class="text-base font-semibold">電気代
+            <div class="text-base font-semibold">Electricity
               <span class="ml-2 px-2 py-0.5 text-xs rounded-full bg-purple-100 text-purple-600">Energy</span>
             </div>
             <button onclick="removeCard(this)" class="text-red-500 text-xl">×</button>
           </div>
 
-          <!-- 表 -->
+          <!-- Table -->
           <div class="overflow-x-auto">
             <table class="w-full text-gray-700 border-collapse">
               <thead class="bg-gray-50 text-gray-600 font-medium">
                 <tr>
-                  <th class="py-2 px-3 text-left">📅 年月</th>
-                  <th class="py-2 px-3 text-left">💴 金額</th>
-                  <th class="py-2 px-3 text-left">🕘 入力日</th>
+                  <th class="py-2 px-3 text-left">📅 Month</th>
+                  <th class="py-2 px-3 text-left">💴 Amount</th>
+                  <th class="py-2 px-3 text-left">🕘 Entry Date</th>
                 </tr>
               </thead>
               <tbody class="bg-white">
