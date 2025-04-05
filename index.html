@@ -178,7 +178,7 @@
       wrapper.appendChild(card);
 
       // 🔽 JSONを読み込んでテーブルに追加
-      fetch("https://github.com/KumagaiKoki/main/data.json")  // ← ★URLを実際のものに変更してください
+      fetch("https://github.com/KumagaiKoki/main/blob/main/data.json")  // ← ★URLを実際のものに変更してください
         .then(res => res.json())
         .then(data => {
           data.forEach(entry => {
