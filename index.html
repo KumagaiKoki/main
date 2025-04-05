@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Electricity UI</title>
+  <title>EElectricity UI</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body {
@@ -38,6 +38,17 @@
     table th {
       border: 1px solid #e5e7eb;
     }
+
+    .vertical-line {
+      position: absolute;
+      width: 4px;
+      background-color: #facc15; /* yellow-400 */
+      z-index: 10;
+      left: calc(320px + 24px); /* homepage width + margin */
+      top: 180px;
+      height: 80px;
+      border-radius: 4px;
+    }
   </style>
 </head>
 <body class="bg-gray-100 min-h-screen flex items-start justify-center p-10 gap-10">
@@ -47,14 +58,14 @@
 
     <!-- Gray Hatch -->
     <div id="gray-hatch"
-         class="absolute top-[12px] left-[-12px] w-full h-full gray-hatch-bg border-thin border-gray-400 rounded-2xl shadow-inner transform -rotate-2 z-0 hidden">
+         class="absolute top-[12px] left-[-12px] w-full h-full gray-hatch-bg border-thin border-gray-400 rounded-2xl shadow-inner transform rotate-2 z-0 hidden">
     </div>
 
     <!-- Homepage Card -->
     <div id="homepage-card"
-         class="relative bg-white w-full rounded-2xl shadow-xl border-2 border-indigo-300 transform -rotate-2 z-10 p-5">
+         class="relative bg-white w-full rounded-2xl shadow-xl border-2 border-gray-600 transform rotate-2 z-10 p-5">
 
-      <!-- Menu Button -->
+      <!-- Menu -->
       <button class="absolute top-3 right-3 text-xl" onclick="toggleMenu()">⋯</button>
       <div id="menu1"
            class="absolute top-12 right-3 bg-black text-white rounded-xl shadow-lg min-w-[180px] py-2 hidden z-50 flex-col space-y-1 text-sm">
@@ -104,7 +115,7 @@
     function addCard() {
       if (document.getElementById("card-wrapper")) return;
 
-      // Show gray hatch
+      // Show gray hatch behind homepage
       document.getElementById("gray-hatch").classList.remove("hidden");
 
       const area = document.getElementById("card-area");
@@ -113,16 +124,22 @@
       wrapper.id = "card-wrapper";
       wrapper.className = "relative w-full";
 
-      // Orange hatch background (now on left-bottom side)
+      // Yellow connecting line
+      const line = document.createElement("div");
+      line.className = "vertical-line";
+      line.id = "yellow-line";
+      wrapper.appendChild(line);
+
+      // Orange hatch background
       const hatch = document.createElement("div");
       hatch.className =
-        "absolute top-[12px] left-[-12px] w-full h-full hatch-bg border-thin border-orange-300 rounded-2xl shadow-inner transform -rotate-2 z-0";
+        "absolute top-[12px] left-[-12px] w-full h-full hatch-bg border-thin border-orange-300 rounded-2xl shadow-inner transform rotate-2 z-0";
       wrapper.appendChild(hatch);
 
       // Electricity card
       const card = document.createElement("div");
       card.className =
-        "card-container relative bg-white w-full rounded-2xl shadow-xl border border-gray-200 p-5 text-sm transform -rotate-2 z-10";
+        "card-container relative bg-white w-full rounded-2xl shadow-xl border-2 border-gray-600 p-5 text-sm transform rotate-2 z-10";
 
       card.innerHTML = `
         <div class="flex items-center justify-between mb-4">
