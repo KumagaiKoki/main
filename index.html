@@ -35,31 +35,34 @@
       border: 2px solid #4b5563;
     }
     .content-hidden {
-      visibility: hidden;
-      height: 0;
-      padding: 0;
-      margin: 0;
-      overflow: hidden;
+      display: none;
     }
-    table {
-      border-collapse: collapse;
-      width: 100%;
+    .menu-button {
+      position: absolute;
+      top: 0.5rem;
+      right: 0.75rem;
+      font-size: 1.25rem;
     }
-    table td,
-    table th {
-      border: 1px solid #e5e7eb;
-      padding: 0.5rem;
-      text-align: left;
-    }
-    input[type="text"] {
-      border: 1px solid #ccc;
-      border-radius: 0.25rem;
-      padding: 0.25rem 0.5rem;
+    .menu-dropdown {
+      position: absolute;
+      top: 2.5rem;
+      right: 0.75rem;
+      background-color: black;
+      color: white;
+      border-radius: 0.75rem;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      padding: 0.5rem 0;
+      display: none;
+      flex-direction: column;
+      z-index: 50;
       font-size: 0.875rem;
-      width: 100%;
     }
-    canvas {
-      font-family: 'Rounded Mplus 1c', sans-serif !important;
+    .menu-dropdown div {
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+    }
+    .menu-dropdown div:hover {
+      background-color: #1f2937;
     }
   </style>
 </head>
@@ -70,11 +73,11 @@
     <div id="gray-hatch" class="absolute top-[20px] left-[-12px] w-full h-full gray-hatch-bg rounded-2xl shadow-inner transform -rotate-6 z-0 hidden"></div>
 
     <div id="homepage-card" class="relative bg-white w-full rounded-2xl shadow-xl border-2 border-gray-600 transform -rotate-6 z-10 p-5">
-      <button class="absolute top-3 right-3 text-xl" onclick="toggleMenu()">⋯</button>
-      <div id="menu1" class="absolute top-12 right-3 bg-black text-white rounded-xl shadow-lg min-w-[180px] py-2 hidden z-50 flex-col space-y-1 text-sm">
-        <div class="px-4 py-2 hover:bg-gray-800 cursor-pointer">認証情報を表示</div>
-        <div class="px-4 py-2 hover:bg-gray-800 cursor-pointer">置き換え</div>
-        <div class="px-4 py-2 hover:bg-gray-800 cursor-pointer">データベースを切断</div>
+      <button class="absolute top-3 right-3 text-xl" onclick="toggleMenu('menu1')">⋯</button>
+      <div id="menu1" class="menu-dropdown hidden">
+        <div>認証情報を表示</div>
+        <div>置き換え</div>
+        <div>データベースを切断</div>
       </div>
 
       <div class="font-semibold text-lg mb-2">
@@ -103,17 +106,25 @@
   <div id="card-area" class="relative flex justify-center"></div>
 
   <script>
-    function toggleMenu() {
-      document.getElementById("menu1").classList.toggle("hidden");
+    function toggleMenu(id) {
+      document.getElementById(id).classList.toggle("hidden");
     }
 
-    document.addEventListener("click", function (e) {
-      const menu = document.getElementById("menu1");
-      const button = document.querySelector("button");
-      if (!menu.contains(e.target) && !button.contains(e.target)) {
-        menu.classList.add("hidden");
+    function toggleSection(sectionId, btnId, imageId) {
+      const section = document.getElementById(sectionId);
+      const button = document.getElementById(btnId);
+      const image = document.getElementById(imageId);
+
+      if (section.classList.contains("content-hidden")) {
+        section.classList.remove("content-hidden");
+        image.classList.add("hidden");
+        button.textContent = "×";
+      } else {
+        section.classList.add("content-hidden");
+        image.classList.remove("hidden");
+        button.textContent = "＋";
       }
-    });
+    }
 
     function addCard() {
       if (document.getElementById("card-wrapper")) return;
@@ -134,20 +145,26 @@
       const card = document.createElement("div");
       card.className = "relative bg-gray-100 w-full rounded-2xl shadow-xl border border-gray-400 p-5 text-sm transform -rotate-6 z-10";
       card.innerHTML = `
-        <div class="flex items-center justify-between mb-2 -mt-2">
+        <div class="flex items-center justify-between mb-2 -mt-2 relative">
           <div class="text-base font-semibold flex items-center gap-2">
             電気代
             <span class="text-purple-600 bg-purple-100 text-xs font-medium px-2 py-0.5 rounded-full">ボタンA</span>
             <span class="text-purple-600 bg-purple-100 text-xs font-medium px-2 py-0.5 rounded-full">ボタンB</span>
           </div>
-          <button onclick="removeCard()" class="text-black text-xl">×</button>
+          <button class="menu-button" onclick="toggleMenu('menu-electric')">⋯</button>
+          <div id="menu-electric" class="menu-dropdown hidden">
+            <div>電気代</div>
+            <div>水道代</div>
+            <div>ガス代</div>
+            <div onclick="removeCard()">閉じる</div>
+          </div>
         </div>
 
         <!-- テーブル -->
         <div class="relative mb-6">
           <div class="absolute top-[20px] left-0 w-full h-full hatch-bg rounded-2xl shadow-inner z-0"></div>
           <div class="relative bg-white rounded-2xl border border-gray-400 p-4 z-10 translate-x-[12px] shadow-lg shadow-gray-400/40 mt-[20px] mb-[40px]">
-            <button onclick="document.getElementById('table-content').classList.toggle('content-hidden')" class="absolute top-2 right-3 text-black">×</button>
+            <button id="toggle-table" onclick="toggleSection('table-content', 'toggle-table', 'table-img')" class="absolute top-2 right-3 text-black">×</button>
             <div id="table-content">
               <div class="overflow-x-auto max-h-[240px] overflow-y-auto">
                 <table class="text-sm text-gray-700">
@@ -168,6 +185,7 @@
                 </table>
               </div>
             </div>
+            <div id="table-img" class="hidden text-center text-gray-500 py-6">📊 表のイラスト</div>
           </div>
         </div>
 
@@ -175,11 +193,12 @@
         <div class="relative mt-[8px]">
           <div class="absolute top-[20px] left-0 w-full h-full hatch-bg rounded-2xl shadow-inner z-0"></div>
           <div class="relative bg-white rounded-2xl border border-gray-400 p-4 z-10 translate-x-[12px] shadow-lg shadow-gray-400/40 mt-[20px] mb-[20px]">
-            <button onclick="document.getElementById('graph-content').classList.toggle('content-hidden')" class="absolute top-2 right-3 text-black">×</button>
+            <button id="toggle-graph" onclick="toggleSection('graph-content', 'toggle-graph', 'graph-img')" class="absolute top-2 right-3 text-black">×</button>
             <div id="graph-content">
               <div id="graph-legend" class="flex flex-wrap gap-3 text-xs font-semibold mb-2"></div>
               <canvas id="electricityChart" width="400" height="250"></canvas>
             </div>
+            <div id="graph-img" class="hidden text-center text-gray-500 py-6">📈 グラフのイラスト</div>
           </div>
         </div>
       `;
