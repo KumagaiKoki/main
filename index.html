@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>電気料金</title>
+  <title>電気料金UI</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Rounded+Mplus+1c&display=swap" rel="stylesheet">
@@ -56,18 +56,15 @@
     }
   </style>
 </head>
-<body class="bg-gray-100 min-h-screen flex items-start justify-center p-10 gap-6">
+<body class="bg-gray-100 min-h-screen flex flex-col items-center p-6 gap-3">
 
   <!-- ホームカード -->
-  <div id="homepage-wrapper" class="relative w-[320px] h-auto">
-    <div id="gray-hatch"
-         class="absolute top-[20px] left-[-12px] w-full h-full gray-hatch-bg rounded-2xl shadow-inner transform -rotate-6 z-0 hidden"></div>
+  <div id="homepage-wrapper" class="relative w-[320px]">
+    <div id="gray-hatch" class="absolute top-[20px] left-[-12px] w-full h-full gray-hatch-bg rounded-2xl shadow-inner transform -rotate-6 z-0 hidden"></div>
 
-    <div id="homepage-card"
-         class="relative bg-white w-full rounded-2xl shadow-xl border-2 border-gray-600 transform -rotate-6 z-10 p-5">
+    <div id="homepage-card" class="relative bg-white w-full rounded-2xl shadow-xl border-2 border-gray-600 transform -rotate-6 z-10 p-5">
       <button class="absolute top-3 right-3 text-xl" onclick="toggleMenu()">⋯</button>
-      <div id="menu1"
-           class="absolute top-12 right-3 bg-black text-white rounded-xl shadow-lg min-w-[180px] py-2 hidden z-50 flex-col space-y-1 text-sm">
+      <div id="menu1" class="absolute top-12 right-3 bg-black text-white rounded-xl shadow-lg min-w-[180px] py-2 hidden z-50 flex-col space-y-1 text-sm">
         <div class="px-4 py-2 hover:bg-gray-800 cursor-pointer">認証情報を表示</div>
         <div class="px-4 py-2 hover:bg-gray-800 cursor-pointer">置き換え</div>
         <div class="px-4 py-2 hover:bg-gray-800 cursor-pointer">データベースを切断</div>
@@ -96,7 +93,7 @@
   </div>
 
   <!-- 電気代カード -->
-  <div id="card-area" class="relative w-full flex justify-center mt-0"></div>
+  <div id="card-area" class="relative w-full flex justify-center mt-2"></div>
 
   <script>
     function toggleMenu() {
@@ -113,7 +110,6 @@
 
     function addCard() {
       if (document.getElementById("card-wrapper")) return;
-
       document.getElementById("gray-hatch").classList.remove("hidden");
 
       const area = document.getElementById("card-area");
@@ -130,7 +126,6 @@
 
       const card = document.createElement("div");
       card.className = "relative bg-gray-100 w-full rounded-2xl shadow-xl border border-gray-400 p-5 text-sm transform -rotate-6 z-10";
-
       card.innerHTML = `
         <div class="flex items-center justify-between mb-2 -mt-2">
           <div class="text-base font-semibold">電気代</div>
@@ -138,9 +133,10 @@
         </div>
 
         <!-- テーブル -->
-        <div class="relative mb-6">
+        <div id="table-section" class="relative mb-6">
           <div class="absolute top-[20px] left-0 w-full h-full hatch-bg rounded-2xl shadow-inner z-0"></div>
           <div class="relative bg-white rounded-2xl border border-gray-400 p-4 z-10 translate-x-[12px] shadow-lg shadow-gray-400/40 mt-[20px] mb-[20px]">
+            <button onclick="document.getElementById('table-section').style.display='none'" class="absolute top-2 right-3 text-black">×</button>
             <div class="overflow-x-auto max-h-[240px] overflow-y-auto">
               <table class="text-sm text-gray-700">
                 <thead>
@@ -153,7 +149,7 @@
                 <tbody id="electricity-tbody" class="bg-white">
                   <tr>
                     <td><input type="text" value="${todayMonth}" /></td>
-                    <td><input type="text" placeholder="¥0" /></td>
+                    <td><input type="text" placeholder="\u00a50" /></td>
                     <td><input type="text" value="${todayDate}" /></td>
                   </tr>
                 </tbody>
@@ -163,14 +159,16 @@
         </div>
 
         <!-- グラフ -->
-        <div class="relative mt-[8px]">
+        <div id="graph-section" class="relative mt-[8px]">
           <div class="absolute top-[20px] left-0 w-full h-full hatch-bg rounded-2xl shadow-inner z-0"></div>
           <div class="relative bg-white rounded-2xl border border-gray-400 p-4 z-10 translate-x-[12px] shadow-lg shadow-gray-400/40 mt-[20px] mb-[20px]">
+            <button onclick="document.getElementById('graph-section').style.display='none'" class="absolute top-2 right-3 text-black">×</button>
             <div id="graph-legend" class="flex flex-wrap gap-3 text-xs font-semibold mb-2"></div>
             <canvas id="electricityChart" width="400" height="250"></canvas>
           </div>
         </div>
       `;
+
       wrapper.appendChild(card);
       area.appendChild(wrapper);
 
@@ -187,7 +185,7 @@
             const row = document.createElement("tr");
             row.innerHTML = `
               <td>${entry.month}</td>
-              <td>¥${entry.cost}</td>
+              <td>\u00a5${entry.cost}</td>
               <td>${entry.date}</td>
             `;
             tbody.appendChild(row);
