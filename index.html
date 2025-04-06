@@ -37,12 +37,6 @@
     .content-hidden {
       display: none;
     }
-    .menu-button {
-      position: absolute;
-      top: 0.5rem;
-      right: 0.75rem;
-      font-size: 1.25rem;
-    }
     .menu-dropdown {
       position: absolute;
       top: 2.5rem;
@@ -66,7 +60,7 @@
     }
   </style>
 </head>
-<body class="bg-gray-100 min-h-screen flex flex-row items-start p-6 gap-6">
+<body class="bg-gray-100 min-h-screen flex flex-col items-center p-6 gap-3">
 
   <!-- ホームカード -->
   <div id="homepage-wrapper" class="relative w-[320px]">
@@ -103,183 +97,23 @@
   </div>
 
   <!-- 電気代カード -->
-  <div id="card-area" class="relative flex justify-center"></div>
+  <div id="card-area" class="relative w-full flex justify-center mt-2"></div>
 
   <script>
     function toggleMenu(id) {
       document.getElementById(id).classList.toggle("hidden");
     }
 
-    function toggleSection(sectionId, btnId, imageId) {
+    function toggleSection(sectionId, btnId) {
       const section = document.getElementById(sectionId);
       const button = document.getElementById(btnId);
-      const image = document.getElementById(imageId);
-
       if (section.classList.contains("content-hidden")) {
         section.classList.remove("content-hidden");
-        image.classList.add("hidden");
         button.textContent = "×";
       } else {
         section.classList.add("content-hidden");
-        image.classList.remove("hidden");
         button.textContent = "＋";
       }
-    }
-
-    function addCard() {
-      if (document.getElementById("card-wrapper")) return;
-      document.getElementById("gray-hatch").classList.remove("hidden");
-
-      const area = document.getElementById("card-area");
-      const wrapper = document.createElement("div");
-      wrapper.id = "card-wrapper";
-      wrapper.className = "relative w-[480px]";
-
-      const today = new Date();
-      const yyyy = today.getFullYear();
-      const mm = String(today.getMonth() + 1).padStart(2, '0');
-      const dd = String(today.getDate()).padStart(2, '0');
-      const todayMonth = `${yyyy}/${mm}`;
-      const todayDate = `${yyyy}/${mm}/${dd}`;
-
-      const card = document.createElement("div");
-      card.className = "relative bg-gray-100 w-full rounded-2xl shadow-xl border border-gray-400 p-5 text-sm transform -rotate-6 z-10";
-      card.innerHTML = `
-        <div class="flex items-center justify-between mb-2 -mt-2 relative">
-          <div class="text-base font-semibold flex items-center gap-2">
-            電気代
-            <span class="text-purple-600 bg-purple-100 text-xs font-medium px-2 py-0.5 rounded-full">ボタンA</span>
-            <span class="text-purple-600 bg-purple-100 text-xs font-medium px-2 py-0.5 rounded-full">ボタンB</span>
-          </div>
-          <button class="menu-button" onclick="toggleMenu('menu-electric')">⋯</button>
-          <div id="menu-electric" class="menu-dropdown hidden">
-            <div>電気代</div>
-            <div>水道代</div>
-            <div>ガス代</div>
-            <div onclick="removeCard()">閉じる</div>
-          </div>
-        </div>
-
-        <!-- テーブル -->
-        <div class="relative mb-6">
-          <div class="absolute top-[20px] left-0 w-full h-full hatch-bg rounded-2xl shadow-inner z-0"></div>
-          <div class="relative bg-white rounded-2xl border border-gray-400 p-4 z-10 translate-x-[12px] shadow-lg shadow-gray-400/40 mt-[20px] mb-[40px]">
-            <button id="toggle-table" onclick="toggleSection('table-content', 'toggle-table', 'table-img')" class="absolute top-2 right-3 text-black">×</button>
-            <div id="table-content">
-              <div class="overflow-x-auto max-h-[240px] overflow-y-auto">
-                <table class="text-sm text-gray-700">
-                  <thead>
-                    <tr class="bg-gray-50 text-gray-600 font-medium">
-                      <th>年月</th>
-                      <th>金額</th>
-                      <th>入力日</th>
-                    </tr>
-                  </thead>
-                  <tbody id="electricity-tbody" class="bg-white">
-                    <tr>
-                      <td><input type="text" value="${todayMonth}" /></td>
-                      <td><input type="text" placeholder="\u00a50" /></td>
-                      <td><input type="text" value="${todayDate}" /></td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-            <div id="table-img" class="hidden text-center text-gray-500 py-6">📊 表のイラスト</div>
-          </div>
-        </div>
-
-        <!-- グラフ -->
-        <div class="relative mt-[8px]">
-          <div class="absolute top-[20px] left-0 w-full h-full hatch-bg rounded-2xl shadow-inner z-0"></div>
-          <div class="relative bg-white rounded-2xl border border-gray-400 p-4 z-10 translate-x-[12px] shadow-lg shadow-gray-400/40 mt-[20px] mb-[20px]">
-            <button id="toggle-graph" onclick="toggleSection('graph-content', 'toggle-graph', 'graph-img')" class="absolute top-2 right-3 text-black">×</button>
-            <div id="graph-content">
-              <div id="graph-legend" class="flex flex-wrap gap-3 text-xs font-semibold mb-2"></div>
-              <canvas id="electricityChart" width="400" height="250"></canvas>
-            </div>
-            <div id="graph-img" class="hidden text-center text-gray-500 py-6">📈 グラフのイラスト</div>
-          </div>
-        </div>
-      `;
-
-      wrapper.appendChild(card);
-      area.appendChild(wrapper);
-
-      fetch("https://raw.githubusercontent.com/KumagaiKoki/main/main/data.json")
-        .then(res => res.json())
-        .then(data => {
-          const tbody = document.getElementById("electricity-tbody");
-          const legend = document.getElementById("graph-legend");
-          const yearly = {};
-          const colorPalette = ['#f87171', '#60a5fa', '#34d399', '#fbbf24', '#a78bfa', '#fb7185'];
-          let colorIndex = 0;
-
-          data.forEach(entry => {
-            const row = document.createElement("tr");
-            row.innerHTML = `
-              <td>${entry.month}</td>
-              <td>\u00a5${entry.cost}</td>
-              <td>${entry.date}</td>
-            `;
-            tbody.appendChild(row);
-
-            const [year, month] = entry.month.split("/").map(Number);
-            if (!yearly[year]) yearly[year] = new Array(12).fill(null);
-            yearly[year][month - 1] = Number(entry.cost);
-          });
-
-          const ctx = document.getElementById("electricityChart").getContext("2d");
-
-          const datasets = Object.entries(yearly).map(([year, costArray]) => {
-            const color = colorPalette[colorIndex % colorPalette.length];
-            const label = document.createElement("span");
-            label.textContent = `${year}年`;
-            label.style.color = color;
-            legend.appendChild(label);
-            colorIndex++;
-
-            return {
-              label: `${year}年`,
-              data: costArray,
-              borderColor: color,
-              borderWidth: 2,
-              pointRadius: 0,
-              tension: 0.3
-            };
-          });
-
-          new Chart(ctx, {
-            type: 'line',
-            data: {
-              labels: ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'],
-              datasets: datasets
-            },
-            options: {
-              plugins: { legend: { display: false } },
-              scales: {
-                y: {
-                  beginAtZero: true,
-                  ticks: {
-                    stepSize: 4000,
-                    font: { family: 'Rounded Mplus 1c' }
-                  }
-                },
-                x: {
-                  ticks: {
-                    callback: (val, i) => (i + 1) % 2 === 0 ? `${i + 1}月` : '',
-                    font: { family: 'Rounded Mplus 1c' }
-                  }
-                }
-              }
-            }
-          });
-        });
-    }
-
-    function removeCard() {
-      document.getElementById("card-wrapper")?.remove();
-      document.getElementById("gray-hatch").classList.add("hidden");
     }
   </script>
 </body>
