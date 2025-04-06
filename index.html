@@ -115,6 +115,13 @@
       }
     });
 
+    function toggleSection(id, btn) {
+      const section = document.getElementById(id);
+      const isHidden = section.classList.contains("content-hidden");
+      section.classList.toggle("content-hidden");
+      btn.textContent = isHidden ? "×" : "開く";
+    }
+
     function addCard() {
       if (document.getElementById("card-wrapper")) return;
       document.getElementById("gray-hatch").classList.remove("hidden");
@@ -147,8 +154,8 @@
         <div class="relative mb-6">
           <div class="absolute top-[20px] left-0 w-full h-full hatch-bg rounded-2xl shadow-inner z-0"></div>
           <div class="relative bg-white rounded-2xl border border-gray-400 p-4 z-10 translate-x-[12px] shadow-lg shadow-gray-400/40 mt-[20px] mb-[40px]">
-            <button onclick="document.getElementById('table-content').classList.toggle('content-hidden')" class="absolute top-2 right-3 text-black">×</button>
-            <div id="table-content">
+            <button onclick="toggleSection('table-content', this)" class="absolute top-2 right-3 text-black">開く</button>
+            <div id="table-content" class="content-hidden">
               <div class="overflow-x-auto max-h-[240px] overflow-y-auto">
                 <table class="text-sm text-gray-700">
                   <thead>
@@ -174,9 +181,9 @@
         <!-- グラフ -->
         <div class="relative mt-[8px]">
           <div class="absolute top-[20px] left-0 w-full h-full hatch-bg rounded-2xl shadow-inner z-0"></div>
-          <div class="relative bg-white rounded-2xl border border-gray-400 p-4 z-10 translate-x-[12px] shadow-lg shadow-gray-400/40 mt-[20px] mb-[20px]">
-            <button onclick="document.getElementById('graph-content').classList.toggle('content-hidden')" class="absolute top-2 right-3 text-black">×</button>
-            <div id="graph-content">
+          <div class="relative bg-white rounded-2xl border border-gray-400 p-4 z-10 translate-x-[12px] shadow-lg shadow-gray-400/40 mt-[20px] mb-[40px]">
+            <button onclick="toggleSection('graph-content', this)" class="absolute top-2 right-3 text-black">開く</button>
+            <div id="graph-content" class="content-hidden">
               <div id="graph-legend" class="flex flex-wrap gap-3 text-xs font-semibold mb-2"></div>
               <canvas id="electricityChart" width="400" height="250"></canvas>
             </div>
