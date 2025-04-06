@@ -115,13 +115,6 @@
       }
     });
 
-    function toggleSection(id, btn) {
-      const section = document.getElementById(id);
-      const isHidden = section.classList.contains("content-hidden");
-      section.classList.toggle("content-hidden");
-      btn.textContent = "…";
-    }
-
     function addCard() {
       if (document.getElementById("card-wrapper")) return;
       document.getElementById("gray-hatch").classList.remove("hidden");
@@ -139,21 +132,22 @@
       const todayDate = `${yyyy}/${mm}/${dd}`;
 
       const card = document.createElement("div");
-      card.className = "relative bg-gray-100 w-full rounded-2xl shadow-xl border border-gray-400 p-5 text-sm transform -rotate-6 z-10 flex flex-col gap-4";
+      card.className = "relative bg-gray-100 w-full rounded-2xl shadow-xl border border-gray-400 p-5 text-sm transform -rotate-6 z-10";
       card.innerHTML = `
-        <div class="flex items-center justify-between -mt-2">
+        <div class="flex items-center justify-between mb-2 -mt-2">
           <div class="text-base font-semibold flex items-center gap-2">
             電気代
             <span class="text-purple-600 bg-purple-100 text-xs font-medium px-2 py-0.5 rounded-full">ボタンA</span>
             <span class="text-purple-600 bg-purple-100 text-xs font-medium px-2 py-0.5 rounded-full">ボタンB</span>
           </div>
-          <button onclick="removeCard()" class="text-black text-xl">&hellip;</button>
+          <button onclick="removeCard()" class="text-black text-xl">×</button>
         </div>
 
-        <div class="relative min-h-[280px]">
+        <!-- テーブル -->
+        <div class="relative mb-6">
           <div class="absolute top-[20px] left-0 w-full h-full hatch-bg rounded-2xl shadow-inner z-0"></div>
-          <div class="relative bg-white rounded-2xl border border-gray-400 p-4 z-10 translate-x-[12px] shadow-lg shadow-gray-400/40 mt-[20px] content-fixed h-full">
-            <button onclick="toggleSection('table-content', this)" class="absolute top-2 right-3 text-black">&hellip;</button>
+          <div class="relative bg-white rounded-2xl border border-gray-400 p-4 z-10 translate-x-[12px] shadow-lg shadow-gray-400/40 mt-[20px] mb-[40px]">
+            <button onclick="document.getElementById('table-content').classList.toggle('content-hidden')" class="absolute top-2 right-3 text-black">×</button>
             <div id="table-content">
               <div class="overflow-x-auto max-h-[240px] overflow-y-auto">
                 <table class="text-sm text-gray-700">
@@ -167,7 +161,7 @@
                   <tbody id="electricity-tbody" class="bg-white">
                     <tr>
                       <td><input type="text" value="${todayMonth}" /></td>
-                      <td><input type="text" placeholder="¥0" /></td>
+                      <td><input type="text" placeholder="\u00a50" /></td>
                       <td><input type="text" value="${todayDate}" /></td>
                     </tr>
                   </tbody>
@@ -177,10 +171,11 @@
           </div>
         </div>
 
-        <div class="relative min-h-[320px]">
+        <!-- グラフ -->
+        <div class="relative mt-[8px]">
           <div class="absolute top-[20px] left-0 w-full h-full hatch-bg rounded-2xl shadow-inner z-0"></div>
-          <div class="relative bg-white rounded-2xl border border-gray-400 p-4 z-10 translate-x-[12px] shadow-lg shadow-gray-400/40 mt-[20px] content-fixed h-full">
-            <button onclick="toggleSection('graph-content', this)" class="absolute top-2 right-3 text-black">&hellip;</button>
+          <div class="relative bg-white rounded-2xl border border-gray-400 p-4 z-10 translate-x-[12px] shadow-lg shadow-gray-400/40 mt-[20px] mb-[20px]">
+            <button onclick="document.getElementById('graph-content').classList.toggle('content-hidden')" class="absolute top-2 right-3 text-black">×</button>
             <div id="graph-content">
               <div id="graph-legend" class="flex flex-wrap gap-3 text-xs font-semibold mb-2"></div>
               <canvas id="electricityChart" width="400" height="250"></canvas>
@@ -205,7 +200,7 @@
             const row = document.createElement("tr");
             row.innerHTML = `
               <td>${entry.month}</td>
-              <td>¥${entry.cost}</td>
+              <td>\u00a5${entry.cost}</td>
               <td>${entry.date}</td>
             `;
             tbody.appendChild(row);
@@ -216,6 +211,7 @@
           });
 
           const ctx = document.getElementById("electricityChart").getContext("2d");
+
           const datasets = Object.entries(yearly).map(([year, costArray]) => {
             const color = colorPalette[colorIndex % colorPalette.length];
             const label = document.createElement("span");
