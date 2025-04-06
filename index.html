@@ -34,6 +34,13 @@
       );
       border: 2px solid #4b5563;
     }
+    .content-hidden {
+      visibility: hidden;
+      height: 0;
+      padding: 0;
+      margin: 0;
+      overflow: hidden;
+    }
     table {
       border-collapse: collapse;
       width: 100%;
@@ -56,7 +63,7 @@
     }
   </style>
 </head>
-<body class="bg-gray-100 min-h-screen flex flex-col items-center p-6 gap-3">
+<body class="bg-gray-100 min-h-screen flex flex-row items-start p-6 gap-6">
 
   <!-- ホームカード -->
   <div id="homepage-wrapper" class="relative w-[320px]">
@@ -93,7 +100,7 @@
   </div>
 
   <!-- 電気代カード -->
-  <div id="card-area" class="relative w-full flex justify-center mt-2"></div>
+  <div id="card-area" class="relative flex justify-center"></div>
 
   <script>
     function toggleMenu() {
@@ -115,7 +122,7 @@
       const area = document.getElementById("card-area");
       const wrapper = document.createElement("div");
       wrapper.id = "card-wrapper";
-      wrapper.className = "relative max-w-[480px] mx-auto mb-[10px]";
+      wrapper.className = "relative w-[480px]";
 
       const today = new Date();
       const yyyy = today.getFullYear();
@@ -128,43 +135,51 @@
       card.className = "relative bg-gray-100 w-full rounded-2xl shadow-xl border border-gray-400 p-5 text-sm transform -rotate-6 z-10";
       card.innerHTML = `
         <div class="flex items-center justify-between mb-2 -mt-2">
-          <div class="text-base font-semibold">電気代</div>
+          <div class="text-base font-semibold flex items-center gap-2">
+            電気代
+            <span class="text-purple-600 bg-purple-100 text-xs font-medium px-2 py-0.5 rounded-full">ボタンA</span>
+            <span class="text-purple-600 bg-purple-100 text-xs font-medium px-2 py-0.5 rounded-full">ボタンB</span>
+          </div>
           <button onclick="removeCard()" class="text-black text-xl">×</button>
         </div>
 
         <!-- テーブル -->
-        <div id="table-section" class="relative mb-6">
+        <div class="relative mb-6">
           <div class="absolute top-[20px] left-0 w-full h-full hatch-bg rounded-2xl shadow-inner z-0"></div>
-          <div class="relative bg-white rounded-2xl border border-gray-400 p-4 z-10 translate-x-[12px] shadow-lg shadow-gray-400/40 mt-[20px] mb-[20px]">
-            <button onclick="document.getElementById('table-section').style.display='none'" class="absolute top-2 right-3 text-black">×</button>
-            <div class="overflow-x-auto max-h-[240px] overflow-y-auto">
-              <table class="text-sm text-gray-700">
-                <thead>
-                  <tr class="bg-gray-50 text-gray-600 font-medium">
-                    <th>年月</th>
-                    <th>金額</th>
-                    <th>入力日</th>
-                  </tr>
-                </thead>
-                <tbody id="electricity-tbody" class="bg-white">
-                  <tr>
-                    <td><input type="text" value="${todayMonth}" /></td>
-                    <td><input type="text" placeholder="\u00a50" /></td>
-                    <td><input type="text" value="${todayDate}" /></td>
-                  </tr>
-                </tbody>
-              </table>
+          <div class="relative bg-white rounded-2xl border border-gray-400 p-4 z-10 translate-x-[12px] shadow-lg shadow-gray-400/40 mt-[20px] mb-[40px]">
+            <button onclick="document.getElementById('table-content').classList.toggle('content-hidden')" class="absolute top-2 right-3 text-black">×</button>
+            <div id="table-content">
+              <div class="overflow-x-auto max-h-[240px] overflow-y-auto">
+                <table class="text-sm text-gray-700">
+                  <thead>
+                    <tr class="bg-gray-50 text-gray-600 font-medium">
+                      <th>年月</th>
+                      <th>金額</th>
+                      <th>入力日</th>
+                    </tr>
+                  </thead>
+                  <tbody id="electricity-tbody" class="bg-white">
+                    <tr>
+                      <td><input type="text" value="${todayMonth}" /></td>
+                      <td><input type="text" placeholder="\u00a50" /></td>
+                      <td><input type="text" value="${todayDate}" /></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
 
         <!-- グラフ -->
-        <div id="graph-section" class="relative mt-[8px]">
+        <div class="relative mt-[8px]">
           <div class="absolute top-[20px] left-0 w-full h-full hatch-bg rounded-2xl shadow-inner z-0"></div>
-          <div class="relative bg-white rounded-2xl border border-gray-400 p-4 z-10 translate-x-[12px] shadow-lg shadow-gray-400/40 mt-[20px] mb-[40px]">
-            <button onclick="document.getElementById('graph-section').style.display='none'" class="absolute top-2 right-3 text-black">×</button>
-            <div id="graph-legend" class="flex flex-wrap gap-3 text-xs font-semibold mb-2"></div>
-            <canvas id="electricityChart" width="400" height="250"></canvas>
+          <div class="relative bg-white rounded-2xl border border-gray-400 p-4 z-10 translate-x-[12px] shadow-lg shadow-gray-400/40 mt-[20px] mb-[20px]">
+            <button onclick="document.getElementById('graph-content').classList.toggle('content-hidden')" class="absolute top-2 right-3 text-black">×</button>
+            <div id="graph-content">
+              <div id="graph-legend" class="flex flex-wrap gap-3 text-xs font-semibold mb-2"></div>
+              <canvas id="electricityChart" width="400" height="250"></canvas>
+            </div>
           </div>
         </div>
       `;
