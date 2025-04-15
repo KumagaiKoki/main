@@ -30,6 +30,7 @@
     .cursor {
       display: inline-block;
       width: 2px;
+      height: 1em;
       background-color: white;
       animation: blink 0.7s steps(1) infinite;
       position: absolute;
@@ -104,8 +105,8 @@
     function typeCode() {
       if (j < codeText.length) {
         codeTarget.textContent += codeText.charAt(j);
-        updateCursorPosition();
         j++;
+        updateCursorPosition();
         setTimeout(typeCode, 20);
       }
     }
@@ -115,9 +116,9 @@
       range.selectNodeContents(codeTarget);
       range.collapse(false);
       const rect = range.getBoundingClientRect();
-      const containerRect = codeTarget.getBoundingClientRect();
-      cursor.style.top = `${rect.top - containerRect.top}px`;
-      cursor.style.left = `${rect.left - containerRect.left}px`;
+      const wrapperRect = document.getElementById("htmlCodeWrapper").getBoundingClientRect();
+      cursor.style.top = `${rect.top - wrapperRect.top}px`;
+      cursor.style.left = `${rect.left - wrapperRect.left}px`;
     }
 
     window.onload = () => {
