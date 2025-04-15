@@ -95,15 +95,13 @@
         const scrollFraction = Math.min(scrollY / maxScroll, 1);
 
         const scale = 1 + scrollFraction * 9;
-        const opacity = 1 - scrollFraction;
-        const bgVal = Math.floor(255 * scrollFraction);
-        const textColor = 255 - bgVal;
+        const blendGray = Math.floor(30 + scrollFraction * (200 - 30)); // from dark gray to light gray
 
         target.style.transform = `scale(${scale})`;
-        target.style.opacity = opacity;
-        target.style.color = `rgb(${textColor}, ${textColor}, ${textColor})`;
+        target.style.opacity = 1 - scrollFraction;
+        target.style.color = `rgb(${blendGray}, ${blendGray}, ${blendGray})`;
 
-        document.body.style.backgroundColor = `rgb(${bgVal}, ${bgVal}, ${bgVal})`;
+        document.body.style.backgroundColor = `rgb(${blendGray}, ${blendGray}, ${blendGray})`;
 
         if (scrollFraction >= 1) {
           box.classList.add("show");
