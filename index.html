@@ -9,11 +9,17 @@
       background-color: black;
       color: white;
       font-family: Consolas, monospace;
+      margin: 0;
+      height: 200vh; /* enable scroll */
+    }
+
+    .center-container {
+      height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
-      margin: 0;
+      overflow: hidden;
+      position: relative;
     }
 
     .typing {
@@ -22,16 +28,24 @@
       border-right: 2px solid white;
       animation: blink 0.7s steps(1) infinite;
       overflow: hidden;
+      transition: transform 0.8s ease-in-out;
     }
 
     @keyframes blink {
       0%, 100% { border-color: white; }
       50% { border-color: transparent; }
     }
+
+    .zoomed {
+      transform: scale(2) translateX(-1.2em);
+      transform-origin: center;
+    }
   </style>
 </head>
 <body>
-  <div id="type" class="typing"></div>
+  <div class="center-container">
+    <div id="type" class="typing"></div>
+  </div>
 
   <script>
     const text = "Hello World!!";
@@ -47,7 +61,20 @@
       }
     }
 
-    window.onload = typeText;
+    window.onload = () => {
+      typeText();
+
+      // scroll detection for zoom effect
+      window.addEventListener("scroll", () => {
+        const scrolled = window.scrollY;
+        const windowHeight = window.innerHeight;
+        if (scrolled > windowHeight / 2) {
+          target.classList.add("zoomed");
+        } else {
+          target.classList.remove("zoomed");
+        }
+      });
+    };
   </script>
 </body>
 </html>
