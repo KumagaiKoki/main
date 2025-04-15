@@ -10,7 +10,7 @@
       color: white;
       font-family: Consolas, monospace;
       margin: 0;
-      height: 200vh; /* enable scroll */
+      height: 200vh;
     }
 
     .center-container {
@@ -29,17 +29,13 @@
       border-right: 2px solid white;
       animation: blink 0.7s steps(1) infinite;
       overflow: hidden;
-      transition: transform 1.2s ease-in-out, opacity 1.2s ease-in-out;
+      transition: transform 0.1s linear, opacity 0.1s linear;
+      transform-origin: center;
     }
 
     @keyframes blink {
       0%, 100% { border-color: white; }
       50% { border-color: transparent; }
-    }
-
-    .zoomed {
-      transform: scale(2);
-      opacity: 0;
     }
 
     .orange-box {
@@ -51,7 +47,7 @@
       left: 50%;
       transform: translate(-50%, -50%);
       opacity: 0;
-      transition: opacity 1s ease-in-out;
+      transition: opacity 0.3s ease-in-out;
       z-index: 10;
     }
 
@@ -68,16 +64,19 @@
 
   <script>
     const text = "Hello World!!";
-    const speed = 100; // ms per character
+    const speed = 100;
     let i = 0;
     const target = document.getElementById("type");
     const box = document.getElementById("orangeBox");
+    let typingFinished = false;
 
     function typeText() {
       if (i < text.length) {
         target.textContent += text.charAt(i);
         i++;
         setTimeout(typeText, speed);
+      } else {
+        typingFinished = true;
       }
     }
 
@@ -85,13 +84,21 @@
       typeText();
 
       window.addEventListener("scroll", () => {
-        const scrolled = window.scrollY;
-        const windowHeight = window.innerHeight;
-        if (scrolled > windowHeight / 2) {
-          target.classList.add("zoomed");
+        if (!typingFinished) return;
+
+        const scrollY = window.scrollY;
+        const maxScroll = window.innerHeight;
+        const scrollFraction = Math.min(scrollY / maxScroll, 1);
+
+        const scale = 1 + scrollFraction; // from 1 to 2
+        const opacity = 1 - scrollFraction; // from 1 to 0
+
+        target.style.transform = `scale(${scale})`;
+        target.style.opacity = opacity;
+
+        if (scrollFraction >= 1) {
           box.classList.add("show");
         } else {
-          target.classList.remove("zoomed");
           box.classList.remove("show");
         }
       });
