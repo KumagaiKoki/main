@@ -13,11 +13,12 @@
     }
 
     .container {
-      height: 100vh;
+      min-height: 200vh;
       display: flex;
       justify-content: center;
-      align-items: center;
+      align-items: start;
       flex-direction: column;
+      padding: 100px;
     }
 
     .typing {
@@ -46,7 +47,8 @@
 <body>
   <div class="container">
     <div id="hello" class="typing fade-out"></div>
-    <div id="htmlCode" class="typing" style="margin-top: 60vh;"></div>
+    <div style="height: 100px;"></div>
+    <div id="htmlCode" class="typing"></div>
   </div>
 
   <script>
@@ -79,7 +81,7 @@
     };
 
     window.addEventListener("scroll", () => {
-      if (window.scrollY > 50) {
+      if (window.scrollY > 50 && !hello.classList.contains("hidden")) {
         hello.classList.add("hidden");
         if (codeTarget.textContent === "") {
           typeCode();
