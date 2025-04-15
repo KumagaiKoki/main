@@ -9,122 +9,45 @@
       background-color: black;
       color: white;
       font-family: Consolas, monospace;
-      margin: 0;
-    }
-
-    .container {
-      min-height: 200vh;
       display: flex;
       justify-content: center;
-      align-items: start;
-      flex-direction: column;
-      padding: 100px;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
     }
 
     .typing {
       font-size: 2rem;
-      white-space: pre-wrap;
-      position: relative;
-    }
-
-    .cursor {
-      display: inline-block;
-      width: 2px;
-      height: 1em;
-      background-color: white;
+      white-space: nowrap;
+      border-right: 2px solid white;
       animation: blink 0.7s steps(1) infinite;
-      vertical-align: bottom;
-    }
-
-    .fade-out {
-      opacity: 1;
-      transition: opacity 1s ease-out;
-    }
-
-    .fade-out.hidden {
-      opacity: 0;
+      overflow: hidden;
     }
 
     @keyframes blink {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0; }
+      0%, 100% { border-color: white; }
+      50% { border-color: transparent; }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div id="hello" class="typing fade-out"></div>
-    <div style="height: 100px;"></div>
-    <div id="htmlCodeWrapper" class="typing">
-      <span id="htmlCode"></span><span id="cursor" class="cursor">&nbsp;</span>
-    </div>
-  </div>
+  <div id="type" class="typing"></div>
 
   <script>
-    const hello = document.getElementById("hello");
-    const codeTarget = document.getElementById("htmlCode");
-    const cursor = document.getElementById("cursor");
-
-    const helloText = "Hello World!!";
-    const codeText = `<!DOCTYPE html>
-<html lang=\"ja\">
-<head>
-  <meta charset=\"UTF-8\">
-  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">
-  <title>Auto Typing UI</title>
-  <style>
-    body {
-      background-color: black;
-      color: white;
-      font-family: Consolas, monospace;
-      margin: 0;
-    }
-
-    .container {
-      min-height: 200vh;
-      display: flex;
-      justify-content: center;
-      align-items: start;
-      flex-direction: column;
-      padding: 100px;
-    }`;
-
+    const text = "Hello World!!";
+    const speed = 100; // ms per character
     let i = 0;
-    let helloDone = false;
-    function typeHello() {
-      if (i < helloText.length) {
-        hello.textContent += helloText.charAt(i);
+    const target = document.getElementById("type");
+
+    function typeText() {
+      if (i < text.length) {
+        target.textContent += text.charAt(i);
         i++;
-        setTimeout(typeHello, 100);
-      } else {
-        helloDone = true;
+        setTimeout(typeText, speed);
       }
     }
 
-    let j = 0;
-    function typeCode() {
-      if (j < codeText.length) {
-        const char = codeText.charAt(j);
-        codeTarget.textContent += char;
-        cursor.style.display = 'inline-block';
-        codeTarget.appendChild(cursor);
-        j++;
-        setTimeout(typeCode, 20);
-      }
-    }
-
-    window.onload = () => {
-      typeHello();
-    };
-
-    window.addEventListener("scroll", () => {
-      if (window.scrollY > 50 && !hello.classList.contains("hidden") && helloDone) {
-        hello.classList.add("hidden");
-        if (codeTarget.textContent === "") {
-          typeCode();
-        }
-      }
-    });
+    window.onload = typeText;
   </script>
 </body>
 </html>
