@@ -33,7 +33,7 @@
       height: 1em;
       background-color: white;
       animation: blink 0.7s steps(1) infinite;
-      position: absolute;
+      vertical-align: bottom;
     }
 
     .fade-out {
@@ -56,7 +56,7 @@
     <div id="hello" class="typing fade-out"></div>
     <div style="height: 100px;"></div>
     <div id="htmlCodeWrapper" class="typing">
-      <span id="htmlCode"></span><span id="cursor" class="cursor"></span>
+      <span id="htmlCode"></span><span id="cursor" class="cursor">&nbsp;</span>
     </div>
   </div>
 
@@ -104,21 +104,13 @@
     let j = 0;
     function typeCode() {
       if (j < codeText.length) {
-        codeTarget.textContent += codeText.charAt(j);
+        const char = codeText.charAt(j);
+        codeTarget.textContent += char;
+        cursor.style.display = 'inline-block';
+        codeTarget.appendChild(cursor);
         j++;
-        updateCursorPosition();
         setTimeout(typeCode, 20);
       }
-    }
-
-    function updateCursorPosition() {
-      const range = document.createRange();
-      range.selectNodeContents(codeTarget);
-      range.collapse(false);
-      const rect = range.getBoundingClientRect();
-      const wrapperRect = document.getElementById("htmlCodeWrapper").getBoundingClientRect();
-      cursor.style.top = `${rect.top - wrapperRect.top}px`;
-      cursor.style.left = `${rect.left - wrapperRect.left}px`;
     }
 
     window.onload = () => {
