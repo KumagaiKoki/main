@@ -31,15 +31,10 @@
       border-right: 2px solid currentColor;
       animation: blink 0.7s steps(1) infinite;
       overflow: hidden;
-      transition: transform 0.1s linear, opacity 0.1s linear, color 0.3s linear, border-right 0.2s ease;
+      transition: transform 0.1s linear, opacity 0.1s linear, color 0.3s linear, border-right 0.1s linear;
       transform-origin: center;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
-    }
-
-    .typing.no-cursor {
-      border-right: none;
-      animation: none;
     }
 
     @keyframes blink {
@@ -107,10 +102,13 @@
         target.style.color = `rgb(${blendGray}, ${blendGray}, ${blendGray})`;
         document.body.style.backgroundColor = `rgb(${blendGray}, ${blendGray}, ${blendGray})`;
 
+        // remove cursor when zooming starts
         if (scrollFraction > 0) {
-          target.classList.add("no-cursor");
+          target.style.borderRight = "none";
+          target.style.animation = "none";
         } else {
-          target.classList.remove("no-cursor");
+          target.style.borderRight = "2px solid currentColor";
+          target.style.animation = "blink 0.7s steps(1) infinite";
         }
 
         if (scrollFraction >= 1) {
