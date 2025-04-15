@@ -90,7 +90,7 @@
         const maxScroll = window.innerHeight;
         const scrollFraction = Math.min(scrollY / maxScroll, 1);
 
-        const scale = 1 + scrollFraction; // from 1 to 2
+        const scale = 1 + scrollFraction * 9; // from 1 to 10
         const opacity = 1 - scrollFraction; // from 1 to 0
 
         target.style.transform = `scale(${scale})`;
