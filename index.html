@@ -28,17 +28,17 @@
     .typing {
       font-size: 2rem;
       white-space: nowrap;
-      border-right: 2px solid white;
+      border-right: 2px solid currentColor;
       animation: blink 0.7s steps(1) infinite;
       overflow: hidden;
-      transition: transform 0.1s linear, opacity 0.1s linear;
+      transition: transform 0.1s linear, opacity 0.1s linear, color 0.3s linear;
       transform-origin: center;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
     }
 
     @keyframes blink {
-      0%, 100% { border-color: white; }
+      0%, 100% { border-color: currentColor; }
       50% { border-color: transparent; }
     }
 
@@ -94,14 +94,15 @@
         const maxScroll = window.innerHeight;
         const scrollFraction = Math.min(scrollY / maxScroll, 1);
 
-        const scale = 1 + scrollFraction * 9; // from 1 to 10
-        const opacity = 1 - scrollFraction; // from 1 to 0
+        const scale = 1 + scrollFraction * 9;
+        const opacity = 1 - scrollFraction;
+        const bgVal = Math.floor(255 * scrollFraction);
+        const textColor = 255 - bgVal;
 
         target.style.transform = `scale(${scale})`;
         target.style.opacity = opacity;
+        target.style.color = `rgb(${textColor}, ${textColor}, ${textColor})`;
 
-        // Background color transition: black to white
-        const bgVal = Math.floor(255 * scrollFraction);
         document.body.style.backgroundColor = `rgb(${bgVal}, ${bgVal}, ${bgVal})`;
 
         if (scrollFraction >= 1) {
