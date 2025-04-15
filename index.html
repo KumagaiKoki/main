@@ -31,10 +31,15 @@
       border-right: 2px solid currentColor;
       animation: blink 0.7s steps(1) infinite;
       overflow: hidden;
-      transition: transform 0.1s linear, opacity 0.1s linear, color 0.3s linear;
+      transition: transform 0.1s linear, opacity 0.1s linear, color 0.3s linear, border-right 0.2s ease;
       transform-origin: center;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
+    }
+
+    .typing.no-cursor {
+      border-right: none;
+      animation: none;
     }
 
     @keyframes blink {
@@ -95,13 +100,18 @@
         const scrollFraction = Math.min(scrollY / maxScroll, 1);
 
         const scale = 1 + scrollFraction * 9;
-        const blendGray = Math.floor(30 + scrollFraction * (200 - 30)); // from dark gray to light gray
+        const blendGray = Math.floor(30 + scrollFraction * (200 - 30));
 
         target.style.transform = `scale(${scale})`;
         target.style.opacity = 1 - scrollFraction;
         target.style.color = `rgb(${blendGray}, ${blendGray}, ${blendGray})`;
-
         document.body.style.backgroundColor = `rgb(${blendGray}, ${blendGray}, ${blendGray})`;
+
+        if (scrollFraction > 0) {
+          target.classList.add("no-cursor");
+        } else {
+          target.classList.remove("no-cursor");
+        }
 
         if (scrollFraction >= 1) {
           box.classList.add("show");
