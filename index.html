@@ -29,7 +29,7 @@
       border-right: 2px solid white;
       animation: blink 0.7s steps(1) infinite;
       overflow: hidden;
-      transition: transform 0.8s ease-in-out;
+      transition: transform 1.2s ease-in-out, opacity 1.2s ease-in-out;
     }
 
     @keyframes blink {
@@ -38,14 +38,32 @@
     }
 
     .zoomed {
-      transform: scale(2) translateX(-1.2em);
-      transform-origin: center;
+      transform: scale(2);
+      opacity: 0;
+    }
+
+    .orange-box {
+      width: 100px;
+      height: 100px;
+      background-color: orange;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+      z-index: 10;
+    }
+
+    .orange-box.show {
+      opacity: 1;
     }
   </style>
 </head>
 <body>
   <div class="center-container">
     <div id="type" class="typing"></div>
+    <div id="orangeBox" class="orange-box"></div>
   </div>
 
   <script>
@@ -53,6 +71,7 @@
     const speed = 100; // ms per character
     let i = 0;
     const target = document.getElementById("type");
+    const box = document.getElementById("orangeBox");
 
     function typeText() {
       if (i < text.length) {
@@ -65,14 +84,15 @@
     window.onload = () => {
       typeText();
 
-      // scroll detection for zoom effect
       window.addEventListener("scroll", () => {
         const scrolled = window.scrollY;
         const windowHeight = window.innerHeight;
         if (scrolled > windowHeight / 2) {
           target.classList.add("zoomed");
+          box.classList.add("show");
         } else {
           target.classList.remove("zoomed");
+          box.classList.remove("show");
         }
       });
     };
