@@ -24,9 +24,15 @@
     .typing {
       font-size: 2rem;
       white-space: pre-wrap;
-      border-right: 2px solid white;
+      position: relative;
+    }
+
+    .cursor {
+      display: inline-block;
+      width: 2px;
+      background-color: white;
       animation: blink 0.7s steps(1) infinite;
-      overflow: hidden;
+      position: absolute;
     }
 
     .fade-out {
@@ -39,8 +45,8 @@
     }
 
     @keyframes blink {
-      0%, 100% { border-color: white; }
-      50% { border-color: transparent; }
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
     }
   </style>
 </head>
@@ -48,19 +54,22 @@
   <div class="container">
     <div id="hello" class="typing fade-out"></div>
     <div style="height: 100px;"></div>
-    <div id="htmlCode" class="typing"></div>
+    <div id="htmlCodeWrapper" class="typing">
+      <span id="htmlCode"></span><span id="cursor" class="cursor"></span>
+    </div>
   </div>
 
   <script>
     const hello = document.getElementById("hello");
     const codeTarget = document.getElementById("htmlCode");
+    const cursor = document.getElementById("cursor");
 
     const helloText = "Hello World!!";
     const codeText = `<!DOCTYPE html>
-<html lang="ja">
+<html lang=\"ja\">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset=\"UTF-8\">
+  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">
   <title>Auto Typing UI</title>
   <style>
     body {
@@ -95,9 +104,20 @@
     function typeCode() {
       if (j < codeText.length) {
         codeTarget.textContent += codeText.charAt(j);
+        updateCursorPosition();
         j++;
         setTimeout(typeCode, 20);
       }
+    }
+
+    function updateCursorPosition() {
+      const range = document.createRange();
+      range.selectNodeContents(codeTarget);
+      range.collapse(false);
+      const rect = range.getBoundingClientRect();
+      const containerRect = codeTarget.getBoundingClientRect();
+      cursor.style.top = `${rect.top - containerRect.top}px`;
+      cursor.style.left = `${rect.left - containerRect.left}px`;
     }
 
     window.onload = () => {
