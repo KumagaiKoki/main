@@ -34,7 +34,7 @@
   </style>
 </head>
 <body>
-  <div id="type" class="typing blinking"></div>
+  <div id="type" class="typing"></div>
 
   <script>
     const text = "Hello World!!";
@@ -50,11 +50,18 @@
       }
     }
 
-    // 最初に3回点滅（= 3 * 700ms）
-    window.onload = () => {
+    function startTypingAfterBlink() {
+      target.classList.add("blinking");
       setTimeout(() => {
+        target.classList.remove("blinking"); // 一旦停止
         typeText();
+        target.classList.add("blinking"); // タイピング中・後も点滅
       }, 3 * 700);
+    }
+
+    window.onload = () => {
+      target.classList.add("blinking");
+      startTypingAfterBlink();
     };
   </script>
 </body>
