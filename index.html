@@ -42,12 +42,13 @@
     function blinkCursor(times, callback) {
       target.style.animation = "blink 0.7s steps(1) infinite";
       setTimeout(() => {
-        target.style.animation = "none"; // 点滅を止める
+        target.style.animation = "blink 0.7s steps(1) infinite"; // 再び有効化（必要であれば）
         callback();
       }, times * 700);
     }
 
     function typeText() {
+      target.style.animation = "blink 0.7s steps(1) infinite"; // タイピング中にも点滅継続
       if (i < text.length) {
         target.textContent += text.charAt(i);
         i++;
