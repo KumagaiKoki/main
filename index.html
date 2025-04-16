@@ -72,15 +72,16 @@
       fill: none;
       stroke: gray;
       stroke-width: 3;
-      stroke-dasharray: 960;
-      stroke-dashoffset: 480;
-      animation: draw-frame 1.5s ease-out forwards;
+      stroke-dasharray: 1440;
+      stroke-dashoffset: 720;
+      animation: draw-frame 2s ease-out forwards;
+      transform: rotate(180deg);
       transform-origin: center;
     }
 
     @keyframes draw-frame {
       0% {
-        stroke-dashoffset: 480;
+        stroke-dashoffset: 720;
       }
       100% {
         stroke-dashoffset: 0;
