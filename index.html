@@ -34,7 +34,7 @@
   </style>
 </head>
 <body>
-  <div id="type" class="typing"></div>
+  <div id="type" class="typing blinking">&#8203;</div>
 
   <script>
     const text = "Hello World!!";
@@ -43,7 +43,9 @@
     const target = document.getElementById("type");
 
     function typeText() {
-      target.textContent = ""; // ゼロ幅スペースをクリア
+      if (i === 0) {
+        target.textContent = "";
+      }
       if (i < text.length) {
         target.textContent += text.charAt(i);
         i++;
@@ -52,7 +54,6 @@
     }
 
     function startBlinkingBeforeTyping(duration, callback) {
-      target.textContent = "\u200B"; // ゼロ幅スペースでカーソル点滅を視覚化
       target.classList.add("blinking");
       setTimeout(() => {
         callback();
