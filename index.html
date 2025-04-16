@@ -20,7 +20,6 @@
       font-size: 2rem;
       white-space: nowrap;
       border-right: 2px solid white;
-      animation: blink 0.7s steps(1) infinite;
       overflow: hidden;
     }
 
@@ -39,6 +38,15 @@
     let i = 0;
     const target = document.getElementById("type");
 
+    // カーソルだけの点滅を3回（0.7s * 3）
+    function blinkCursor(times, callback) {
+      target.style.animation = "blink 0.7s steps(1) infinite";
+      setTimeout(() => {
+        target.style.animation = "none"; // 点滅を止める
+        callback();
+      }, times * 700);
+    }
+
     function typeText() {
       if (i < text.length) {
         target.textContent += text.charAt(i);
@@ -47,7 +55,9 @@
       }
     }
 
-    window.onload = typeText;
+    window.onload = () => {
+      blinkCursor(3, typeText);
+    };
   </script>
 </body>
 </html>
