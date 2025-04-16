@@ -17,7 +17,7 @@
     }
 
     body {
-      min-height: 200vh; /* ページ全体を縦スクロール可能に */
+      min-height: 200vh;
     }
 
     .container {
@@ -49,12 +49,44 @@
     .editor-frame {
       display: none;
       margin-top: 4pt;
-      border: 3px solid gray;
       background-color: #1e1e1e;
-      width: 36ch; /* 固定幅に変更 */
+      width: 36ch;
       padding: 1rem;
-      border-radius: 12px; /* 角を丸く */
+      border-radius: 12px;
       box-sizing: border-box;
+      border: 3px solid transparent;
+      background-clip: padding-box;
+      position: relative;
+    }
+
+    .editor-frame::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 0;
+      height: 3px;
+      background: gray;
+      transform: translateX(-50%);
+      animation: border-expand 0.6s ease-out forwards;
+      border-radius: 2px;
+    }
+
+    @keyframes border-expand {
+      0% {
+        width: 0;
+        left: 50%;
+      }
+      50% {
+        width: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      100% {
+        width: 100%;
+        left: 0;
+        transform: none;
+      }
     }
 
     @media (max-width: 768px) {
@@ -72,7 +104,7 @@
 
   <script>
     const text = "Hello World!!";
-    const speed = 100; // ms per character
+    const speed = 100;
     let i = 0;
     const target = document.getElementById("type");
     const editorFrame = document.getElementById("editorFrame");
@@ -88,7 +120,7 @@
         setTimeout(typeText, speed);
       } else {
         typingFinished = true;
-        document.documentElement.style.overflowY = "auto"; // スクロールを許可
+        document.documentElement.style.overflowY = "auto";
       }
     }
 
