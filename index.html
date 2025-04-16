@@ -90,6 +90,17 @@
       display: none;
       gap: 8px;
       z-index: 1;
+      opacity: 0;
+      transform: scale(0.5);
+      animation: pop-in 0.6s ease forwards;
+      animation-delay: 1.5s; /* Matches the frame draw time */
+    }
+
+    @keyframes pop-in {
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
     }
 
     .dot {
@@ -97,18 +108,29 @@
       height: 12px;
       border-radius: 50%;
       display: inline-block;
+      transform: scale(0);
+      animation: dot-pop 0.3s ease-out forwards;
     }
 
-    .red {
+    .dot.red {
       background-color: #ff5f56;
+      animation-delay: 1.6s;
     }
 
-    .yellow {
+    .dot.yellow {
       background-color: #ffbd2e;
+      animation-delay: 1.75s;
     }
 
-    .green {
+    .dot.green {
       background-color: #27c93f;
+      animation-delay: 1.9s;
+    }
+
+    @keyframes dot-pop {
+      to {
+        transform: scale(1);
+      }
     }
 
     @media (max-width: 768px) {
@@ -174,9 +196,7 @@
     window.addEventListener('scroll', () => {
       if (typingFinished) {
         editorFrame.style.display = 'block';
-        setTimeout(() => {
-          windowControls.style.display = 'flex';
-        }, 1500); // 枠線アニメーション（1.5s）終了後に表示
+        windowControls.style.display = 'flex';
       }
     });
   </script>
