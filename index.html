@@ -50,9 +50,7 @@
       display: none;
       margin-top: 4pt;
       width: 36ch;
-      padding: 1rem;
-      border-radius: 12px;
-      box-sizing: border-box;
+      height: 6rem;
       position: relative;
     }
 
@@ -62,7 +60,6 @@
       left: 0;
       width: 100%;
       height: 100%;
-      border-radius: 12px;
       pointer-events: none;
     }
 
@@ -75,16 +72,13 @@
       fill: none;
       stroke: gray;
       stroke-width: 3;
-      stroke-dasharray: 400;
-      stroke-dashoffset: 400;
+      stroke-dasharray: 960; /* = (36ch*10px + 6rem*16px) * 2 approximation */
+      stroke-dashoffset: 960;
       animation: draw-frame 1.5s ease-out forwards;
     }
 
     @keyframes draw-frame {
-      0% {
-        stroke-dashoffset: 400;
-      }
-      100% {
+      to {
         stroke-dashoffset: 0;
       }
     }
@@ -98,11 +92,11 @@
 </head>
 <body>
   <div class="container">
-    <div id="type" class="typing blinking">​</div>
+    <div id="type" class="typing blinking">&#8203;</div>
     <div id="editorFrame" class="editor-frame">
       <div class="editor-border">
-        <svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
-          <rect x="2" y="2" width="96" height="96" rx="12" ry="12" class="path" />
+        <svg viewBox="0 0 360 96" preserveAspectRatio="xMidYMid meet">
+          <rect x="1.5" y="1.5" width="357" height="93" rx="12" ry="12" class="path" />
         </svg>
       </div>
     </div>
