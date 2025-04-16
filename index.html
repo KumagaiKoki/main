@@ -32,7 +32,7 @@
     .typing {
       font-size: 2rem;
       white-space: nowrap;
-      border-right: 2px solid white;
+      border-right: 2px solid orange; /* カーソル色をオレンジに */
       overflow: hidden;
       position: relative;
     }
@@ -42,7 +42,7 @@
     }
 
     @keyframes blink {
-      0%, 100% { border-color: white; }
+      0%, 100% { border-color: orange; }
       50% { border-color: transparent; }
     }
 
@@ -103,7 +103,7 @@
     <div id="type" class="typing blinking">&#8203;</div>
     <div id="editorFrame" class="editor-frame">
       <div class="editor-border">
-        <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+        <svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
           <rect x="1.5" y="1.5" width="97" height="97" rx="12" ry="12" class="path" />
         </svg>
       </div>
