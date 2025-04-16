@@ -13,6 +13,7 @@
       padding: 0;
       height: 100%;
       overflow-x: hidden;
+      overflow-y: hidden; /* 最初は縦スクロール禁止 */
     }
 
     body {
@@ -50,7 +51,7 @@
       margin-top: 4pt;
       border: 3px solid gray;
       background-color: #1e1e1e;
-      width: 30ch; /* 固定幅に変更 */
+      width: 36ch; /* 固定幅に変更 */
       padding: 1rem;
       border-radius: 12px; /* 角を丸く */
       box-sizing: border-box;
@@ -87,6 +88,7 @@
         setTimeout(typeText, speed);
       } else {
         typingFinished = true;
+        document.documentElement.style.overflowY = "auto"; // スクロールを許可
       }
     }
 
