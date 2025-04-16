@@ -23,6 +23,10 @@
       overflow: hidden;
     }
 
+    .blinking {
+      animation: blink 0.7s steps(1) infinite;
+    }
+
     @keyframes blink {
       0%, 100% { border-color: white; }
       50% { border-color: transparent; }
@@ -30,7 +34,7 @@
   </style>
 </head>
 <body>
-  <div id="type" class="typing"></div>
+  <div id="type" class="typing blinking"></div>
 
   <script>
     const text = "Hello World!!";
@@ -38,17 +42,7 @@
     let i = 0;
     const target = document.getElementById("type");
 
-    // カーソルだけの点滅を3回（0.7s * 3）
-    function blinkCursor(times, callback) {
-      target.style.animation = "blink 0.7s steps(1) infinite";
-      setTimeout(() => {
-        target.style.animation = "blink 0.7s steps(1) infinite"; // 再び有効化（必要であれば）
-        callback();
-      }, times * 700);
-    }
-
     function typeText() {
-      target.style.animation = "blink 0.7s steps(1) infinite"; // タイピング中にも点滅継続
       if (i < text.length) {
         target.textContent += text.charAt(i);
         i++;
@@ -56,8 +50,11 @@
       }
     }
 
+    // 最初に3回点滅（= 3 * 700ms）
     window.onload = () => {
-      blinkCursor(3, typeText);
+      setTimeout(() => {
+        typeText();
+      }, 3 * 700);
     };
   </script>
 </body>
