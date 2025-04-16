@@ -13,7 +13,7 @@
       padding: 0;
       height: 100%;
       overflow-x: hidden;
-      overflow-y: hidden; /* 最初は縦スクロール禁止 */
+      overflow-y: hidden;
     }
 
     body {
@@ -32,7 +32,7 @@
     .typing {
       font-size: 2rem;
       white-space: nowrap;
-      border-right: 2px solid orange; /* カーソル色をオレンジに */
+      border-right: 2px solid orange;
       overflow: hidden;
       position: relative;
     }
@@ -55,6 +55,7 @@
       border-radius: 12px;
       box-sizing: border-box;
       position: relative;
+      border: 4px solid transparent; /* 枠線描画領域と一致させる */
     }
 
     .editor-border {
@@ -75,11 +76,10 @@
     .path {
       fill: none;
       stroke: gray;
-      stroke-width: 3;
+      stroke-width: 4; /* 太くする */
       stroke-dasharray: 400;
       stroke-dashoffset: 400;
       animation: draw-frame 1.5s ease-out forwards;
-      transform-origin: center top;
     }
 
     @keyframes draw-frame {
@@ -104,7 +104,7 @@
     <div id="editorFrame" class="editor-frame">
       <div class="editor-border">
         <svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
-          <rect x="1.5" y="1.5" width="97" height="97" rx="12" ry="12" class="path" />
+          <rect x="2" y="2" width="96" height="96" rx="12" ry="12" class="path" />
         </svg>
       </div>
     </div>
