@@ -49,13 +49,11 @@
     .editor-frame {
       display: none;
       margin-top: 4pt;
-      background-color: #1e1e1e;
       width: 36ch;
       padding: 1rem;
       border-radius: 12px;
       box-sizing: border-box;
       position: relative;
-      border: 4px solid transparent; /* 枠線描画領域と一致させる */
     }
 
     .editor-border {
@@ -76,10 +74,11 @@
     .path {
       fill: none;
       stroke: gray;
-      stroke-width: 4; /* 太くする */
+      stroke-width: 3;
       stroke-dasharray: 400;
       stroke-dashoffset: 400;
       animation: draw-frame 1.5s ease-out forwards;
+      transform-origin: center top;
     }
 
     @keyframes draw-frame {
@@ -104,7 +103,7 @@
     <div id="editorFrame" class="editor-frame">
       <div class="editor-border">
         <svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
-          <rect x="2" y="2" width="96" height="96" rx="12" ry="12" class="path" />
+          <path d="M50,0 H100 V100 H0 V0 H50" class="path" />
         </svg>
       </div>
     </div>
