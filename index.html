@@ -43,6 +43,7 @@
     const target = document.getElementById("type");
 
     function typeText() {
+      target.textContent = ""; // ゼロ幅スペースをクリア
       if (i < text.length) {
         target.textContent += text.charAt(i);
         i++;
@@ -51,6 +52,7 @@
     }
 
     function startBlinkingBeforeTyping(duration, callback) {
+      target.textContent = "\u200B"; // ゼロ幅スペースでカーソル点滅を視覚化
       target.classList.add("blinking");
       setTimeout(() => {
         callback();
