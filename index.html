@@ -5,13 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Auto Typing UI</title>
   <style>
-    body {
+    html, body {
       background-color: black;
       color: white;
       font-family: Consolas, monospace;
       margin: 0;
-      height: 100vh;
-      overflow-y: scroll;
+      height: 100%;
+      overflow-x: hidden;
     }
 
     .container {
@@ -39,17 +39,29 @@
 
     .grid-overlay {
       display: none;
-      width: 100%;
+      width: 100vw;
       height: 150vh;
       background-image:
         linear-gradient(to bottom right, rgba(255,255,255,0.3), rgba(0,0,0,0.9)),
-        repeating-linear-gradient(white 0 1px, transparent 1px 20px),
-        repeating-linear-gradient(90deg, white 0 1px, transparent 1px 20px);
-      background-blend-mode: overlay;
+        repeating-linear-gradient(white 0 1px, transparent 1px 40px),
+        repeating-linear-gradient(90deg, white 0 1px, transparent 1px 40px);
+      background-color: transparent;
+      background-blend-mode: multiply;
       position: absolute;
       top: 100vh;
       left: 0;
       z-index: -1;
+      background-repeat: repeat;
+      background-size: 40px 40px;
+    }
+
+    @media (max-width: 768px) {
+      .typing {
+        font-size: 1.5rem;
+      }
+      .grid-overlay {
+        background-size: 30px 30px;
+      }
     }
   </style>
 </head>
