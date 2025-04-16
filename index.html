@@ -9,115 +9,45 @@
       background-color: black;
       color: white;
       font-family: Consolas, monospace;
-      margin: 0;
-      height: 200vh;
-      transition: background-color 0.3s linear;
-    }
-
-    .center-container {
-      height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      overflow: hidden;
-      position: sticky;
-      top: 0;
-      will-change: transform;
+      height: 100vh;
+      margin: 0;
     }
 
     .typing {
       font-size: 2rem;
       white-space: nowrap;
-      border-right: 2px solid currentColor;
+      border-right: 2px solid white;
       animation: blink 0.7s steps(1) infinite;
       overflow: hidden;
-      transition: transform 0.1s linear, opacity 0.1s linear, color 0.3s linear, border-right 0.1s linear;
-      transform-origin: center;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
     }
 
     @keyframes blink {
-      0%, 100% { border-color: currentColor; }
+      0%, 100% { border-color: white; }
       50% { border-color: transparent; }
-    }
-
-    .orange-box {
-      width: 100px;
-      height: 100px;
-      background-color: orange;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      opacity: 0;
-      transition: opacity 0.3s ease-in-out;
-      z-index: 10;
-    }
-
-    .orange-box.show {
-      opacity: 1;
     }
   </style>
 </head>
 <body>
-  <div class="center-container">
-    <div id="type" class="typing"></div>
-    <div id="orangeBox" class="orange-box"></div>
-  </div>
+  <div id="type" class="typing"></div>
 
   <script>
     const text = "Hello World!!";
-    const speed = 100;
+    const speed = 100; // ms per character
     let i = 0;
     const target = document.getElementById("type");
-    const box = document.getElementById("orangeBox");
-    let typingFinished = false;
 
     function typeText() {
       if (i < text.length) {
         target.textContent += text.charAt(i);
         i++;
         setTimeout(typeText, speed);
-      } else {
-        typingFinished = true;
       }
     }
 
-    window.onload = () => {
-      typeText();
-
-      window.addEventListener("scroll", () => {
-        if (!typingFinished) return;
-
-        const scrollY = window.scrollY;
-        const maxScroll = window.innerHeight;
-        const scrollFraction = Math.min(scrollY / maxScroll, 1);
-
-        const scale = 1 + scrollFraction * 9;
-        const blendGray = Math.floor(30 + scrollFraction * (200 - 30));
-
-        target.style.transform = `scale(${scale})`;
-        target.style.opacity = 1 - scrollFraction;
-        target.style.color = `rgb(${blendGray}, ${blendGray}, ${blendGray})`;
-        document.body.style.backgroundColor = `rgb(${blendGray}, ${blendGray}, ${blendGray})`;
-
-        // remove cursor when zooming starts
-        if (scrollFraction > 0) {
-          target.style.borderRight = "none";
-          target.style.animation = "none";
-        } else {
-          target.style.borderRight = "2px solid currentColor";
-          target.style.animation = "blink 0.7s steps(1) infinite";
-        }
-
-        if (scrollFraction >= 1) {
-          box.classList.add("show");
-        } else {
-          box.classList.remove("show");
-        }
-      });
-    };
+    window.onload = typeText;
   </script>
 </body>
 </html>
