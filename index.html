@@ -83,26 +83,13 @@
       }
     }
 
-    .gray-bar {
-      position: absolute;
-      top: 4px;
-      left: 4px;
-      width: calc(100% - 8px);
-      height: 28px;
-      background-color: #2f2f2f;
-      display: none;
-      border-top-left-radius: 8px;
-      border-top-right-radius: 8px;
-      z-index: 1;
-    }
-
     .window-controls {
       position: absolute;
-      top: 10px;
-      left: 16px;
+      top: 18px;
+      left: 12px;
       display: none;
       gap: 8px;
-      z-index: 2;
+      z-index: 1;
     }
 
     .dot {
@@ -139,7 +126,6 @@
         <svg viewBox="0 0 360 384" preserveAspectRatio="xMidYMid meet">
           <rect x="1.5" y="1.5" width="357" height="381" rx="12" ry="12" class="path" />
         </svg>
-        <div class="gray-bar" id="grayBar"></div>
         <div class="window-controls" id="windowControls">
           <span class="dot red"></span>
           <span class="dot yellow"></span>
@@ -155,7 +141,6 @@
     let i = 0;
     const target = document.getElementById("type");
     const editorFrame = document.getElementById("editorFrame");
-    const grayBar = document.getElementById("grayBar");
     const windowControls = document.getElementById("windowControls");
     let typingFinished = false;
 
@@ -190,11 +175,8 @@
       if (typingFinished) {
         editorFrame.style.display = 'block';
         setTimeout(() => {
-          grayBar.style.display = 'block';
-          setTimeout(() => {
-            windowControls.style.display = 'flex';
-          }, 100);
-        }, 1500);
+          windowControls.style.display = 'flex';
+        }, 1500); // 枠線アニメーション（1.5s）終了後に表示
       }
     });
   </script>
