@@ -34,7 +34,7 @@
   </style>
 </head>
 <body>
-  <div id="type" class="typing blinking"></div>
+  <div id="type" class="typing"></div>
 
   <script>
     const text = "Hello World!!";
@@ -50,11 +50,17 @@
       }
     }
 
-    window.onload = () => {
-      // 3回点滅 = 約2.1秒待つ
+    function startBlinkingBeforeTyping(duration, callback) {
+      target.classList.add("blinking");
       setTimeout(() => {
+        callback();
+      }, duration);
+    }
+
+    window.onload = () => {
+      startBlinkingBeforeTyping(2100, () => {
         typeText();
-      }, 2100);
+      });
     };
   </script>
 </body>
