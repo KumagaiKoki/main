@@ -50,7 +50,7 @@
       display: none;
       margin-top: 4pt;
       width: 36ch;
-      height: 24rem; /* 縦の長さを4倍に変更 */
+      height: 24rem;
       position: relative;
     }
 
@@ -72,7 +72,7 @@
       fill: none;
       stroke: gray;
       stroke-width: 3;
-      stroke-dasharray: 1920; /* おおよそ2倍に調整 */
+      stroke-dasharray: 1920;
       stroke-dashoffset: 1920;
       animation: draw-frame 1.5s ease-out forwards;
     }
@@ -85,9 +85,9 @@
 
     .window-controls {
       position: absolute;
-      top: 8px;
+      top: 12px;
       left: 12px;
-      display: flex;
+      display: none;
       gap: 8px;
       z-index: 1;
     }
@@ -126,7 +126,7 @@
         <svg viewBox="0 0 360 384" preserveAspectRatio="xMidYMid meet">
           <rect x="1.5" y="1.5" width="357" height="381" rx="12" ry="12" class="path" />
         </svg>
-        <div class="window-controls">
+        <div class="window-controls" id="windowControls">
           <span class="dot red"></span>
           <span class="dot yellow"></span>
           <span class="dot green"></span>
@@ -141,6 +141,7 @@
     let i = 0;
     const target = document.getElementById("type");
     const editorFrame = document.getElementById("editorFrame");
+    const windowControls = document.getElementById("windowControls");
     let typingFinished = false;
 
     function typeText() {
@@ -173,6 +174,9 @@
     window.addEventListener('scroll', () => {
       if (typingFinished) {
         editorFrame.style.display = 'block';
+        setTimeout(() => {
+          windowControls.style.display = 'flex';
+        }, 1500); // 枠線アニメーション（1.5s）終了後に表示
       }
     });
   </script>
