@@ -64,7 +64,6 @@
       width: 100%;
       height: 100%;
       pointer-events: none;
-      z-index: 4;
     }
 
     .editor-border svg {
@@ -95,7 +94,7 @@
       left: 12px;
       display: none;
       gap: 8px;
-      z-index: 5;
+      z-index: 2;
       opacity: 0;
       transform: scale(0.5);
       animation: pop-in 0.6s ease forwards;
@@ -152,9 +151,9 @@
       white-space: pre-line;
       font-family: 'Fira Code', Consolas, monospace;
       display: none;
-      background-color: rgba(0, 0, 0, 0.7);
+      background-color: black;
       box-sizing: border-box;
-      z-index: 3;
+      z-index: 1;
     }
 
     .editor-content span.func-name {
@@ -236,21 +235,12 @@
 
     window.addEventListener('scroll', () => {
       if (typingFinished) {
-        document.body.style.backgroundColor = '#4b0082';
-        editorFrame.style.display = 'block';
-        windowControls.style.display = 'flex';
-
-        // 黒塗りを0.6秒後に表示
-        setTimeout(() => {
-          editorText.style.display = 'block';
-        }, 1900);
-      if (typingFinished) {
-        document.body.style.backgroundColor = '#4b0082';
         editorFrame.style.display = 'block';
         windowControls.style.display = 'flex';
         setTimeout(() => {
           editorText.style.display = 'block';
-        }, 600);
+        }, 2200);
+        document.body.style.backgroundColor = '#4b0082';
       }
     });
   </script>
