@@ -54,6 +54,7 @@
       width: 36ch;
       height: 24rem;
       position: relative;
+      background-color: transparent;
     }
 
     .editor-border {
@@ -147,6 +148,8 @@
       padding: 10px;
       white-space: pre-line;
       font-family: 'Fira Code', Consolas, monospace;
+      display: none;
+      background-color: black;
     }
 
     .editor-content span.func-name {
@@ -177,7 +180,7 @@
           <span class="dot yellow"></span>
           <span class="dot green"></span>
         </div>
-        <div class="editor-content" id="editorText" style="display: none;">
+        <div class="editor-content" id="editorText">
 <span class="func-name">UtilityCost</span><span class="paren">()</span>
 <span class="func-name">Recipe</span><span class="paren">()</span>
 <span class="func-name">FreqPurchases</span><span class="paren">()</span>
@@ -236,6 +239,7 @@
 
         // 背景色を黒から紫に変更
         document.body.style.backgroundColor = '#4b0082'; // indigo purple
+        editorText.style.backgroundColor = 'black'; // 枠内黒背景に塗りつぶす
       }
     });
   </script>
