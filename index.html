@@ -72,7 +72,7 @@
     }
 
     .path {
-      fill: black;
+      fill: transparent;
       stroke: gray;
       stroke-width: 3px;
       vector-effect: non-scaling-stroke;
@@ -171,7 +171,7 @@
     <div id="editorFrame" class="editor-frame">
       <div class="editor-border">
         <svg viewBox="-1.5 -1.5 378 387" width="375" height="384" preserveAspectRatio="none">
-          <rect x="1.5" y="1.5" width="372" height="381" rx="12" ry="12" class="path" />
+          <rect id="editorRect" x="1.5" y="1.5" width="372" height="381" rx="12" ry="12" class="path" />
         </svg>
         <div class="window-controls" id="windowControls">
           <span class="dot red"></span>
@@ -198,6 +198,7 @@
     const editorFrame = document.getElementById("editorFrame");
     const windowControls = document.getElementById("windowControls");
     const editorText = document.getElementById("editorText");
+    const editorRect = document.getElementById("editorRect");
     let typingFinished = false;
 
     function typeText() {
@@ -233,6 +234,7 @@
         windowControls.style.display = 'flex';
         setTimeout(() => {
           editorText.style.display = 'block';
+          editorRect.setAttribute('fill', 'black');
         }, 1900 + 300);
 
         document.body.style.backgroundColor = '#4b0082';
