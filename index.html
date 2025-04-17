@@ -240,7 +240,9 @@
         setTimeout(() => {
           editorText.style.display = 'block';
         }, 2200);
-        document.body.style.backgroundColor = '#4b0082';
+        setTimeout(() => {
+          document.body.style.backgroundColor = '#4b0082';
+        }, 600); // 0.6秒遅延追加
       }
     });
   </script>
