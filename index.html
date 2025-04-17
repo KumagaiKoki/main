@@ -238,15 +238,14 @@
         // 枠線描画と同時に紫に変更
         document.body.style.backgroundColor = '#4b0082';
 
-        // 枠線と同時に表示開始し、黒塗り遅延
-        setTimeout(() => {
-          editorFrame.style.display = 'block';
-          windowControls.style.display = 'flex';
-        }, 0);
+        // 枠線表示
+        editorFrame.style.display = 'block';
+        windowControls.style.display = 'flex';
 
+        // 黒塗りは0.6秒遅らせて表示
         setTimeout(() => {
           editorText.style.display = 'block';
-        }, 2200); // テキスト表示の遅延は据え置き
+        }, 2500);
       }
     });
   </script>
