@@ -138,9 +138,9 @@
     .editor-content {
       position: absolute;
       top: 40px;
-      left: 0;
+      left: 10px;
       width: 100%;
-      text-align: center;
+      text-align: left;
       font-size: 1.5rem;
       padding: 10px;
       white-space: pre-line;
@@ -166,7 +166,7 @@
           <span class="dot yellow"></span>
           <span class="dot green"></span>
         </div>
-        <div class="editor-content" id="editorText">
+        <div class="editor-content" id="editorText" style="display: none;">
 UtilityCost()
 Recipe()
 FreqPurchases()
@@ -184,6 +184,7 @@ Photos()</div>
     const target = document.getElementById("type");
     const editorFrame = document.getElementById("editorFrame");
     const windowControls = document.getElementById("windowControls");
+    const editorText = document.getElementById("editorText");
     let typingFinished = false;
 
     function typeText() {
@@ -217,6 +218,9 @@ Photos()</div>
       if (typingFinished) {
         editorFrame.style.display = 'block';
         windowControls.style.display = 'flex';
+        setTimeout(() => {
+          editorText.style.display = 'block';
+        }, 1900 + 300); // green dot delay + its animation duration
       }
     });
   </script>
