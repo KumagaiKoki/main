@@ -228,14 +228,14 @@
         editorFrame.style.display = 'block';
         windowControls.style.display = 'flex';
 
-        // 枠線描画が1.5sで終わるので、さらに1秒後に黒塗り
+        // 黒塗りを枠線描画と同時に実行
         setTimeout(() => {
           frameRect.classList.add('filled');
-        }, 2500);
+        }, 1000);
 
         setTimeout(() => {
           editorText.classList.add('show');
-        }, 2500);
+        }, 1000);
       }
     });
   </script>
