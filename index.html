@@ -64,7 +64,7 @@
       width: 100%;
       height: 100%;
       pointer-events: none;
-      z-index: 3;
+      z-index: 4;
     }
 
     .editor-border svg {
@@ -95,7 +95,7 @@
       left: 12px;
       display: none;
       gap: 8px;
-      z-index: 4;
+      z-index: 5;
       opacity: 0;
       transform: scale(0.5);
       animation: pop-in 0.6s ease forwards;
@@ -152,9 +152,9 @@
       white-space: pre-line;
       font-family: 'Fira Code', Consolas, monospace;
       display: none;
-      background-color: rgba(0, 0, 0, 0.85);
+      background-color: rgba(0, 0, 0, 0.7);
       box-sizing: border-box;
-      z-index: 2;
+      z-index: 3;
     }
 
     .editor-content span.func-name {
@@ -236,16 +236,12 @@
 
     window.addEventListener('scroll', () => {
       if (typingFinished) {
+        document.body.style.backgroundColor = '#4b0082';
         editorFrame.style.display = 'block';
         windowControls.style.display = 'flex';
-
         setTimeout(() => {
           editorText.style.display = 'block';
-        }, 2500);
-
-        setTimeout(() => {
-          document.body.style.backgroundColor = '#4b0082';
-        }, 2800);
+        }, 600);
       }
     });
   </script>
