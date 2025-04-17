@@ -73,13 +73,17 @@
     }
 
     .path {
-      fill: black;
+      fill: none;
       stroke: gray;
       stroke-width: 3px;
       vector-effect: non-scaling-stroke;
       stroke-dasharray: 1920;
       stroke-dashoffset: 1920;
       animation: draw-frame 1.5s ease-out forwards;
+    }
+
+    .path.filled {
+      fill: black;
     }
 
     @keyframes draw-frame {
@@ -161,7 +165,7 @@
     <div id="editorFrame" class="editor-frame">
       <div class="editor-border">
         <svg viewBox="-1.5 -1.5 378 387" width="375" height="384" preserveAspectRatio="none">
-          <rect x="1.5" y="1.5" width="372" height="381" rx="12" ry="12" class="path" />
+          <rect id="frameRect" x="1.5" y="1.5" width="372" height="381" rx="12" ry="12" class="path" />
         </svg>
         <div class="window-controls" id="windowControls">
           <span class="dot red"></span>
@@ -188,6 +192,7 @@
     const editorFrame = document.getElementById("editorFrame");
     const windowControls = document.getElementById("windowControls");
     const editorText = document.getElementById("editorText");
+    const frameRect = document.getElementById("frameRect");
     let typingFinished = false;
 
     function typeText() {
@@ -222,9 +227,15 @@
         document.body.style.backgroundColor = '#4b0082';
         editorFrame.style.display = 'block';
         windowControls.style.display = 'flex';
+
+        // 枠線描画が1.5sで終わるので、さらに1秒後に黒塗り
+        setTimeout(() => {
+          frameRect.classList.add('filled');
+        }, 2500);
+
         setTimeout(() => {
           editorText.classList.add('show');
-        }, 1500);
+        }, 2500);
       }
     });
   </script>
