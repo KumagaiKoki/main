@@ -150,10 +150,15 @@
       padding: 50px 10px 10px 10px;
       white-space: pre-line;
       font-family: 'Fira Code', Consolas, monospace;
-      display: none;
+      opacity: 0;
       background-color: black;
       box-sizing: border-box;
       z-index: 1;
+      transition: opacity 1s ease;
+    }
+
+    .editor-content.show {
+      opacity: 1;
     }
 
     .editor-content span.func-name {
@@ -242,9 +247,9 @@
         editorFrame.style.display = 'block';
         windowControls.style.display = 'flex';
 
-        // 黒塗りは0.6秒遅らせて表示
+        // 黒塗りは0.6秒遅らせてフェードイン
         setTimeout(() => {
-          editorText.style.display = 'block';
+          editorText.classList.add('show');
         }, 2500);
       }
     });
