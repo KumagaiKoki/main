@@ -146,6 +146,14 @@
       white-space: pre-line;
     }
 
+    .editor-content span.func-name {
+      color: #00ffff;
+    }
+
+    .editor-content span.paren {
+      color: white;
+    }
+
     @media (max-width: 768px) {
       .typing {
         font-size: 2rem;
@@ -167,12 +175,13 @@
           <span class="dot green"></span>
         </div>
         <div class="editor-content" id="editorText" style="display: none;">
-UtilityCost()
-Recipe()
-FreqPurchases()
-Todo()
-ShoppingList()
-Photos()</div>
+<span class="func-name">UtilityCost</span><span class="paren">()</span>
+<span class="func-name">Recipe</span><span class="paren">()</span>
+<span class="func-name">FreqPurchases</span><span class="paren">()</span>
+<span class="func-name">Todo</span><span class="paren">()</span>
+<span class="func-name">ShoppingList</span><span class="paren">()</span>
+<span class="func-name">Photos</span><span class="paren">()</span>
+</div>
       </div>
     </div>
   </div>
@@ -220,7 +229,7 @@ Photos()</div>
         windowControls.style.display = 'flex';
         setTimeout(() => {
           editorText.style.display = 'block';
-        }, 1900 + 300); // green dot delay + its animation duration
+        }, 1900 + 300);
       }
     });
   </script>
