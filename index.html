@@ -238,9 +238,9 @@
         editorFrame.style.display = 'block';
         windowControls.style.display = 'flex';
         setTimeout(() => {
+          document.body.style.backgroundColor = '#4b0082';
           editorText.style.display = 'block';
-        }, 2200);
-        document.body.style.backgroundColor = '#4b0082';
+        }, 2500); // wait for green dot (1.9s) + 0.6s pause
       }
     });
   </script>
