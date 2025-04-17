@@ -235,14 +235,14 @@
 
     window.addEventListener('scroll', () => {
       if (typingFinished) {
-        editorFrame.style.display = 'block';
-        windowControls.style.display = 'flex';
+        document.body.style.backgroundColor = '#4b0082'; // 紫に即時変更
         setTimeout(() => {
-          editorText.style.display = 'block';
-        }, 2200);
-        setTimeout(() => {
-          document.body.style.backgroundColor = '#4b0082';
-        }, 600); // 0.6秒遅延追加
+          editorFrame.style.display = 'block';
+          windowControls.style.display = 'flex';
+          setTimeout(() => {
+            editorText.style.display = 'block';
+          }, 2200);
+        }, 600); // 黒塗り開始を0.6秒遅延
       }
     });
   </script>
