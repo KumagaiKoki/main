@@ -143,16 +143,6 @@
       text-align: center;
       font-size: 1.5rem;
       padding: 10px;
-      opacity: 0;
-      transition: opacity 0.4s ease;
-    }
-
-    .editor-content.visible {
-      opacity: 1;
-    }
-
-    .editor-line + .editor-line {
-      margin-top: 0.5em;
     }
 
     @media (max-width: 768px) {
@@ -175,14 +165,7 @@
           <span class="dot yellow"></span>
           <span class="dot green"></span>
         </div>
-        <div class="editor-content" id="editorText">
-          <div class="editor-line">01: UtilityCost()</div>
-          <div class="editor-line">02: Recipe()</div>
-          <div class="editor-line">03: FreqPurchases()</div>
-          <div class="editor-line">04: Todo()</div>
-          <div class="editor-line">05: ShoppingList()</div>
-          <div class="editor-line">06: Photos()</div>
-        </div>
+        <div class="editor-content" id="editorText">UtilityCost()</div>
       </div>
     </div>
   </div>
@@ -194,7 +177,6 @@
     const target = document.getElementById("type");
     const editorFrame = document.getElementById("editorFrame");
     const windowControls = document.getElementById("windowControls");
-    const editorText = document.getElementById("editorText");
     let typingFinished = false;
 
     function typeText() {
@@ -228,6 +210,8 @@
       if (typingFinished) {
         editorFrame.style.display = 'block';
         windowControls.style.display = 'flex';
-        setTimeout(() => {
-          editorText.classList.add('visible');
-        }, 2100);
+      }
+    });
+  </script>
+</body>
+</html>
