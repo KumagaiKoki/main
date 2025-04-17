@@ -72,7 +72,7 @@
     }
 
     .path {
-      fill: transparent;
+      fill: black;
       stroke: gray;
       stroke-width: 3px;
       vector-effect: non-scaling-stroke;
@@ -171,7 +171,7 @@
     <div id="editorFrame" class="editor-frame">
       <div class="editor-border">
         <svg viewBox="-1.5 -1.5 378 387" width="375" height="384" preserveAspectRatio="none">
-          <rect id="editorRect" x="1.5" y="1.5" width="372" height="381" rx="12" ry="12" class="path" />
+          <rect x="1.5" y="1.5" width="372" height="381" rx="12" ry="12" class="path" />
         </svg>
         <div class="window-controls" id="windowControls">
           <span class="dot red"></span>
@@ -191,19 +191,20 @@
   </div>
 
   <script>
-    const text = "Hello World!!";
+    const text = "UtilityCost()";
     const speed = 100;
     let i = 0;
     const target = document.getElementById("type");
     const editorFrame = document.getElementById("editorFrame");
     const windowControls = document.getElementById("windowControls");
     const editorText = document.getElementById("editorText");
-    const editorRect = document.getElementById("editorRect");
     let typingFinished = false;
 
     function typeText() {
       if (i === 0) {
         target.textContent = "";
+        document.body.style.backgroundColor = '#000'; // 黒く塗りつぶすタイミングをここに設定
+        editorFrame.style.display = 'block';
       }
       if (i < text.length) {
         target.textContent += text.charAt(i);
@@ -211,6 +212,10 @@
         setTimeout(typeText, speed);
       } else {
         typingFinished = true;
+        windowControls.style.display = 'flex';
+        setTimeout(() => {
+          editorText.style.display = 'block';
+        }, 600);
         document.documentElement.style.overflowY = "auto";
       }
     }
@@ -227,19 +232,6 @@
         typeText();
       });
     };
-
-    window.addEventListener('scroll', () => {
-      if (typingFinished) {
-        editorFrame.style.display = 'block';
-        windowControls.style.display = 'flex';
-        setTimeout(() => {
-          editorText.style.display = 'block';
-          editorRect.setAttribute('fill', 'black');
-        }, 1900 + 300);
-
-        document.body.style.backgroundColor = '#4b0082';
-      }
-    });
   </script>
 </body>
 </html>
