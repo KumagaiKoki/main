@@ -72,7 +72,7 @@
     }
 
     .path {
-      fill: black;
+      fill: none;
       stroke: gray;
       stroke-width: 3px;
       vector-effect: non-scaling-stroke;
@@ -147,7 +147,6 @@
       padding: 10px;
       white-space: pre-line;
       font-family: 'Fira Code', Consolas, monospace;
-      display: none;
     }
 
     .editor-content span.func-name {
@@ -178,7 +177,7 @@
           <span class="dot yellow"></span>
           <span class="dot green"></span>
         </div>
-        <div class="editor-content" id="editorText">
+        <div class="editor-content" id="editorText" style="display: none;">
 <span class="func-name">UtilityCost</span><span class="paren">()</span>
 <span class="func-name">Recipe</span><span class="paren">()</span>
 <span class="func-name">FreqPurchases</span><span class="paren">()</span>
@@ -191,7 +190,7 @@
   </div>
 
   <script>
-    const text = "UtilityCost()";
+    const text = "Hello World!!";
     const speed = 100;
     let i = 0;
     const target = document.getElementById("type");
@@ -203,8 +202,6 @@
     function typeText() {
       if (i === 0) {
         target.textContent = "";
-        document.body.style.backgroundColor = '#000'; // 黒く塗りつぶすタイミングをここに設定
-        editorFrame.style.display = 'block';
       }
       if (i < text.length) {
         target.textContent += text.charAt(i);
@@ -212,10 +209,6 @@
         setTimeout(typeText, speed);
       } else {
         typingFinished = true;
-        windowControls.style.display = 'flex';
-        setTimeout(() => {
-          editorText.style.display = 'block';
-        }, 600);
         document.documentElement.style.overflowY = "auto";
       }
     }
@@ -232,6 +225,19 @@
         typeText();
       });
     };
+
+    window.addEventListener('scroll', () => {
+      if (typingFinished) {
+        editorFrame.style.display = 'block';
+        windowControls.style.display = 'flex';
+        setTimeout(() => {
+          editorText.style.display = 'block';
+        }, 1900 + 300);
+
+        // 背景色を黒から紫に変更
+        document.body.style.backgroundColor = '#4b0082'; // indigo purple
+      }
+    });
   </script>
 </body>
 </html>
