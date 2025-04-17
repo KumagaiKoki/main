@@ -73,7 +73,7 @@
     }
 
     .path {
-      fill: none;
+      fill: black;
       stroke: gray;
       stroke-width: 3px;
       vector-effect: non-scaling-stroke;
@@ -117,25 +117,12 @@
       animation: dot-pop 0.3s ease-out forwards;
     }
 
-    .dot.red {
-      background-color: #ff5f56;
-      animation-delay: 0s;
-    }
-
-    .dot.yellow {
-      background-color: #ffbd2e;
-      animation-delay: 0.3s;
-    }
-
-    .dot.green {
-      background-color: #27c93f;
-      animation-delay: 0.6s;
-    }
+    .dot.red { background-color: #ff5f56; animation-delay: 0s; }
+    .dot.yellow { background-color: #ffbd2e; animation-delay: 0.3s; }
+    .dot.green { background-color: #27c93f; animation-delay: 0.6s; }
 
     @keyframes dot-pop {
-      to {
-        transform: scale(1);
-      }
+      to { transform: scale(1); }
     }
 
     .editor-content {
@@ -151,7 +138,6 @@
       white-space: pre-line;
       font-family: 'Fira Code', Consolas, monospace;
       opacity: 0;
-      background-color: black;
       box-sizing: border-box;
       z-index: 1;
       transition: opacity 1s ease;
@@ -161,18 +147,11 @@
       opacity: 1;
     }
 
-    .editor-content span.func-name {
-      color: #8dd3fc;
-    }
-
-    .editor-content span.paren {
-      color: #e5e5e5;
-    }
+    .editor-content span.func-name { color: #8dd3fc; }
+    .editor-content span.paren { color: #e5e5e5; }
 
     @media (max-width: 768px) {
-      .typing {
-        font-size: 2rem;
-      }
+      .typing { font-size: 2rem; }
     }
   </style>
 </head>
@@ -240,14 +219,9 @@
 
     window.addEventListener('scroll', () => {
       if (typingFinished) {
-        // 枠線描画と同時に紫に変更
         document.body.style.backgroundColor = '#4b0082';
-
-        // 枠線表示
         editorFrame.style.display = 'block';
         windowControls.style.display = 'flex';
-
-        // 黒塗りは0.6秒遅らせてフェードイン
         setTimeout(() => {
           editorText.classList.add('show');
         }, 1500);
