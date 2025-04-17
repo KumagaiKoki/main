@@ -143,6 +143,12 @@
       text-align: center;
       font-size: 1.5rem;
       padding: 10px;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .editor-content.visible {
+      opacity: 1;
     }
 
     @media (max-width: 768px) {
@@ -177,6 +183,7 @@
     const target = document.getElementById("type");
     const editorFrame = document.getElementById("editorFrame");
     const windowControls = document.getElementById("windowControls");
+    const editorText = document.getElementById("editorText");
     let typingFinished = false;
 
     function typeText() {
@@ -210,6 +217,9 @@
       if (typingFinished) {
         editorFrame.style.display = 'block';
         windowControls.style.display = 'flex';
+        setTimeout(() => {
+          editorText.classList.add('visible');
+        }, 2100); // green dot animation (1.9s) + buffer
       }
     });
   </script>
