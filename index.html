@@ -142,7 +142,8 @@
       position: absolute;
       top: 40px;
       left: 10px;
-      width: 100%;
+      width: calc(100% - 20px);
+      height: calc(100% - 50px);
       text-align: left;
       font-size: 1.5rem;
       padding: 10px;
@@ -150,6 +151,7 @@
       font-family: 'Fira Code', Consolas, monospace;
       display: none;
       background-color: black;
+      border-radius: 12px;
     }
 
     .editor-content span.func-name {
@@ -187,7 +189,7 @@
 <span class="func-name">Todo</span><span class="paren">()</span>
 <span class="func-name">ShoppingList</span><span class="paren">()</span>
 <span class="func-name">Photos</span><span class="paren">()</span>
-</div>
+        </div>
       </div>
     </div>
   </div>
@@ -235,11 +237,9 @@
         windowControls.style.display = 'flex';
         setTimeout(() => {
           editorText.style.display = 'block';
-        }, 1900 + 300);
-
-        // 背景色を黒から紫に変更
-        document.body.style.backgroundColor = '#4b0082'; // indigo purple
-        editorText.style.backgroundColor = 'black'; // 枠内黒背景に塗りつぶす
+        }, 2200);
+        document.body.style.backgroundColor = '#4b0082';
+        editorText.style.backgroundColor = 'black';
       }
     });
   </script>
