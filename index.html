@@ -54,7 +54,6 @@
       width: 36ch;
       height: 24rem;
       position: relative;
-      background-color: transparent;
     }
 
     .editor-border {
@@ -73,7 +72,7 @@
     }
 
     .path {
-      fill: none;
+      fill: black;
       stroke: gray;
       stroke-width: 3px;
       vector-effect: non-scaling-stroke;
@@ -149,7 +148,6 @@
       white-space: pre-line;
       font-family: 'Fira Code', Consolas, monospace;
       display: none;
-      background-color: black;
     }
 
     .editor-content span.func-name {
@@ -237,9 +235,7 @@
           editorText.style.display = 'block';
         }, 1900 + 300);
 
-        // 背景色を黒から紫に変更
-        document.body.style.backgroundColor = '#4b0082'; // indigo purple
-        editorText.style.backgroundColor = 'black'; // 枠内黒背景に塗りつぶす
+        document.body.style.backgroundColor = '#4b0082';
       }
     });
   </script>
