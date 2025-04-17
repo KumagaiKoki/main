@@ -239,6 +239,15 @@
         document.body.style.backgroundColor = '#4b0082';
         editorFrame.style.display = 'block';
         windowControls.style.display = 'flex';
+
+        // 黒塗りを0.6秒後に表示
+        setTimeout(() => {
+          editorText.style.display = 'block';
+        }, 1900);
+      if (typingFinished) {
+        document.body.style.backgroundColor = '#4b0082';
+        editorFrame.style.display = 'block';
+        windowControls.style.display = 'flex';
         setTimeout(() => {
           editorText.style.display = 'block';
         }, 600);
