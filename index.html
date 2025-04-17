@@ -15,6 +15,7 @@
       height: 100%;
       overflow-x: hidden;
       overflow-y: hidden;
+      transition: background-color 1s ease;
     }
 
     body {
@@ -232,6 +233,9 @@
         setTimeout(() => {
           editorText.style.display = 'block';
         }, 1900 + 300);
+
+        // 背景色を黒から紫に変更
+        document.body.style.backgroundColor = '#4b0082'; // indigo purple
       }
     });
   </script>
