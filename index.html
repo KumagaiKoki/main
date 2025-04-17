@@ -119,7 +119,7 @@
 
     .dot.red {
       background-color: #ff5f56;
-      animation-delay: 1.4s;
+      animation-delay: 0.6s;
     }
 
     .dot.yellow {
@@ -250,6 +250,7 @@
         // 黒塗りは0.6秒遅らせてフェードイン
         setTimeout(() => {
           editorText.classList.add('show');
+          editorText.style.border = '1px solid white';
         }, 2500);
       }
     });
