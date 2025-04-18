@@ -13,20 +13,26 @@
       overflow-x: hidden;
       overflow-y: hidden;
       font-family: 'Fira Code', Consolas, monospace;
+      background-color: black;
+      color: white;
+      transition: background-color 1s ease;
     }
 
-    body {
-      background: linear-gradient(-45deg, #0f2027, #203a43, #2c5364);
+    body.animated-bg {
+      animation: animatedBG 5s ease forwards;
       background-size: 600% 600%;
-      animation: animatedBG 15s ease infinite;
-      color: white;
-      min-height: 200vh;
     }
 
     @keyframes animatedBG {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
+      0% {
+        background-color: black;
+        background-position: 0% 50%;
+        background-image: linear-gradient(-45deg, #0f2027, #203a43, #2c5364);
+      }
+      100% {
+        background-position: 100% 50%;
+        background-image: linear-gradient(-45deg, #0f2027, #203a43, #2c5364);
+      }
     }
 
     .container {
@@ -263,6 +269,7 @@
     const iconContainer = document.getElementById("iconContainer");
     const editableText = document.getElementById("editableText");
     let typingFinished = false;
+    let animationTriggered = false;
 
     function typeText() {
       if (i === 0) target.textContent = "";
@@ -292,7 +299,6 @@
         typeText();
       });
 
-      // add pressed effect to all icons
       document.querySelectorAll('.icon').forEach((el) => {
         el.addEventListener('touchstart', () => el.classList.add('pressed'));
         el.addEventListener('touchend', () => el.classList.remove('pressed'));
@@ -303,13 +309,14 @@
     };
 
     window.addEventListener('scroll', () => {
-      if (typingFinished) {
-        document.body.style.backgroundColor = '#4b0082';
+      if (typingFinished && !animationTriggered) {
+        document.body.classList.add('animated-bg');
         editorFrame.style.display = 'block';
         windowControls.style.display = 'flex';
         iconContainer.style.display = 'flex';
         setTimeout(() => frameRect.classList.add('filled'), 1500);
         setTimeout(() => editorText.classList.add('show'), 1500);
+        animationTriggered = true;
       }
     });
   </script>
