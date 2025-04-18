@@ -61,15 +61,6 @@
       vertical-align: bottom;
     }
 
-    .blinking {
-      animation: blink 0.7s steps(1) infinite;
-    }
-
-    @keyframes blink {
-      0%, 100% { border-color: orange; }
-      50% { border-color: transparent; }
-    }
-
     .editor-frame {
       display: none;
       margin-top: 4pt;
@@ -232,7 +223,7 @@
     <source src="https://cdn.jsdelivr.net/gh/KumagaiKoki/main/day1.mp4" type="video/mp4">
   </video>
   <div class="container">
-    <div id="type" class="typing blinking">​</div>
+    <div id="type" class="typing"></div>
     <div id="editorFrame" class="editor-frame">
       <div class="editor-border">
         <svg viewBox="-1.5 -1.5 378 387" width="375" height="384" preserveAspectRatio="none">
@@ -300,11 +291,6 @@
       }
     }
 
-    function startBlinkingBeforeTyping(duration, callback) {
-      target.classList.add("blinking");
-      setTimeout(callback, duration);
-    }
-
     function handleButtonClick(message) {
       if (editableText) {
         editableText.textContent = message;
@@ -312,9 +298,7 @@
     }
 
     window.onload = () => {
-      startBlinkingBeforeTyping(1400, () => {
-        typeText();
-      });
+      typeText();
 
       document.querySelectorAll('.icon').forEach((el) => {
         el.addEventListener('touchstart', () => el.classList.add('pressed'));
