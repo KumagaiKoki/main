@@ -172,6 +172,19 @@
       gap: 12px;
     }
 
+    .icon-label {
+      font-size: 0.75rem;
+      color: white;
+      text-align: center;
+      margin-top: 4px;
+    }
+
+    .icon-column {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
     .icon {
       width: 42px;
       height: 42px;
@@ -206,11 +219,26 @@
     </div>
     <div class="icon-container" id="iconContainer">
       <div class="icon-row">
-        <div class="icon"></div>
-        <div class="icon"></div>
-        <div class="icon"></div>
-        <div class="icon"></div>
-        <div class="icon"></div>
+        <div class="icon-column">
+          <div class="icon"></div>
+          <div class="icon-label">光熱費</div>
+        </div>
+        <div class="icon-column">
+          <div class="icon"></div>
+          <div class="icon-label">消耗品</div>
+        </div>
+        <div class="icon-column">
+          <div class="icon"></div>
+          <div class="icon-label">料理</div>
+        </div>
+        <div class="icon-column">
+          <div class="icon"></div>
+          <div class="icon-label">あかちゃん</div>
+        </div>
+        <div class="icon-column">
+          <div class="icon"></div>
+          <div class="icon-label">Coming</div>
+        </div>
       </div>
     </div>
   </div>
