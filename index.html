@@ -13,21 +13,13 @@
       margin: 0;
       padding: 0;
       height: 100%;
-      overflow: hidden;
+      overflow-x: hidden;
+      overflow-y: hidden;
+      transition: background-color 1s ease;
     }
 
     body {
       min-height: 200vh;
-    }
-
-    .video-background {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      object-fit: cover;
-      z-index: -1;
     }
 
     .container {
@@ -214,10 +206,6 @@
   </style>
 </head>
 <body>
-  <video class="video-background" autoplay loop muted playsinline>
-    <source src="https://kumagaikoki.github.io/main/day1.mov" type="video/mp4">
-  </video>
-
   <div class="container">
     <div id="type" class="typing blinking">​</div>
     <div id="editorFrame" class="editor-frame">
@@ -260,7 +248,6 @@
       </div>
     </div>
   </div>
-
   <script>
     const text = "Hello World!!";
     const speed = 100;
@@ -302,6 +289,7 @@
         typeText();
       });
 
+      // add pressed effect to all icons
       document.querySelectorAll('.icon').forEach((el) => {
         el.addEventListener('touchstart', () => el.classList.add('pressed'));
         el.addEventListener('touchend', () => el.classList.remove('pressed'));
@@ -313,6 +301,7 @@
 
     window.addEventListener('scroll', () => {
       if (typingFinished) {
+        document.body.style.backgroundColor = '#4b0082';
         editorFrame.style.display = 'block';
         windowControls.style.display = 'flex';
         iconContainer.style.display = 'flex';
