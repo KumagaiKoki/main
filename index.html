@@ -296,6 +296,11 @@
       }
     }
 
+    function startBlinkingBeforeTyping(duration, callback) {
+      target.classList.add("blinking");
+      setTimeout(callback, duration);
+    }
+
     function handleButtonClick(message) {
       if (editableText) {
         editableText.textContent = message;
@@ -303,8 +308,9 @@
     }
 
     window.onload = () => {
+      startBlinkingBeforeTyping(1400, () => {
         typeText();
-    );
+      });
 
       document.querySelectorAll('.icon').forEach((el) => {
         el.addEventListener('touchstart', () => el.classList.add('pressed'));
