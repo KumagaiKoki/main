@@ -58,6 +58,15 @@
       position: relative;
     }
 
+    .blinking {
+      animation: blink 0.7s steps(1) infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { border-color: orange; }
+      50% { border-color: transparent; }
+    }
+
     .editor-frame {
       display: none;
       margin-top: 4pt;
@@ -220,8 +229,46 @@
     <source src="https://cdn.jsdelivr.net/gh/KumagaiKoki/main/day1.mp4" type="video/mp4">
   </video>
   <div class="container">
-    <div id="type" class="typing"></div>
-    <!-- rest of content remains the same -->
+    <div id="type" class="typing blinking">​</div>
+    <div id="editorFrame" class="editor-frame">
+      <div class="editor-border">
+        <svg viewBox="-1.5 -1.5 378 387" width="375" height="384" preserveAspectRatio="none">
+          <rect id="frameRect" x="1.5" y="1.5" width="372" height="381" rx="12" ry="12" class="path" />
+        </svg>
+        <div class="window-controls" id="windowControls">
+          <span class="dot red"></span>
+          <span class="dot yellow"></span>
+          <span class="dot green"></span>
+        </div>
+        <div class="editor-content" id="editorText">
+          <span class="func-name" id="editableText">いい感じのフォント</span><span class="paren">()</span>
+        </div>
+      </div>
+    </div>
+    <div class="icon-container" id="iconContainer">
+      <div class="icon-row">
+        <div class="icon-column">
+          <div class="icon" onclick="handleButtonClick('光熱費のボタンが押されました')"></div>
+          <div class="icon-label">光熱費</div>
+        </div>
+        <div class="icon-column">
+          <div class="icon"></div>
+          <div class="icon-label">消耗品</div>
+        </div>
+        <div class="icon-column">
+          <div class="icon"></div>
+          <div class="icon-label">料理</div>
+        </div>
+        <div class="icon-column">
+          <div class="icon"></div>
+          <div class="icon-label">あかちゃん</div>
+        </div>
+        <div class="icon-column">
+          <div class="icon"></div>
+          <div class="icon-label">****</div>
+        </div>
+      </div>
+    </div>
   </div>
   <script>
     const text = "Hello World!!";
@@ -249,10 +296,21 @@
       }
     }
 
+    function startBlinkingBeforeTyping(duration, callback) {
+      target.classList.add("blinking");
+      setTimeout(callback, duration);
+    }
+
+    function handleButtonClick(message) {
+      if (editableText) {
+        editableText.textContent = message;
+      }
+    }
+
     window.onload = () => {
-      setTimeout(() => {
+      startBlinkingBeforeTyping(1400, () => {
         typeText();
-      }, 1400);
+      });
 
       document.querySelectorAll('.icon').forEach((el) => {
         el.addEventListener('touchstart', () => el.classList.add('pressed'));
