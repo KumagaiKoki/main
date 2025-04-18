@@ -98,6 +98,9 @@
       vector-effect: non-scaling-stroke;
       stroke-dasharray: 1920;
       stroke-dashoffset: 1920;
+    }
+
+    .path.draw {
       animation: draw-frame 1.5s ease-out forwards;
     }
 
@@ -293,7 +296,7 @@
       } else {
         typingFinished = true;
         document.documentElement.style.overflowY = "auto";
-        backgroundVideo.classList.add('show'); // <-- ここで動画を表示
+        backgroundVideo.classList.add('show');
       }
     }
 
@@ -309,7 +312,7 @@
     }
 
     window.onload = () => {
-      backgroundVideo.load(); // 同時にロードだけは始める
+      backgroundVideo.load();
       startBlinkingBeforeTyping(1400, () => {
         typeText();
       });
@@ -328,6 +331,7 @@
         editorFrame.style.display = 'block';
         windowControls.style.display = 'flex';
         iconContainer.style.display = 'flex';
+        frameRect.classList.add('draw'); // 枠線描画を開始
         setTimeout(() => frameRect.classList.add('filled'), 1500);
         setTimeout(() => editorText.classList.add('show'), 1500);
       }
