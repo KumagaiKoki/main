@@ -22,6 +22,17 @@
       min-height: 200vh;
     }
 
+    .background-video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      z-index: -1;
+      display: none;
+    }
+
     .container {
       display: flex;
       justify-content: center;
@@ -206,6 +217,9 @@
   </style>
 </head>
 <body>
+  <video id="backgroundVideo" class="background-video" autoplay muted loop>
+    <source src="https://cdn.jsdelivr.net/gh/KumagaiKoki/main/day1.mp4" type="video/mp4">
+  </video>
   <div class="container">
     <div id="type" class="typing blinking">​</div>
     <div id="editorFrame" class="editor-frame">
@@ -259,6 +273,7 @@
     const frameRect = document.getElementById("frameRect");
     const iconContainer = document.getElementById("iconContainer");
     const editableText = document.getElementById("editableText");
+    const backgroundVideo = document.getElementById("backgroundVideo");
     let typingFinished = false;
 
     function typeText() {
@@ -300,7 +315,7 @@
 
     window.addEventListener('scroll', () => {
       if (typingFinished) {
-        document.body.style.backgroundColor = '#fde4b0'; // 薄いオレンジ
+        backgroundVideo.style.display = 'block';
         editorFrame.style.display = 'block';
         windowControls.style.display = 'flex';
         iconContainer.style.display = 'flex';
