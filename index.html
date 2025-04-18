@@ -206,7 +206,7 @@
   </style>
 </head>
 <body>
-  <div class="container" style="background-color: #fdebc9;">
+  <div class="container">
     <div id="type" class="typing blinking">​</div>
     <div id="editorFrame" class="editor-frame">
       <div class="editor-border">
@@ -289,6 +289,7 @@
         typeText();
       });
 
+      // add pressed effect to all icons
       document.querySelectorAll('.icon').forEach((el) => {
         el.addEventListener('touchstart', () => el.classList.add('pressed'));
         el.addEventListener('touchend', () => el.classList.remove('pressed'));
