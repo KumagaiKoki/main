@@ -7,15 +7,14 @@
   <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
   <style>
     html, body {
-      background-color: black;
-      color: white;
-      font-family: 'Fira Code', Consolas, monospace;
       margin: 0;
       padding: 0;
       height: 100%;
+      font-family: 'Fira Code', Consolas, monospace;
+      color: white;
+      background-color: black;
       overflow-x: hidden;
       overflow-y: hidden;
-      transition: background-color 1s ease;
     }
 
     body {
@@ -30,8 +29,14 @@
       height: 100vh;
       object-fit: cover;
       z-index: -1;
+      visibility: hidden;
       opacity: 0;
-      transition: opacity 1s ease;
+      transition: opacity 1s ease, visibility 1s ease;
+    }
+
+    .background-video.show {
+      visibility: visible;
+      opacity: 1;
     }
 
     .container {
@@ -41,6 +46,7 @@
       height: 100vh;
       position: relative;
       flex-direction: column;
+      z-index: 1;
     }
 
     .typing {
@@ -316,7 +322,7 @@
 
     window.addEventListener('scroll', () => {
       if (typingFinished) {
-        backgroundVideo.style.opacity = '1';
+        backgroundVideo.classList.add('show');
         editorFrame.style.display = 'block';
         windowControls.style.display = 'flex';
         iconContainer.style.display = 'flex';
