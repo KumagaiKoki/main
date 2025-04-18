@@ -7,34 +7,19 @@
   <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
   <style>
     html, body {
+      background-color: black;
+      color: white;
+      font-family: 'Fira Code', Consolas, monospace;
       margin: 0;
       padding: 0;
-      height: 200%;
-      overflow: hidden;
-      font-family: 'Fira Code', Consolas, monospace;
-      color: white;
-      position: relative;
+      height: 100%;
+      overflow-x: hidden;
+      overflow-y: hidden;
+      transition: background-color 1s ease;
     }
 
-    body::before {
-      content: "";
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: -1;
-      background: black;
-    }
-
-    #background-video {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      object-fit: cover;
-      z-index: -2;
+    body {
+      min-height: 200vh;
     }
 
     .container {
@@ -214,13 +199,13 @@
       transform: scale(0.95);
       box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.6);
     }
+
+    @media (max-width: 768px) {
+      .typing { font-size: 2rem; }
+    }
   </style>
 </head>
 <body>
-  <video id="background-video" autoplay muted loop playsinline>
-    <source src="https://github.com/KumagaiKoki/main/raw/main/day1.mov" type="video/mp4">
-    Your browser does not support the video tag.
-  </video>
   <div class="container">
     <div id="type" class="typing blinking">​</div>
     <div id="editorFrame" class="editor-frame">
@@ -275,7 +260,6 @@
     const iconContainer = document.getElementById("iconContainer");
     const editableText = document.getElementById("editableText");
     let typingFinished = false;
-    let animationTriggered = false;
 
     function typeText() {
       if (i === 0) target.textContent = "";
@@ -305,6 +289,7 @@
         typeText();
       });
 
+      // add pressed effect to all icons
       document.querySelectorAll('.icon').forEach((el) => {
         el.addEventListener('touchstart', () => el.classList.add('pressed'));
         el.addEventListener('touchend', () => el.classList.remove('pressed'));
@@ -315,13 +300,13 @@
     };
 
     window.addEventListener('scroll', () => {
-      if (typingFinished && !animationTriggered && window.scrollY > 0) {
+      if (typingFinished) {
+        document.body.style.backgroundColor = '#4b0082';
         editorFrame.style.display = 'block';
         windowControls.style.display = 'flex';
         iconContainer.style.display = 'flex';
         setTimeout(() => frameRect.classList.add('filled'), 1500);
         setTimeout(() => editorText.classList.add('show'), 1500);
-        animationTriggered = true;
       }
     });
   </script>
