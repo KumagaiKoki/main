@@ -7,19 +7,27 @@
   <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
   <style>
     html, body {
-      background-color: black;
-      color: white;
-      font-family: 'Fira Code', Consolas, monospace;
       margin: 0;
       padding: 0;
       height: 100%;
       overflow-x: hidden;
       overflow-y: hidden;
-      transition: background-color 1s ease;
+      font-family: 'Fira Code', Consolas, monospace;
+      color: white;
     }
 
     body {
       min-height: 200vh;
+    }
+
+    #bg-video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      min-width: 100%;
+      min-height: 100%;
+      z-index: -1;
+      object-fit: cover;
     }
 
     .container {
@@ -206,6 +214,10 @@
   </style>
 </head>
 <body>
+  <video autoplay muted loop playsinline id="bg-video">
+    <source src="https://player.vimeo.com/external/368632406.sd.mp4?s=14b78fbb3c05fce6a530fa58e6f967de5f27a3d7&profile_id=139&oauth2_token_id=57447761" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
   <div class="container">
     <div id="type" class="typing blinking">​</div>
     <div id="editorFrame" class="editor-frame">
@@ -289,7 +301,6 @@
         typeText();
       });
 
-      // add pressed effect to all icons
       document.querySelectorAll('.icon').forEach((el) => {
         el.addEventListener('touchstart', () => el.classList.add('pressed'));
         el.addEventListener('touchend', () => el.classList.remove('pressed'));
@@ -305,6 +316,7 @@
         editorFrame.style.display = 'block';
         windowControls.style.display = 'flex';
         iconContainer.style.display = 'flex';
+
         setTimeout(() => frameRect.classList.add('filled'), 1500);
         setTimeout(() => editorText.classList.add('show'), 1500);
       }
