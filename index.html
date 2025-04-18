@@ -292,6 +292,7 @@
         setTimeout(typeText, speed);
       } else {
         typingFinished = true;
+        backgroundVideo.classList.add('show');
         document.documentElement.style.overflowY = "auto";
       }
     }
@@ -323,7 +324,6 @@
 
     window.addEventListener('scroll', () => {
       if (typingFinished) {
-        backgroundVideo.classList.add('show');
         editorFrame.style.display = 'block';
         windowControls.style.display = 'flex';
         iconContainer.style.display = 'flex';
