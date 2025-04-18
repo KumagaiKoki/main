@@ -244,7 +244,7 @@
           <span class="dot green"></span>
         </div>
         <div class="editor-content" id="editorText">
-          <span class="func-name" id="editableText">いい感じのフォント</span><span class="paren">()</span>
+          <span class="func-name" id="editableText">iikanji_kana</span>
         </div>
       </div>
     </div>
@@ -328,7 +328,7 @@
     };
 
     window.addEventListener('scroll', () => {
-      if (typingFinished && scrollTriggered && window.scrollY > 0) {
+      if (typingFinished && !scrollTriggered && window.scrollY > 50) {
         scrollTriggered = true;
         editorFrame.style.display = 'block';
         windowControls.style.display = 'flex';
