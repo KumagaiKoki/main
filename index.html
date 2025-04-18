@@ -171,8 +171,8 @@
       display: none;
       justify-content: center;
       margin-top: 20px;
-      background-color: rgba(30, 30, 30, 0.6);
-      border: 1.5px solid rgba(100, 100, 100, 0.8);
+      background-color: rgba(30, 30, 30, 0.08);
+      border: 1.5px solid rgba(255, 255, 255, 0.25);
       border-radius: 16px;
       padding: 7px;
       box-sizing: border-box;
@@ -219,6 +219,105 @@
   </style>
 </head>
 <body>
-  <!-- ... 省略 ... -->
+  <video id="backgroundVideo" class="background-video" playsinline autoplay muted loop>
+    <source src="https://cdn.jsdelivr.net/gh/KumagaiKoki/main/day1.mp4" type="video/mp4">
+  </video>
+  <div class="container">
+    <div id="type" class="typing"></div>
+    <div id="editorFrame" class="editor-frame">
+      <div class="editor-border">
+        <svg viewBox="-1.5 -1.5 378 387" width="375" height="384" preserveAspectRatio="none">
+          <rect id="frameRect" x="1.5" y="1.5" width="372" height="381" rx="12" ry="12" class="path" />
+        </svg>
+        <div class="window-controls" id="windowControls">
+          <span class="dot red"></span>
+          <span class="dot yellow"></span>
+          <span class="dot green"></span>
+        </div>
+        <div class="editor-content" id="editorText">
+          <span class="func-name" id="editableText">いい感じのフォント</span><span class="paren">()</span>
+        </div>
+      </div>
+    </div>
+    <div class="icon-container" id="iconContainer">
+      <div class="icon-row">
+        <div class="icon-column">
+          <div class="icon" onclick="handleButtonClick('光熱費のボタンが押されました')"></div>
+          <div class="icon-label">光熱費</div>
+        </div>
+        <div class="icon-column">
+          <div class="icon"></div>
+          <div class="icon-label">消耗品</div>
+        </div>
+        <div class="icon-column">
+          <div class="icon"></div>
+          <div class="icon-label">料理</div>
+        </div>
+        <div class="icon-column">
+          <div class="icon"></div>
+          <div class="icon-label">あかちゃん</div>
+        </div>
+        <div class="icon-column">
+          <div class="icon"></div>
+          <div class="icon-label">****</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    const text = "Hello World!!";
+    const speed = 100;
+    let i = 0;
+    const target = document.getElementById("type");
+    const editorFrame = document.getElementById("editorFrame");
+    const windowControls = document.getElementById("windowControls");
+    const editorText = document.getElementById("editorText");
+    const frameRect = document.getElementById("frameRect");
+    const iconContainer = document.getElementById("iconContainer");
+    const editableText = document.getElementById("editableText");
+    const backgroundVideo = document.getElementById("backgroundVideo");
+    let typingFinished = false;
+
+    function typeText() {
+      if (i === 0) target.textContent = "";
+      if (i < text.length) {
+        target.textContent += text.charAt(i);
+        i++;
+        setTimeout(typeText, speed);
+      } else {
+        typingFinished = true;
+        backgroundVideo.classList.add('show');
+        document.documentElement.style.overflowY = "auto";
+      }
+    }
+
+    function handleButtonClick(message) {
+      if (editableText) {
+        editableText.textContent = message;
+      }
+    }
+
+    window.onload = () => {
+      typeText();
+
+      document.querySelectorAll('.icon').forEach((el) => {
+        el.addEventListener('touchstart', () => el.classList.add('pressed'));
+        el.addEventListener('touchend', () => el.classList.remove('pressed'));
+        el.addEventListener('mousedown', () => el.classList.add('pressed'));
+        el.addEventListener('mouseup', () => el.classList.remove('pressed'));
+        el.addEventListener('mouseleave', () => el.classList.remove('pressed'));
+      });
+    };
+
+    window.addEventListener('scroll', () => {
+      if (typingFinished) {
+        editorFrame.style.display = 'block';
+        windowControls.style.display = 'flex';
+        iconContainer.style.display = 'flex';
+        setTimeout(() => frameRect.classList.add('filled'), 1500);
+        setTimeout(() => editorText.classList.add('show'), 1500);
+      }
+    });
+  </script>
 </body>
 </html>
