@@ -190,6 +190,7 @@
       height: 42px;
       background-color: orange;
       border-radius: 10px;
+      cursor: pointer;
     }
 
     @media (max-width: 768px) {
@@ -211,7 +212,7 @@
           <span class="dot green"></span>
         </div>
         <div class="editor-content" id="editorText">
-<span class="func-name">いい感じのフォント</span><span class="paren">()</span>
+<span class="func-name" id="editableText">いい感じのフォント</span><span class="paren">()</span>
 <span class="func-name">iikanji_no_font</span><span class="paren">()</span>
 <span class="func-name">イイ感じのふぉんと</span><span class="paren">()</span>
         </div>
@@ -220,7 +221,7 @@
     <div class="icon-container" id="iconContainer">
       <div class="icon-row">
         <div class="icon-column">
-          <div class="icon"></div>
+          <div class="icon" onclick="handleButtonClick('光熱費のボタンが押されました')"></div>
           <div class="icon-label">光熱費</div>
         </div>
         <div class="icon-column">
@@ -253,6 +254,7 @@
     const editorText = document.getElementById("editorText");
     const frameRect = document.getElementById("frameRect");
     const iconContainer = document.getElementById("iconContainer");
+    const editableText = document.getElementById("editableText");
     let typingFinished = false;
 
     function typeText() {
@@ -274,6 +276,12 @@
       setTimeout(() => {
         callback();
       }, duration);
+    }
+
+    function handleButtonClick(message) {
+      if (editableText) {
+        editableText.textContent = message;
+      }
     }
 
     window.onload = () => {
