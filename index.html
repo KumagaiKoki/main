@@ -328,7 +328,7 @@
     };
 
     window.addEventListener('scroll', () => {
-      if (typingFinished && !scrollTriggered && window.scrollY > 0) {
+      if (typingFinished && !scrollTriggered && window.scrollY > 10) {
         scrollTriggered = true;
         editorFrame.style.display = 'block';
         windowControls.style.display = 'flex';
