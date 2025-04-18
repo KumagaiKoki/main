@@ -286,6 +286,7 @@
     const editableText = document.getElementById("editableText");
     const backgroundVideo = document.getElementById("backgroundVideo");
     let typingFinished = false;
+    let scrollTriggered = false;
 
     function typeText() {
       if (i === 0) target.textContent = "";
@@ -327,11 +328,12 @@
     };
 
     window.addEventListener('scroll', () => {
-      if (typingFinished) {
+      if (typingFinished && !scrollTriggered && window.scrollY > 50) {
+        scrollTriggered = true;
         editorFrame.style.display = 'block';
         windowControls.style.display = 'flex';
         iconContainer.style.display = 'flex';
-        frameRect.classList.add('draw'); // 枠線描画を開始
+        frameRect.classList.add('draw');
         setTimeout(() => frameRect.classList.add('filled'), 1500);
         setTimeout(() => editorText.classList.add('show'), 1500);
       }
