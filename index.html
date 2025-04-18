@@ -154,17 +154,20 @@
     .editor-content span.func-name { color: #8dd3fc; }
     .editor-content span.paren { color: #e5e5e5; }
 
-    .icon-row {
+    .icon-container {
       display: none;
       justify-content: center;
-      gap: 16px;
       margin-top: 20px;
+      background-color: rgba(255, 255, 255, 0.1);
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-radius: 20px;
+      padding: 20px;
     }
 
-    .icon-wrapper {
-      padding: 6px;
-      background-color: rgba(255, 255, 255, 0.2);
-      border-radius: 10px;
+    .icon-row {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
     }
 
     .icon {
@@ -199,12 +202,14 @@
         </div>
       </div>
     </div>
-    <div class="icon-row" id="iconRow">
-      <div class="icon-wrapper"><div class="icon"></div></div>
-      <div class="icon-wrapper"><div class="icon"></div></div>
-      <div class="icon-wrapper"><div class="icon"></div></div>
-      <div class="icon-wrapper"><div class="icon"></div></div>
-      <div class="icon-wrapper"><div class="icon"></div></div>
+    <div class="icon-container" id="iconContainer">
+      <div class="icon-row">
+        <div class="icon"></div>
+        <div class="icon"></div>
+        <div class="icon"></div>
+        <div class="icon"></div>
+        <div class="icon"></div>
+      </div>
     </div>
   </div>
 
@@ -217,7 +222,7 @@
     const windowControls = document.getElementById("windowControls");
     const editorText = document.getElementById("editorText");
     const frameRect = document.getElementById("frameRect");
-    const iconRow = document.getElementById("iconRow");
+    const iconContainer = document.getElementById("iconContainer");
     let typingFinished = false;
 
     function typeText() {
@@ -252,7 +257,7 @@
         document.body.style.backgroundColor = '#4b0082';
         editorFrame.style.display = 'block';
         windowControls.style.display = 'flex';
-        iconRow.style.display = 'flex';
+        iconContainer.style.display = 'flex';
 
         setTimeout(() => {
           frameRect.classList.add('filled');
