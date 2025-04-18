@@ -9,39 +9,33 @@
     html, body {
       margin: 0;
       padding: 0;
-      height: 200%; /* 高さを増やしてスクロールを可能にする */
+      height: 200%;
       overflow-x: hidden;
       overflow-y: auto;
       font-family: 'Fira Code', Consolas, monospace;
-      background-color: black;
       color: white;
-      transition: background-color 1s ease;
+      position: relative;
     }
 
-    body.animated-bg {
-      animation: animatedBG 5s ease forwards;
-      background-size: 400% 400%;
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: -1;
+      background: black;
     }
 
-    @keyframes animatedBG {
-      0% {
-        background-color: black;
-        background-image: linear-gradient(-45deg, black, black, black);
-        background-position: 0% 50%;
-      }
-      25% {
-        background-image: linear-gradient(-45deg, #2c3e50, #34495e, #2c3e50);
-      }
-      50% {
-        background-image: linear-gradient(-45deg, #2980b9, #6dd5fa, #2980b9);
-      }
-      75% {
-        background-image: linear-gradient(-45deg, #ff6a00, #ee0979, #ff6a00);
-      }
-      100% {
-        background-image: linear-gradient(-45deg, #ff9a9e, #fad0c4, #fad0c4);
-        background-position: 100% 50%;
-      }
+    #background-video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      z-index: -2;
     }
 
     .container {
@@ -224,6 +218,10 @@
   </style>
 </head>
 <body>
+  <video id="background-video" autoplay muted loop playsinline>
+    <source src="https://github.com/KumagaiKoki/main/raw/main/day1.mov" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
   <div class="container">
     <div id="type" class="typing blinking">​</div>
     <div id="editorFrame" class="editor-frame">
@@ -319,7 +317,6 @@
 
     window.addEventListener('scroll', () => {
       if (typingFinished && !animationTriggered && window.scrollY > 0) {
-        document.body.classList.add('animated-bg');
         editorFrame.style.display = 'block';
         windowControls.style.display = 'flex';
         iconContainer.style.display = 'flex';
