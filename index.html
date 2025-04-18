@@ -289,7 +289,6 @@
         typeText();
       });
 
-      // add pressed effect to all icons
       document.querySelectorAll('.icon').forEach((el) => {
         el.addEventListener('touchstart', () => el.classList.add('pressed'));
         el.addEventListener('touchend', () => el.classList.remove('pressed'));
@@ -301,7 +300,7 @@
 
     window.addEventListener('scroll', () => {
       if (typingFinished) {
-        document.body.style.backgroundColor = '#4b0082';
+        document.body.style.backgroundColor = '#fde4b0'; // 薄いオレンジ
         editorFrame.style.display = 'block';
         windowControls.style.display = 'flex';
         iconContainer.style.display = 'flex';
