@@ -191,6 +191,12 @@
       background-color: orange;
       border-radius: 10px;
       cursor: pointer;
+      transition: transform 0.1s ease, box-shadow 0.1s ease;
+    }
+
+    .icon:active {
+      transform: translateZ(-2px) scale(0.95);
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.6);
     }
 
     @media (max-width: 768px) {
@@ -212,9 +218,7 @@
           <span class="dot green"></span>
         </div>
         <div class="editor-content" id="editorText">
-<span class="func-name" id="editableText">いい感じのフォント</span><span class="paren">()</span>
-<span class="func-name">iikanji_no_font</span><span class="paren">()</span>
-<span class="func-name">イイ感じのふぉんと</span><span class="paren">()</span>
+<span class="func-name" id="editableText">現状特に書くことなし</span>
         </div>
       </div>
     </div>
