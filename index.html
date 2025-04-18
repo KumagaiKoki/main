@@ -7,7 +7,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
   <style>
     html, body {
-      background-color: black;
+      background-color: #fdebc9; /* 薄いオレンジ */
       color: white;
       font-family: 'Fira Code', Consolas, monospace;
       margin: 0;
@@ -289,7 +289,6 @@
         typeText();
       });
 
-      // add pressed effect to all icons
       document.querySelectorAll('.icon').forEach((el) => {
         el.addEventListener('touchstart', () => el.classList.add('pressed'));
         el.addEventListener('touchend', () => el.classList.remove('pressed'));
