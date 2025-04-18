@@ -50,16 +50,8 @@
       z-index: 1;
     }
 
-    .typing {
-      font-size: 2rem;
-      white-space: nowrap;
-      border-right: 2px solid orange;
-      overflow: hidden;
-      position: relative;
-      line-height: 1;
-      display: inline-block;
-      vertical-align: top;
-    }
+    $1
+  height: 2.4rem;
 
     .editor-frame {
       display: none;
@@ -217,7 +209,13 @@
     }
 
     @media (max-width: 768px) {
-      .typing { font-size: 2rem; }
+      $1
+  line-height: 1;
+  display: inline-block;
+  vertical-align: top;
+  height: 2.4rem;
+  padding: 0;
+  margin: 0;
     }
   </style>
 </head>
