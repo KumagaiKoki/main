@@ -293,6 +293,7 @@
       } else {
         typingFinished = true;
         document.documentElement.style.overflowY = "auto";
+        backgroundVideo.classList.add('show'); // <-- ここで動画を表示
       }
     }
 
@@ -308,6 +309,7 @@
     }
 
     window.onload = () => {
+      backgroundVideo.load(); // 同時にロードだけは始める
       startBlinkingBeforeTyping(1400, () => {
         typeText();
       });
@@ -323,7 +325,6 @@
 
     window.addEventListener('scroll', () => {
       if (typingFinished) {
-        backgroundVideo.classList.add('show');
         editorFrame.style.display = 'block';
         windowControls.style.display = 'flex';
         iconContainer.style.display = 'flex';
