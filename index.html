@@ -50,22 +50,8 @@
       z-index: 1;
     }
 
-    .typing {
-      font-size: 2rem;
-      white-space: nowrap;
-      border-right: 2px solid orange;
-      overflow: hidden;
-      position: relative;
-    }
-
-    .blinking {
-      animation: blink 0.7s steps(1) infinite;
-    }
-
-    @keyframes blink {
-      0%, 100% { border-color: orange; }
-      50% { border-color: transparent; }
-    }
+    $1
+  height: 2.4rem;
 
     .editor-frame {
       display: none;
@@ -98,6 +84,9 @@
       vector-effect: non-scaling-stroke;
       stroke-dasharray: 1920;
       stroke-dashoffset: 1920;
+    }
+
+    .path.draw {
       animation: draw-frame 1.5s ease-out forwards;
     }
 
@@ -220,7 +209,13 @@
     }
 
     @media (max-width: 768px) {
-      .typing { font-size: 2rem; }
+      $1
+  line-height: 1;
+  display: inline-block;
+  vertical-align: top;
+  height: 2.4rem;
+  padding: 0;
+  margin: 0;
     }
   </style>
 </head>
@@ -229,7 +224,7 @@
     <source src="https://cdn.jsdelivr.net/gh/KumagaiKoki/main/day1.mp4" type="video/mp4">
   </video>
   <div class="container">
-    <div id="type" class="typing blinking">​</div>
+    <div id="type" class="typing"></div>
     <div id="editorFrame" class="editor-frame">
       <div class="editor-border">
         <svg viewBox="-1.5 -1.5 378 387" width="375" height="384" preserveAspectRatio="none">
@@ -241,7 +236,7 @@
           <span class="dot green"></span>
         </div>
         <div class="editor-content" id="editorText">
-          <span class="func-name" id="editableText">いい感じのフォント</span><span class="paren">()</span>
+          <span class="func-name" id="editableText">iikanji_kana</span>
         </div>
       </div>
     </div>
@@ -283,6 +278,7 @@
     const editableText = document.getElementById("editableText");
     const backgroundVideo = document.getElementById("backgroundVideo");
     let typingFinished = false;
+    let scrollTriggered = false;
 
     function typeText() {
       if (i === 0) target.textContent = "";
@@ -293,12 +289,8 @@
       } else {
         typingFinished = true;
         document.documentElement.style.overflowY = "auto";
+        backgroundVideo.classList.add('show');
       }
-    }
-
-    function startBlinkingBeforeTyping(duration, callback) {
-      target.classList.add("blinking");
-      setTimeout(callback, duration);
     }
 
     function handleButtonClick(message) {
@@ -308,9 +300,8 @@
     }
 
     window.onload = () => {
-      startBlinkingBeforeTyping(1400, () => {
-        typeText();
-      });
+      backgroundVideo.load();
+      typeText();
 
       document.querySelectorAll('.icon').forEach((el) => {
         el.addEventListener('touchstart', () => el.classList.add('pressed'));
@@ -322,11 +313,12 @@
     };
 
     window.addEventListener('scroll', () => {
-      if (typingFinished) {
-        backgroundVideo.classList.add('show');
+      if (typingFinished && !scrollTriggered && window.scrollY > 50) {
+        scrollTriggered = true;
         editorFrame.style.display = 'block';
         windowControls.style.display = 'flex';
         iconContainer.style.display = 'flex';
+        frameRect.classList.add('draw');
         setTimeout(() => frameRect.classList.add('filled'), 1500);
         setTimeout(() => editorText.classList.add('show'), 1500);
       }
