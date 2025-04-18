@@ -30,7 +30,8 @@
       height: 100vh;
       object-fit: cover;
       z-index: -1;
-      display: none;
+      opacity: 0;
+      transition: opacity 1s ease;
     }
 
     .container {
@@ -315,7 +316,7 @@
 
     window.addEventListener('scroll', () => {
       if (typingFinished) {
-        backgroundVideo.style.display = 'block';
+        backgroundVideo.style.opacity = '1';
         editorFrame.style.display = 'block';
         windowControls.style.display = 'flex';
         iconContainer.style.display = 'flex';
