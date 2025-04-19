@@ -308,13 +308,14 @@
       <div id="subCategoryWrapper">
     <div id="subCategoryLabel" class="jp-text">ベビー用品</div>
     <div class="white-scroll-container">
-  const exampleBox = createWhiteBox({
-    title: '紙おむつ',
-    subtitle: '新生児用 <span class=\'en-text\' style="font-family: \'Consolas\', monospace;">(3-5kg)</span> 66枚',
-    imageUrl: 'https://github.com/KumagaiKoki/main/blob/main/101.jpg?raw=true',
-    price: '1,386 (¥21/枚)',
-    link: 'https://amzn.asia/d/7PBKP5a'
-  });
+      
+    addWhiteBox({
+      title: '紙おむつ',
+      subtitle: '新生児用 <span class="en-text" style="font-family: \'Consolas\', monospace;">(3-5kg)</span> 66枚',
+      imageUrl: 'https://github.com/KumagaiKoki/main/blob/main/101.jpg?raw=true',
+      price: '1,386 (¥21/枚)',
+      link: 'https://amzn.asia/d/7PBKP5a'
+    });
       <div class="white-box"></div>
 
       <div class="white-box"></div>
@@ -399,32 +400,30 @@
   const hello = document.getElementById('type');
   hello.style.marginTop = '100px';
 }
-      function createWhiteBox({
-    title = '',
-    subtitle = '',
-    imageUrl = '',
-    price = '',
-    link = '#'
-  }) {
-    return `
-    <div class="white-box">
-      <div style="padding: 16px; display: flex; flex-direction: column; height: 100%; box-sizing: border-box; justify-content: space-between;">
-        <div>
-          <div class="jp-text" style="font-size: 1rem; font-weight: bold; color: black; font-family: 'Rounded Mplus 1c', sans-serif;">${title}</div>
-          <div class='en-text' style="display: none;"></div>
-          <div class="jp-text" style="font-size: 0.85rem; color: #333; font-family: 'Rounded Mplus 1c', sans-serif;">${subtitle}</div>
-        </div>
-        <img src="${imageUrl}" alt="${title}" style="width: 100%; height: 130px; margin: 8px 0; object-fit: cover;">
-        <div>
-          <div style="display: flex; justify-content: space-between; align-items: center;">
-            <div class="jp-text" style="font-size: 0.85rem; color: #111; font-family: 'Rounded Mplus 1c', sans-serif;">¥<span class='en-text' style="font-family: 'Consolas', monospace;">${price}</span></div>
-            <a href="${link}" style="font-family: 'Rounded Mplus 1c', sans-serif;font-size: 0.7rem; padding: 4px 10px; background-color: #2563eb; color: white; border: none; border-radius: 6px; cursor: pointer; text-decoration: none; display: inline-block;">購入</a>
-          </div>
+function addWhiteBox({ title, subtitle, imageUrl, price, link, containerSelector = '.white-scroll-container' }) {
+  const container = document.querySelector(containerSelector);
+  if (!container) return;
+
+  const box = document.createElement('div');
+  box.className = 'white-box';
+  box.innerHTML = `
+    <div style="padding: 16px; display: flex; flex-direction: column; height: 100%; box-sizing: border-box; justify-content: space-between;">
+      <div>
+        <div class="jp-text" style="font-size: 1rem; font-weight: bold; color: black; font-family: 'Rounded Mplus 1c', sans-serif;">${title}</div>
+        <div class="en-text" style="display: none;"></div>
+        <div class="jp-text" style="font-size: 0.85rem; color: #333; font-family: 'Rounded Mplus 1c', sans-serif;">${subtitle}</div>
+      </div>
+      <img src="${imageUrl}" alt="${title}" style="width: 100%; height: 130px; margin: 8px 0; object-fit: cover;">
+      <div>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <div class="jp-text" style="font-size: 0.85rem; color: #111; font-family: 'Rounded Mplus 1c', sans-serif;">¥<span class='en-text' style="font-family: 'Consolas', monospace;">${price}</span></div>
+          <a href="${link}" style="font-family: 'Rounded Mplus 1c', sans-serif; font-size: 0.7rem; padding: 4px 10px; background-color: #2563eb; color: white; border: none; border-radius: 6px; cursor: pointer; text-decoration: none; display: inline-block;">購入</a>
         </div>
       </div>
     </div>
-    `;
-  }
+  `;
+  container.appendChild(box);
+}
 
     window.onload = () => {
       typeText();
