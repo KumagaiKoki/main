@@ -161,8 +161,6 @@
       font-size: 1.5rem;
       padding: 20px;
       white-space: pre;
-      font-family: 'Fira Code', Consolas, monospace;
-      opacity: 0;
       box-sizing: border-box;
       z-index: 1;
       transition: opacity 1s ease;
@@ -202,9 +200,6 @@
       color: white;
       text-align: center;
       margin-top: 4px;
-    }
-
-    .icon-label.jp-text {
       font-family: 'Rounded Mplus 1c', sans-serif;
     }
 
@@ -251,9 +246,7 @@
         </div>
       </div>
     </div>
-    <div class="container">
-    <div id="type" class="typing jp-text"></div>
-    <div class="icon-container">
+    <div class="icon-container" id="iconContainer">
       <div class="icon-row">
         <div class="icon-column">
           <div class="icon" onclick="handleIconClick(['光熱費のボタンが押されました'])"></div>
@@ -293,9 +286,12 @@
     let typingFinished = false;
 
     function typeText() {
-      if (i === 0) target.textContent = "";
+      if (i === 0) target.innerHTML = "";
       if (i < text.length) {
-        target.textContent += text.charAt(i);
+        const span = document.createElement("span");
+        span.className = "en-text";
+        span.textContent = text.charAt(i);
+        target.appendChild(span);
         i++;
         setTimeout(typeText, speed);
       } else {
