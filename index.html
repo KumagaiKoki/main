@@ -231,15 +231,12 @@
     #subCategoryWrapper {
   display: none;
   flex-direction: column;
-  align-items: stretch;
+  align-items: flex-start;
   width: 100%;
   padding: 0 16px;
   box-sizing: border-box;
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      margin-top: 20px;
-    }
+  margin-top: 20px;
+}
 
     #subCategoryLabel {
       color: white;
@@ -355,7 +352,7 @@
         </div>
       </div>
     </div>
-      <div id="subCategoryWrapper">
+      <div id="subCategoryWrapper" style="display: none;">
     <div id="subCategoryLabel" class="jp-text">ベビー用品</div>
     <div class="white-scroll-container">
       <div class="white-box">
@@ -447,11 +444,15 @@
 
     function showSubCategory() {
   const wrapper = document.getElementById('subCategoryWrapper');
-  wrapper.style.display = 'flex';
+  wrapper.style.display = 'block';
 
-  // ページの高さを調整する処理
+  const hello = document.getElementById('type');
+  hello.style.marginTop = '100px';
+
+  // スクロール可能になるように高さ調整
   const extraHeight = wrapper.offsetTop + wrapper.scrollHeight + 100;
   document.body.style.minHeight = `${extraHeight}px`;
+}px`;
 
   // Hello World の上に余白を追加
   const hello = document.getElementById('type');
