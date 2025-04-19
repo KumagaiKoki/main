@@ -242,11 +242,11 @@
     <div class="icon-container" id="iconContainer">
       <div class="icon-row">
         <div class="icon-column">
-          <div class="icon" onclick="handleIconClick('光熱費のボタンが押されました')"></div>
+          <div class="icon" onclick="handleIconClick(['光熱費のボタンが押されました'])"></div>
           <div class="icon-label">光熱費</div>
         </div>
         <div class="icon-column">
-          <div class="icon" onclick="handleIconClick('consumables')"></div>
+          <div class="icon" onclick="handleIconClick(['ベビー用品', '食品', '生活消耗品', '調理器具', '文房具'])"></div>
           <div class="icon-label">消耗品</div>
         </div>
         <div class="icon-column">
@@ -291,14 +291,9 @@
       }
     }
 
-    function handleIconClick(contentType) {
+    function handleIconClick(lines) {
       if (!editableText) return;
-      if (contentType === 'consumables') {
-        const lines = ["ベビー用品", "食品", "生活消耗品", "調理器具", "文房具"];
-        editableText.innerHTML = lines.map((text, idx) => `<span class='line-number'>${idx + 1}</span>${text}`).join("\n");
-      } else {
-        editableText.textContent = contentType;
-      }
+      editableText.innerHTML = lines.map((text, idx) => `<span class='line-number'>${idx + 1}</span>${text}`).join("\n");
     }
 
     window.onload = () => {
