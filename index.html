@@ -14,9 +14,10 @@
       height: auto;
       color: white;
       overflow-x: hidden;
-      overflow-y: hidden;
+      overflow-y: auto;
     }
-
+    
+    /* 以下は既存の CSS をそのまま残す */
     .line-number, .en-text {
       font-family: 'Consolas', monospace;
     }
@@ -53,7 +54,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      min-height: 100vh;
       position: relative;
       flex-direction: column;
       z-index: 1;
