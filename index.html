@@ -307,9 +307,10 @@
           "ベビー用品",
           "食品",
           "生活消耗品",
-          "調理器具文房具"
+          "調理器具",
+          "文房具"
         ];
-        editableText.innerHTML = lines.map((text, idx) => `<span class='line-number'>${idx + 1}</span>${text}`).join("\n");
+        editableText.innerHTML = lines.map((text, idx) => `<span class='line-number'>${idx + 1}</span><span style='font-size:0.9rem'>${text}</span>`).join("\n");
       }
     }
 
