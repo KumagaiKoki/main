@@ -265,7 +265,7 @@
     <source src="https://cdn.jsdelivr.net/gh/KumagaiKoki/main/day1.mp4" type="video/mp4">
   </video>
   <div class="container">
-    <div id="type" class="typing"></div>
+    <div id="type" class="typing" style="margin-top: 100px;"></div>
     <div id="editorFrame" class="editor-frame">
       <div class="editor-border">
         <svg viewBox="-1.5 -1.5 378 387">
@@ -387,6 +387,10 @@
   // ページの高さを調整する処理
   const extraHeight = wrapper.offsetTop + wrapper.scrollHeight + 100;
   document.body.style.minHeight = `${extraHeight}px`;
+
+  // Hello World の上に余白を追加
+  const hello = document.getElementById('type');
+  hello.style.marginTop = '100px';
 }
 
     window.onload = () => {
