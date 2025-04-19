@@ -144,7 +144,7 @@
 
     .editor-content {
       position: absolute;
-      top: 0;
+      top: -1rem;
       left: 0;
       width: 100%;
       height: 100%;
@@ -216,10 +216,6 @@
       transform: scale(0.95);
       box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.6);
     }
-
-    @media (max-width: 768px) {
-      .typing { font-size: 2rem; }
-    }
   </style>
 </head>
 <body>
@@ -230,7 +226,7 @@
     <div id="type" class="typing"></div>
     <div id="editorFrame" class="editor-frame">
       <div class="editor-border">
-        <svg viewBox="-1.5 -1.5 378 387" width="375" height="384" preserveAspectRatio="none">
+        <svg viewBox="-1.5 -1.5 378 387">
           <rect id="frameRect" x="1.5" y="1.5" width="372" height="381" rx="12" ry="12" class="path" />
         </svg>
         <div class="window-controls" id="windowControls">
@@ -246,11 +242,11 @@
     <div class="icon-container" id="iconContainer">
       <div class="icon-row">
         <div class="icon-column">
-          <div class="icon" onclick="handleButtonClick('光熱費のボタンが押されました')"></div>
+          <div class="icon" onclick="handleIconClick('光熱費のボタンが押されました')"></div>
           <div class="icon-label">光熱費</div>
         </div>
         <div class="icon-column">
-          <div class="icon" onclick="handleConsumablesClick()"></div>
+          <div class="icon" onclick="handleIconClick('consumables')"></div>
           <div class="icon-label">消耗品</div>
         </div>
         <div class="icon-column">
@@ -295,28 +291,18 @@
       }
     }
 
-    function handleButtonClick(message) {
-      if (editableText) {
-        editableText.textContent = message;
-      }
-    }
-
-    function handleConsumablesClick() {
-      if (editableText) {
-        const lines = [
-          "ベビー用品",
-          "食品",
-          "生活消耗品",
-          "調理器具",
-          "文房具"
-        ];
+    function handleIconClick(contentType) {
+      if (!editableText) return;
+      if (contentType === 'consumables') {
+        const lines = ["ベビー用品", "食品", "生活消耗品", "調理器具", "文房具"];
         editableText.innerHTML = lines.map((text, idx) => `<span class='line-number'>${idx + 1}</span>${text}`).join("\n");
+      } else {
+        editableText.textContent = contentType;
       }
     }
 
     window.onload = () => {
       typeText();
-
       document.querySelectorAll('.icon').forEach((el) => {
         el.addEventListener('touchstart', () => el.classList.add('pressed'));
         el.addEventListener('touchend', () => el.classList.remove('pressed'));
