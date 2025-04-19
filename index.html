@@ -177,32 +177,68 @@
       margin-right: 1ch;
     }
 
-    .horizontal-scroll {
-      display: flex;
-      overflow-x: auto;
-      padding: 16px;
-      gap: 16px;
+    .icon-container {
       display: none;
+      justify-content: center;
+      margin-top: 20px;
+      background-color: rgba(30, 30, 30, 0.3);
+      border: 1.5px solid rgba(255, 255, 255, 0.25);
+      border-radius: 16px;
+      padding: 7px;
+      box-sizing: border-box;
+      width: fit-content;
+      flex-direction: column;
+      align-items: center;
     }
 
-    .card {
-      flex: 0 0 auto;
-      background-color: #222;
-      border-radius: 16px;
-      padding: 16px;
-      width: 240px;
+    .icon-row {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .icon-label {
+      font-size: 0.5rem;
       color: white;
       text-align: center;
+      margin-top: 4px;
+      font-family: 'Rounded Mplus 1c', sans-serif;
     }
 
-    .card img {
-      max-width: 100%;
-      border-radius: 12px;
+    .icon-column {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
-    .card-title {
-      margin-top: 12px;
+    .icon {
+      width: 42px;
+      height: 42px;
+      background-color: orange;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: transform 0.1s ease, box-shadow 0.1s ease;
+      touch-action: manipulation;
+    }
+
+    .icon.pressed {
+      transform: scale(0.95);
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.6);
+    }
+
+    #subCategoryLabel {
+      margin-top: 20px;
+      color: white;
       font-size: 1rem;
+      font-family: 'Rounded Mplus 1c', sans-serif;
+    }
+
+    #whiteBox {
+      width: 220px;
+      height: 60px;
+      background-color: white;
+      border-radius: 14px;
+      margin-top: 10px;
     }
   </style>
 </head>
@@ -227,15 +263,31 @@
         </div>
       </div>
     </div>
-    <div class="horizontal-scroll" id="scrollCards">
-      <div class="card">
-        <img src="https://www.apple.com/v/iphone-16-pro/a/images/overview/hero/hero_iphone__f2j8az6h1j6y_large.jpg" alt="iPhone 16 Pro">
-        <div class="card-title">iPhone 16 Pro</div>
+    <div class="icon-container" id="iconContainer">
+      <div class="icon-row">
+        <div class="icon-column">
+          <div class="icon" onclick="handleIconClick(['光熱費のボタンが押されました'])"></div>
+          <div class="icon-label jp-text">光熱費</div>
+        </div>
+        <div class="icon-column">
+          <div class="icon" onclick="handleIconClick(['ベビー用品', '食品', '生活消耗品', '調理器具', '文房具']); showSubCategory();"></div>
+          <div class="icon-label jp-text">消耗品</div>
+        </div>
+        <div class="icon-column">
+          <div class="icon"></div>
+          <div class="icon-label jp-text">料理</div>
+        </div>
+        <div class="icon-column">
+          <div class="icon"></div>
+          <div class="icon-label jp-text">あかちゃん</div>
+        </div>
+        <div class="icon-column">
+          <div class="icon"></div>
+          <div class="icon-label jp-text">****</div>
+        </div>
       </div>
-      <div class="card">
-        <img src="https://www.apple.com/v/iphone-16/a/images/overview/hero/hero_iphone__c4h6qf59h1s6_large.jpg" alt="iPhone 16">
-        <div class="card-title">iPhone 16</div>
-      </div>
+      <div id="subCategoryLabel" class="jp-text" style="display:none;">ベビー用品</div>
+      <div id="whiteBox" style="display:none;"></div>
     </div>
   </div>
   <script>
@@ -247,9 +299,11 @@
     const windowControls = document.getElementById("windowControls");
     const editorText = document.getElementById("editorText");
     const frameRect = document.getElementById("frameRect");
+    const iconContainer = document.getElementById("iconContainer");
     const editableText = document.getElementById("editableText");
     const backgroundVideo = document.getElementById("backgroundVideo");
-    const scrollCards = document.getElementById("scrollCards");
+    const subCategoryLabel = document.getElementById("subCategoryLabel");
+    const whiteBox = document.getElementById("whiteBox");
     let typingFinished = false;
 
     function typeText() {
@@ -268,18 +322,36 @@
       }
     }
 
+    function handleIconClick(lines) {
+      if (!editableText) return;
+      editableText.innerHTML = lines.map((text, idx) => {
+        return `<span class='line-number en-text'>${idx + 1}</span><span class='jp-text'>${text}</span>`;
+      }).join("\n");
+    }
+
+    function showSubCategory() {
+      subCategoryLabel.style.display = 'block';
+      whiteBox.style.display = 'block';
+    }
+
     window.onload = () => {
       typeText();
+      document.querySelectorAll('.icon').forEach((el) => {
+        el.addEventListener('touchstart', () => el.classList.add('pressed'));
+        el.addEventListener('touchend', () => el.classList.remove('pressed'));
+        el.addEventListener('mousedown', () => el.classList.add('pressed'));
+        el.addEventListener('mouseup', () => el.classList.remove('pressed'));
+        el.addEventListener('mouseleave', () => el.classList.remove('pressed'));
+      });
     };
 
     window.addEventListener('scroll', () => {
       if (typingFinished) {
         editorFrame.style.display = 'block';
         windowControls.style.display = 'flex';
-        scrollCards.style.display = 'flex';
+        iconContainer.style.display = 'flex';
         setTimeout(() => frameRect.classList.add('filled'), 1500);
         setTimeout(() => editorText.classList.add('show'), 1500);
-        editableText.innerHTML = `<span class='line-number en-text'>1</span><span class='jp-text'>ベビー用品</span>`;
       }
     });
   </script>
