@@ -374,8 +374,13 @@
     }
 
     function showSubCategory() {
-      subCategoryWrapper.style.display = 'flex';
-    }
+  const wrapper = document.getElementById('subCategoryWrapper');
+  wrapper.style.display = 'flex';
+
+  // ページの高さを調整する処理
+  const extraHeight = wrapper.offsetTop + wrapper.scrollHeight + 100;
+  document.body.style.minHeight = `${extraHeight}px`;
+}
 
     window.onload = () => {
       typeText();
