@@ -10,7 +10,7 @@
       margin: 0;
       padding: 0;
       height: 100%;
-      font-family: 'Fira Code', Consolas, monospace;
+      font-family: 'Rounded Mplus 1c', 'Fira Code', Consolas, monospace;
       color: white;
       overflow-x: hidden;
       overflow-y: hidden;
@@ -307,10 +307,10 @@
           "ベビー用品",
           "食品",
           "生活消耗品",
-          "調理器具",
+          "調理器具"
           "文房具"
         ];
-        editableText.innerHTML = lines.map((text, idx) => `<span class='line-number'>${idx + 1}</span><span style='font-size:0.9rem'>${text}</span>`).join("\n");
+        editableText.innerHTML = lines.map((text, idx) => `<span class='line-number'>${idx + 1}</span>${text}`).join("\n");
       }
     }
 
