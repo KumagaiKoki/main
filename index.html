@@ -11,19 +11,17 @@
       margin: 0;
       padding: 0;
       height: 100%;
-      font-family: 'Rounded Mplus 1c', 'Consolas', monospace;
       color: white;
       overflow-x: hidden;
       overflow-y: hidden;
     }
 
-    .line-number {
+    .line-number, .en-text {
       font-family: 'Consolas', monospace;
     }
 
-    body {
-      min-height: 200vh;
-      background-color: black;
+    .jp-text {
+      font-family: 'Rounded Mplus 1c', sans-serif;
     }
 
     body {
@@ -303,7 +301,11 @@
 
     function handleIconClick(lines) {
       if (!editableText) return;
-      editableText.innerHTML = lines.map((text, idx) => `<span class='line-number'>${idx + 1}</span>${text}`).join("\n");
+      editableText.innerHTML = lines.map((text, idx) => {
+        const lineNum = `<span class='line-number en-text'>${idx + 1}</span>`;
+        const content = `<span class='jp-text'>${text}</span>`;
+        return lineNum + content;
+      }).join("\n");
     }
 
     window.onload = () => {
