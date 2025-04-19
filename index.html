@@ -152,7 +152,7 @@
       text-align: left;
       font-size: 1.5rem;
       padding: 20px;
-      white-space: pre-line;
+      white-space: pre;
       font-family: 'Fira Code', Consolas, monospace;
       opacity: 0;
       box-sizing: border-box;
@@ -235,7 +235,12 @@
           <span class="dot green"></span>
         </div>
         <div class="editor-content" id="editorText">
-          <span class="func-name" id="editableText">Vimを使ってくれてありがとう</span>
+          <pre id="editableText">
+<span class="func-name">1</span> ベビー用品
+<span class="func-name">2</span> 食品
+<span class="func-name">3</span> 生活消耗品
+<span class="func-name">4</span> 調理器具文房具
+          </pre>
         </div>
       </div>
     </div>
@@ -246,7 +251,7 @@
           <div class="icon-label">光熱費</div>
         </div>
         <div class="icon-column">
-          <div class="icon"></div>
+          <div class="icon" onclick="handleButtonClick('<span class=\"func-name\">1</span> ベビー用品\n<span class=\"func-name\">2</span> 食品\n<span class=\"func-name\">3</span> 生活消耗品\n<span class=\"func-name\">4</span> 調理器具文房具')"></div>
           <div class="icon-label">消耗品</div>
         </div>
         <div class="icon-column">
@@ -293,7 +298,7 @@
 
     function handleButtonClick(message) {
       if (editableText) {
-        editableText.textContent = message;
+        editableText.innerHTML = message;
       }
     }
 
