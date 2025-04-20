@@ -66,11 +66,10 @@
     }
     .editor-frame {
       display: none;
-      position: absolute;
-      top: 120px; /* ← エディタ上辺を明示的に配置 */
       margin-top: 4pt;
       width: 375px;
-      height: 768px;
+      height: 384px;
+      position: relative;
       background-color: transparent;
     }
     .editor-border {
@@ -240,7 +239,7 @@
     <div id="editorFrame" class="editor-frame">
       <div class="editor-border">
         <svg viewBox="-1.5 -1.5 378 387">
-          <rect id="frameRect" x="1.5" y="1.5" width="372" height="190" rx="12" ry="12" class="path" />
+          <rect id="frameRect" x="1.5" y="1.5" width="372" height="95" rx="12" ry="12" class="path" />
         </svg>
         <div class="window-controls" id="windowControls">
           <span class="dot red"></span>
