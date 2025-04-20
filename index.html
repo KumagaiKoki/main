@@ -280,59 +280,58 @@
   </div>
   <script>
 function addWhiteBox({ title, subtitle, imageUrl, price, link, containerSelector }) {
-  const container = document.querySelector(containerSelector);
-  if (!container) return;
+      const container = document.querySelector(containerSelector);
+      if (!container) return;
 
-  const box = document.createElement('div');
-  box.className = 'white-box';
-
-  box.innerHTML = `
-    <div style="
-      padding: 16px;
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-      box-sizing: border-box;
-      justify-content: space-between;
-      font-family: 'Rounded Mplus 1c', sans-serif;
-    ">
-      <div>
-        <div style="font-size: 1rem; font-weight: bold; color: black;">
-          ${title}
-        </div>
-        <div style="font-size: 0.85rem; color: #333;">
-          ${subtitle}
-        </div>
-      </div>
-      <img src="${imageUrl}" alt="${title}" style="
-        width: 100%;
-        height: 130px;
-        margin: 8px 0;
-        object-fit: cover;
-      ">
-      <div>
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-          <div style="font-size: 0.85rem; color: #111;">
-            ¥${price}
+      const box = document.createElement('div');
+      box.className = 'white-box';
+      box.innerHTML = `
+        <div style="
+          padding: 16px;
+          display: flex;
+          flex-direction: column;
+          height: 100%;
+          box-sizing: border-box;
+          justify-content: space-between;
+          font-family: 'Rounded Mplus 1c', sans-serif;
+        ">
+          <div>
+            <div style="font-size: 1rem; font-weight: bold; color: black;">
+              ${title}
+            </div>
+            <div style="font-size: 0.85rem; color: #333;">
+              ${subtitle}
+            </div>
           </div>
-          <a href="${link}" style="
-            font-family: 'Rounded Mplus 1c', sans-serif;
-            font-size: 0.7rem;
-            padding: 4px 10px;
-            background-color: #2563eb;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            text-decoration: none;
-          ">購入</a>
+          <img src="${imageUrl}" alt="${title}" style="
+            width: 100%;
+            height: 130px;
+            margin: 8px 0;
+            object-fit: cover;
+          ">
+          <div>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <div style="font-size: 0.85rem; color: #111;">
+                ¥${price}
+              </div>
+              <a href="${link}" style="
+                font-family: 'Rounded Mplus 1c', sans-serif;
+                font-size: 0.7rem;
+                padding: 4px 10px;
+                background-color: #2563eb;
+                color: white;
+                border: none;
+                border-radius: 6px;
+                cursor: pointer;
+                text-decoration: none;
+              ">購入</a>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-  `;
+      `;
 
-  container.appendChild(box);
-}
+      container.appendChild(box);
+    }
 
     const text = "Hello World!!";
     const speed = 100;
@@ -382,25 +381,34 @@ function addWhiteBox({ title, subtitle, imageUrl, price, link, containerSelector
       hello.style.marginTop = '100px';
     }
 
-    window.onload = () => {
-      typeText();
-      addWhiteBox({
+window.onload = () => {
+    typeText();
+
+    const sampleItems = [
+      {
         title: '紙おむつ',
         subtitle: '新生児用 (3-5kg) 66枚',
         imageUrl: 'https://github.com/KumagaiKoki/main/blob/main/101.jpg?raw=true',
-        price: '1,386 (¥21/枚)',
+        price: '1,386 (\u00a521/枚)',
         link: 'https://amzn.asia/d/7PBKP5a',
-        containerSelector: '#babyItemsContainer'
-      });
+      },
+      {
+        title: 'おしりふき',
+        subtitle: '70枚 x 3個パック',
+        imageUrl: 'https://via.placeholder.com/220x130?text=Wipes',
+        price: '498 (\u00a52/枚)',
+        link: 'https://example.com/wipes'
+      },
+      {
+        title: 'ベビーローション',
+        subtitle: '300ml 低刺激タイプ',
+        imageUrl: 'https://via.placeholder.com/220x130?text=Lotion',
+        price: '980',
+        link: 'https://example.com/lotion'
+      }
+    ];
 
-      document.querySelectorAll('.icon').forEach((el) => {
-        el.addEventListener('touchstart', () => el.classList.add('pressed'));
-        el.addEventListener('touchend', () => el.classList.remove('pressed'));
-        el.addEventListener('mousedown', () => el.classList.add('pressed'));
-        el.addEventListener('mouseup', () => el.classList.remove('pressed'));
-        el.addEventListener('mouseleave', () => el.classList.remove('pressed'));
-      });
-    };
+    sampleItems.forEach(item => addWhiteBox({ ...item, containerSelector: '#babyItemsContainer' }));
 
     window.addEventListener('scroll', () => {
       if (typingFinished) {
@@ -411,6 +419,7 @@ function addWhiteBox({ title, subtitle, imageUrl, price, link, containerSelector
         setTimeout(() => editorText.classList.add('show'), 1500);
       }
     });
-  </script>
+  };
+</script>
 </body>
 </html>
