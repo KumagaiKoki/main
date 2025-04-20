@@ -283,8 +283,14 @@ function addWhiteBox({ title, subtitle, imageUrl, price, link, containerSelector
   const container = document.querySelector(containerSelector);
   if (!container) return;
 
+  // 横並びのスタイルを追加
+  container.style.display = 'flex';
+  container.style.flexWrap = 'wrap';
+  container.style.gap = '16px';
+
   const box = document.createElement('div');
   box.className = 'white-box';
+  box.style.width = '200px';
 
   box.innerHTML = `
     <div style="
@@ -295,6 +301,9 @@ function addWhiteBox({ title, subtitle, imageUrl, price, link, containerSelector
       box-sizing: border-box;
       justify-content: space-between;
       font-family: 'Rounded Mplus 1c', sans-serif;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      background-color: #fff;
     ">
       <div>
         <div style="font-size: 1rem; font-weight: bold; color: black;">
