@@ -280,14 +280,15 @@
   </div>
   <script>
   function applyFonts(text) {
-    return text.replace(/([\u0000-\u007F]+)/g, '<span class="en-text">$1</span>')
-               .replace(/([\u0080-\uFFFF]+)/g, '<span class="jp-text">$1</span>');
-  }
-
-  function applyFonts(text) {
-    // ASCIIのうち、空白や制御文字を除くすべてをen-textにする
-    return text.replace(/([\u0021-\u007E]+)/g, '<span class="en-text">$1</span>')
-               .replace(/([\u0080-\uFFFF]+)/g, '<span class="jp-text">$1</span>');
+    // 文字ごとに日本語か英数字かを判定して span を挿入
+    return Array.from(text).map(char => {
+      const code = char.charCodeAt(0);
+      if (code <= 0x007E) {
+        return `<span class="en-text">${char}</span>`; // ASCII範囲
+      } else {
+        return `<span class="jp-text">${char}</span>`;
+      }
+    }).join('');
   }
 
   function addWhiteBox({ title, subtitle, imageUrl, price, link, containerSelector }) {
@@ -368,7 +369,7 @@
       typeText();
       addWhiteBox({
         title: '紙おむつ',
-        subtitle: '新生児用 <span class="en-text" style="font-family: \'Consolas\', monospace;">(3-5kg!)</span> 66枚',
+        subtitle: '新生児用 <span class="en-text" style="font-family: \'Consolas\', monospace;">(3-5kg)</span> 66枚',
         imageUrl: 'https://github.com/KumagaiKoki/main/blob/main/101.jpg?raw=true',
         price: '1,386 (¥21/枚)',
         link: 'https://amzn.asia/d/7PBKP5a',
