@@ -70,21 +70,6 @@
       position: relative;
       background-color: transparent;
     }
-    .fixed-top {
-      position: fixed !important;
-      top: 24px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 1000;
-      margin-top: 0 !important;
-    }
-    .fixed-editor {
-      position: fixed !important;
-      top: 80px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 999;
-    }
     .editor-border {
       position: absolute;
       top: 0;
@@ -252,7 +237,7 @@
     <div id="editorFrame" class="editor-frame">
       <div class="editor-border">
         <svg viewBox="-1.5 -1.5 378 387">
-          <rect id="frameRect" x="1.5" y="1.5" width="372" height="95" rx="12" ry="12" class="path" />
+          <rect id="frameRect" x="1.5" y="1.5" width="372" height="95" ry="12" class="path" />
         </svg>
         <div class="window-controls" id="windowControls">
           <span class="dot red"></span>
@@ -266,12 +251,10 @@
     </div>
     <div class="icon-container" id="iconContainer">
       <div class="icon-row">
-       <div class="icon-column">
-          <div class="icon"></div>
+        <div class="icon-column">
           <div class="icon-label jp-text">光熱費</div>
         </div>
         <div class="icon-column">
-          <div class="icon" onclick="showSubCategory();"></div>
           <div class="icon-label jp-text">消耗品</div>
         </div>
         <div class="icon-column">
@@ -378,6 +361,13 @@ function addWhiteBox({ title, subtitle, imageUrl, price, link, containerSelector
       }
     }
 
+    function handleIconClick(lines) {
+      if (!editableText) return;
+      editableText.innerHTML = lines.map((text, idx) => {
+        return `<span class='line-number en-text'>${idx + 1}</span><span class='jp-text'>${text}</span>`;
+      }).join("\n");
+    }
+
     function showSubCategory() {
       const wrapper = document.getElementById('subCategoryWrapper');
       wrapper.style.display = 'flex';
@@ -440,19 +430,6 @@ window.onload = () => {
     sampleItems.forEach(item => addWhiteBox({ ...item, containerSelector: '#babyItemsContainer' }));
 
     window.addEventListener('scroll', () => {
-      const scrollY = window.scrollY;
-      const fixThreshold = 100;
-    
-      if (scrollY >= fixThreshold) {
-        type.classList.add('fixed-top');
-        if (typingFinished) {
-          editorFrame.classList.add('fixed-editor');
-        }
-      } else {
-        type.classList.remove('fixed-top');
-        editorFrame.classList.remove('fixed-editor');
-      }
-    
       if (typingFinished) {
         editorFrame.style.display = 'block';
         windowControls.style.display = 'flex';
