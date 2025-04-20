@@ -444,13 +444,10 @@ window.onload = () => {
       const fixThreshold = 100;
     
       if (scrollY >= fixThreshold) {
-        type.classList.add('fixed-top');
         if (typingFinished) {
           editorFrame.classList.add('fixed-editor');
-
         }
       } else {
-        type.classList.remove('fixed-top');
         editorFrame.classList.remove('fixed-editor');
       }
     
