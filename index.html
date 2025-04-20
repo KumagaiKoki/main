@@ -444,16 +444,16 @@ window.onload = () => {
       const fixThreshold = 100;
     
       if (scrollY >= fixThreshold) {
+        type.classList.add('fixed-top');
         if (typingFinished) {
           editorFrame.classList.add('fixed-editor');
         }
       } else {
+        type.classList.remove('fixed-top');
         editorFrame.classList.remove('fixed-editor');
       }
     
       if (typingFinished) {
-        backgroundVideo.classList.remove('show');
-        document.body.style.backgroundColor = 'gray';
         editorFrame.style.display = 'block';
         windowControls.style.display = 'flex';
         iconContainer.style.display = 'flex';
