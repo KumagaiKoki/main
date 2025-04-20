@@ -70,6 +70,21 @@
       position: relative;
       background-color: transparent;
     }
+    .fixed-top {
+      position: fixed !important;
+      top: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      margin-top: 0 !important;
+    }
+    .fixed-editor {
+      position: fixed !important;
+      top: 80px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 999;
+    }
     .editor-border {
       position: absolute;
       top: 0;
@@ -425,6 +440,19 @@ window.onload = () => {
     sampleItems.forEach(item => addWhiteBox({ ...item, containerSelector: '#babyItemsContainer' }));
 
     window.addEventListener('scroll', () => {
+      const scrollY = window.scrollY;
+      const fixThreshold = 100;
+    
+      if (scrollY >= fixThreshold) {
+        type.classList.add('fixed-top');
+        if (typingFinished) {
+          editorFrame.classList.add('fixed-editor');
+        }
+      } else {
+        type.classList.remove('fixed-top');
+        editorFrame.classList.remove('fixed-editor');
+      }
+    
       if (typingFinished) {
         editorFrame.style.display = 'block';
         windowControls.style.display = 'flex';
