@@ -447,6 +447,8 @@ window.onload = () => {
         type.classList.add('fixed-top');
         if (typingFinished) {
           editorFrame.classList.add('fixed-editor');
+          backgroundVideo.classList.remove('show'); // ← ビデオを隠す
+          document.body.style.backgroundColor = 'gray'; // ← 灰色背景に
         }
       } else {
         type.classList.remove('fixed-top');
