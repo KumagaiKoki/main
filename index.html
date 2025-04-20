@@ -244,29 +244,9 @@
   </style>
 </head>
 <body>
-    <div class="background-section">
-    <video id="backgroundVideo" class="background-video" autoplay muted loop playsinline>
-      <source src="https://cdn.jsdelivr.net/gh/KumagaiKoki/main/day1.mp4" type="video/mp4">
-    </video>
-    <div class="container">
-      <div id="type" class="typing">Hello World!!</div>
-      <div id="editorFrame" class="editor-frame">
-        <div class="editor-border">
-          <svg viewBox="-1.5 -1.5 378 387">
-            <rect id="frameRect" x="1.5" y="1.5" width="372" height="95" rx="12" ry="12" class="path" />
-          </svg>
-          <div class="editor-content" id="editorText">
-            <pre id="editableText"></pre>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div style="min-height: 150vh; padding: 40px; background-color: #f4f4f4;">
-    <p style="color: black; font-family: 'Rounded Mplus 1c', sans-serif; font-size: 1.2rem;">
-      スクロール後のコンテンツ領域（背景は薄い灰色）
-    </p>
-  </div>
+  <video id="backgroundVideo" class="background-video" playsinline autoplay muted loop>
+    <source src="https://cdn.jsdelivr.net/gh/KumagaiKoki/main/day1.mp4" type="video/mp4">
+  </video>
   <div class="container">
     <div id="type" class="typing" style="margin-top: 100px;"></div>
     <div id="editorFrame" class="editor-frame">
