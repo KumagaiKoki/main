@@ -280,15 +280,8 @@
   </div>
   <script>
   function applyFonts(text) {
-    // 文字ごとに日本語か英数字かを判定して span を挿入
-    return Array.from(text).map(char => {
-      const code = char.charCodeAt(0);
-      if (code <= 0x007E) {
-        return `<span class="en-text">${char}</span>`; // ASCII範囲
-      } else {
-        return `<span class="jp-text">${char}</span>`;
-      }
-    }).join('');
+    return text.replace(/([\u0000-\u007F]+)/g, '<span class="en-text">$1</span>')
+               .replace(/([\u0080-\uFFFF]+)/g, '<span class="jp-text">$1</span>');
   }
 
   function addWhiteBox({ title, subtitle, imageUrl, price, link, containerSelector }) {
