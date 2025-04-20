@@ -336,6 +336,19 @@ function addWhiteBox({ title, subtitle, imageUrl, price, link, containerSelector
     }
 
     const text = " Hello World!!";
+    const helpText = `
+    <span style="color:#10b981;">version 1.01</span> - <span style="color:#6b7280;">Household Expense Tracker Shell</span>
+    
+    <span style="color:#93c5fd;">Available commands:</span>
+    
+      <span style="color:#f59e0b;">KOUNETSUHI</span>     <span style="color:#d1d5db;">Display utility costs such as electricity, gas, and water</span>
+      <span style="color:#f59e0b;">SYOUMOUHIN</span>     <span style="color:#d1d5db;">List and manage consumables and daily goods</span>
+      <span style="color:#f59e0b;">RYOURI</span>         <span style="color:#d1d5db;">Show cooking-related expenses and recipe logs</span>
+      <span style="color:#f43f5e;">HELP</span>           <span style="color:#d1d5db;">Display this help text</span>
+      <span style="color:#6366f1;">EXIT</span>           <span style="color:#d1d5db;">Exit the tracker shell</span>
+    
+    <span style="color:#6b7280;">Type</span> <span style="color:#22d3ee;">'COMMAND --help'</span> <span style="color:#6b7280;">for more information on a specific command.</span>
+    `;
     const speed = 100;
     let i = 0;
     const target = document.getElementById("type");
@@ -442,11 +455,18 @@ window.onload = () => {
         backgroundVideo.classList.remove('show');
         document.body.style.backgroundColor = '#f9f9f9';
         type.style.color = 'black';
+      
         editorFrame.style.display = 'block';
         windowControls.style.display = 'flex';
         iconContainer.style.display = 'flex';
-        setTimeout(() => frameRect.classList.add('filled'), 1500);
-        setTimeout(() => editorText.classList.add('show'), 1500);
+        setTimeout(() => {
+          frameRect.classList.add('filled');
+          editorText.classList.add('show');
+          
+          // ✅ テキストエディタに help テキストを出力
+          editableText.innerHTML = helpText;
+      
+        }, 1500);
       }
     });
   };
