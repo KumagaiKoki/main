@@ -425,7 +425,20 @@ window.onload = () => {
     sampleItems.forEach(item => addWhiteBox({ ...item, containerSelector: '#babyItemsContainer' }));
 
     window.addEventListener('scroll', () => {
+      const scrollY = window.scrollY;
+      const fixThreshold = 100;
+    
+      if (scrollY >= fixThreshold) {
+        if (typingFinished) {
+          editorFrame.classList.add('fixed-editor');
+        }
+      } else {
+        editorFrame.classList.remove('fixed-editor');
+      }
+    
       if (typingFinished) {
+        backgroundVideo.classList.remove('show');
+        document.body.style.backgroundColor = 'gray';
         editorFrame.style.display = 'block';
         windowControls.style.display = 'flex';
         iconContainer.style.display = 'flex';
