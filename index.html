@@ -279,36 +279,60 @@
     </div>
   </div>
   <script>
-  function applyFonts(text) {
-    return text.replace(/([\u0000-\u007F]+)/g, '<span class="en-text">$1</span>')
-               .replace(/([\u0080-\uFFFF]+)/g, '<span class="jp-text">$1</span>');
-  }
+function addWhiteBox({ title, subtitle, imageUrl, price, link, containerSelector }) {
+  const container = document.querySelector(containerSelector);
+  if (!container) return;
 
-  function addWhiteBox({ title, subtitle, imageUrl, price, link, containerSelector }) {
-    const container = document.querySelector(containerSelector);
-    if (!container) return;
+  const box = document.createElement('div');
+  box.className = 'white-box';
 
-    const box = document.createElement('div');
-    box.className = 'white-box';
-
-    box.innerHTML = `
-      <div style="padding: 16px; display: flex; flex-direction: column; height: 100%; box-sizing: border-box; justify-content: space-between;">
-        <div>
-          <div style="font-size: 1rem; font-weight: bold; color: black;">${applyFonts(title)}</div>
-          <div style="font-size: 0.85rem; color: #333;">${applyFonts(subtitle)}</div>
+  box.innerHTML = `
+    <div style="
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      box-sizing: border-box;
+      justify-content: space-between;
+      font-family: 'Rounded Mplus 1c', sans-serif;
+    ">
+      <div>
+        <div style="font-size: 1rem; font-weight: bold; color: black;">
+          ${title}
         </div>
-        <img src="${imageUrl}" alt="${title}" style="width: 100%; height: 130px; margin: 8px 0; object-fit: cover;">
-        <div>
-          <div style="display: flex; justify-content: space-between; align-items: center;">
-            <div style="font-size: 0.85rem; color: #111;">${applyFonts('¥' + price)}</div>
-            <a href="${link}" style="font-family: 'Rounded Mplus 1c', sans-serif; font-size: 0.7rem; padding: 4px 10px; background-color: #2563eb; color: white; border: none; border-radius: 6px; cursor: pointer; text-decoration: none;">購入</a>
-          </div>
+        <div style="font-size: 0.85rem; color: #333;">
+          ${subtitle}
         </div>
       </div>
-    `;
+      <img src="${imageUrl}" alt="${title}" style="
+        width: 100%;
+        height: 130px;
+        margin: 8px 0;
+        object-fit: cover;
+      ">
+      <div>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <div style="font-size: 0.85rem; color: #111;">
+            ¥${price}
+          </div>
+          <a href="${link}" style="
+            font-family: 'Rounded Mplus 1c', sans-serif;
+            font-size: 0.7rem;
+            padding: 4px 10px;
+            background-color: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            text-decoration: none;
+          ">購入</a>
+        </div>
+      </div>
+    </div>
+  `;
 
-    container.appendChild(box);
-  }
+  container.appendChild(box);
+}
 
     const text = "Hello World!!";
     const speed = 100;
