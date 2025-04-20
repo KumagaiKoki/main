@@ -62,7 +62,7 @@
       display: inline-block;
       vertical-align: bottom;
       height: 2.4rem;               /* ← 高さを固定（フォントサイズ + α） */
-      vertical-align: middle;       /* ← 安定させる */
+      vertical-align: middle; /* Y軸中心に揃える */
     }
     .editor-frame {
       display: none;
@@ -335,7 +335,7 @@ function addWhiteBox({ title, subtitle, imageUrl, price, link, containerSelector
       container.appendChild(box);
     }
 
-    const text = " Hello World!!";
+    const text = "Hello World!!";
     const speed = 100;
     let i = 0;
     const target = document.getElementById("type");
