@@ -284,6 +284,12 @@
                .replace(/([\u0080-\uFFFF]+)/g, '<span class="jp-text">$1</span>');
   }
 
+  function applyFonts(text) {
+    // ASCIIのうち、空白や制御文字を除くすべてをen-textにする
+    return text.replace(/([\u0021-\u007E]+)/g, '<span class="en-text">$1</span>')
+               .replace(/([\u0080-\uFFFF]+)/g, '<span class="jp-text">$1</span>');
+  }
+
   function addWhiteBox({ title, subtitle, imageUrl, price, link, containerSelector }) {
     const container = document.querySelector(containerSelector);
     if (!container) return;
@@ -362,7 +368,7 @@
       typeText();
       addWhiteBox({
         title: '紙おむつ',
-        subtitle: '新生児用 <span class="en-text" style="font-family: \'Consolas\', monospace;">(3-5kg)</span> 66枚',
+        subtitle: '新生児用 <span class="en-text" style="font-family: \'Consolas\', monospace;">(3-5kg!)</span> 66枚',
         imageUrl: 'https://github.com/KumagaiKoki/main/blob/main/101.jpg?raw=true',
         price: '1,386 (¥21/枚)',
         link: 'https://amzn.asia/d/7PBKP5a',
