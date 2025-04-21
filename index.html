@@ -425,7 +425,8 @@ window.onload = () => {
     ];
 
     sampleItems.forEach(item => addWhiteBox({ ...item, containerSelector: '#babyItemsContainer' }));
-
+    editableText.textContent = "version 1.01";
+    
     window.addEventListener('scroll', () => {
       const scrollY = window.scrollY;
       const fixThreshold = 100;
