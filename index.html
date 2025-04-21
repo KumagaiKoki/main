@@ -138,25 +138,28 @@
       position: absolute;
       top: 0;
       left: 0;
-      width: calc(100% - 40px); /* padding分差し引き */
-      height: calc(100% - 30px); /* padding分差し引き */
+      width: 100%;
+      height: 100%;
+      padding: 24px;
+      box-sizing: border-box;
       border-radius: 12px;
       text-align: left;
-      font-size: 1.25rem;
-      padding: 10px 20px 20px 20px;
-      white-space: pre-wrap; /* wrap to avoid overflow */
-      overflow: auto;
-      box-sizing: border-box;
+      font-size: 1.1rem;
+      white-space: pre-wrap;  /* ← 折り返し有効 */
+      word-break: break-word; /* ← 長い単語も折り返す */
+      overflow-y: auto;       /* ← 必要ならスクロール */
+      font-family: 'Fira Code', monospace;
       z-index: 1;
-      transition: opacity 1s ease;
     }
     .editor-content.show {
       opacity: 1;
     }
-    #editableText {
-      font-family: 'Fira Code', monospace;
-      line-height: 1.4;
-      word-break: break-word;
+   #editableText {
+      display: block;
+      width: 100%;
+      height: auto;
+      line-height: 1.5;
+      font-size: inherit;
     }
     
     .line-number {
