@@ -424,7 +424,18 @@ window.onload = () => {
     ];
 
     sampleItems.forEach(item => addWhiteBox({ ...item, containerSelector: '#babyItemsContainer' }));
-    editableText.textContent = "version 1.01\n- Household Expense Tracker Shell\nAvailable commands:";
+    editableText.textContent =
+      `version 1.01
+      - Household Expense Tracker Shell
+      Available commands:
+      
+        KOUNETSUHI     Display utility costs such as electricity, gas, and water
+        SYOUMOUHIN     List and manage consumables and daily goods
+        RYOURI         Show cooking-related expenses and recipe logs
+        HELP           Display this help text
+        EXIT           Exit the tracker shell
+      
+      Type 'COMMAND --help' for more information on a specific command.`;
     
     window.addEventListener('scroll', () => {
       const scrollY = window.scrollY;
