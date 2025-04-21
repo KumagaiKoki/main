@@ -436,7 +436,11 @@ window.onload = () => {
         EXIT           Exit the tracker shell
       
       Type 'COMMAND --help' for more information on a specific command.`;
-    
+
+    #editableText {
+      white-space: pre;
+    }
+  
     window.addEventListener('scroll', () => {
       const scrollY = window.scrollY;
       const fixThreshold = 100;
