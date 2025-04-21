@@ -246,7 +246,7 @@
           <span class="dot green"></span>
         </div>
         <div class="editor-content" id="editorText">
-          <pre id="editableText"></pre>
+          <div id="editableText"></div>
         </div>
       </div>
     </div>
@@ -424,18 +424,22 @@ window.onload = () => {
     ];
 
     sampleItems.forEach(item => addWhiteBox({ ...item, containerSelector: '#babyItemsContainer' }));
-    editableText.textContent =
-    `version 1.01
-    - Household Expense Tracker Shell
-    Available commands:
-      
-      KOUNETSUHI     Display utility costs such as electricity, gas, and water
-      SYOUMOUHIN     List and manage consumables and daily goods
-      RYOURI         Show cooking-related expenses and recipe logs
-      HELP           Display this help text
-      EXIT           Exit the tracker shell
-    
-    Type 'COMMAND --help' for more information on a specific command.`;
+
+  const helpText = `
+  <span style="color:#10b981;">version 1.01</span> - <span style="color:#6b7280;">Household Expense Tracker Shell</span>
+  
+  <span style="color:#93c5fd;">Available commands:</span>
+  
+    <span style="color:#f59e0b;">KOUNETSUHI</span>     <span style="color:#d1d5db;">Display utility costs such as electricity, gas, and water</span>
+    <span style="color:#f59e0b;">SYOUMOUHIN</span>     <span style="color:#d1d5db;">List and manage consumables and daily goods</span>
+    <span style="color:#f59e0b;">RYOURI</span>         <span style="color:#d1d5db;">Show cooking-related expenses and recipe logs</span>
+    <span style="color:#f43f5e;">HELP</span>           <span style="color:#d1d5db;">Display this help text</span>
+    <span style="color:#6366f1;">EXIT</span>           <span style="color:#d1d5db;">Exit the tracker shell</span>
+  
+  <span style="color:#6b7280;">Type</span> <span style="color:#22d3ee;">'COMMAND --help'</span> <span style="color:#6b7280;">for more information on a specific command.</span>
+  `;
+  
+  document.getElementById('editableText').innerHTML = helpText;
   
     window.addEventListener('scroll', () => {
       const scrollY = window.scrollY;
