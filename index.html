@@ -140,26 +140,24 @@
       left: 0;
       width: 100%;
       height: 100%;
+      display: flex;
+      justify-content: center;   /* 横方向中央 */
+      align-items: center;       /* 縦方向中央 ← 重要！ */
       padding: 24px;
       box-sizing: border-box;
-      border-radius: 12px;
-      text-align: left;
       font-size: 1.1rem;
-      white-space: pre-wrap;  /* ← 折り返し有効 */
-      word-break: break-word; /* ← 長い単語も折り返す */
-      overflow-y: auto;       /* ← 必要ならスクロール */
-      font-family: 'Fira Code', monospace;
+      background-color: rgba(0, 0, 0, 0.7); /* エディタ背景が黒 */
+      border-radius: 12px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+      word-break: break-word;
       z-index: 1;
     }
-    .editor-content.show {
-      opacity: 1;
-    }
-   #editableText {
-      display: block;
-      width: 100%;
-      height: auto;
+    
+    #editableText {
+      font-family: 'Fira Code', monospace;
       line-height: 1.5;
-      font-size: inherit;
+      width: 100%;
     }
     
     .line-number {
