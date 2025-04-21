@@ -138,13 +138,14 @@
       position: absolute;
       top: 0;
       left: 0;
-      width: 100%;
-      height: 100%;
+      width: calc(100% - 40px); /* padding分差し引き */
+      height: calc(100% - 30px); /* padding分差し引き */
       border-radius: 12px;
       text-align: left;
       font-size: 1.25rem;
-      padding: 10px 20px 20px 10px; /* ← 上の余白だけ10pxに */
-      white-space: pre;
+      padding: 10px 20px 20px 20px;
+      white-space: pre-wrap; /* wrap to avoid overflow */
+      overflow: auto;
       box-sizing: border-box;
       z-index: 1;
       transition: opacity 1s ease;
@@ -152,6 +153,12 @@
     .editor-content.show {
       opacity: 1;
     }
+    #editableText {
+      font-family: 'Fira Code', monospace;
+      line-height: 1.4;
+      word-break: break-word;
+    }
+    
     .line-number {
       display: inline-block;
       width: 2ch;
