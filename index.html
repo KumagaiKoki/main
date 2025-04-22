@@ -434,21 +434,25 @@ window.onload = () => {
     sampleItems.forEach(item => addWhiteBox({ ...item, containerSelector: '#babyItemsContainer' }));
 
   const helpText = `
-  <span style="color:#10b981;">version 1.01</span>
-  <span>- </span><span style="color:#6b7280;">Household Expense Tracker Shell</span>
-  
-  <span style="color:#93c5fd;">Available commands:</span>
-  
-    <span style="color:#f59e0b;">KOUNETSUHI</span>     <span style="color:#d1d5db;">Display utility costs such as electricity, gas, and water  </span>
-    <span style="color:#f59e0b;">SYOUMOUHIN</span>     <span style="color:#d1d5db;">List and manage consumables and daily goods</span>
-    <span style="color:#f59e0b;">RYOURI</span>         <span style="color:#d1d5db;">Show cooking-related expenses and recipe logs</span>
-    <span style="color:#f43f5e;">HELP</span>           <span style="color:#d1d5db;">Display this help text</span>
-    <span style="color:#6366f1;">EXIT</span>           <span style="color:#d1d5db;">Exit the tracker shell</span>
-  
-  <span style="color:#6b7280;">Type</span> <span style="color:#22d3ee;">'COMMAND --help'</span> <span style="color:#6b7280;">for more information on a specific command.</span>
-  `;
-  
-  document.getElementById('editableText').innerHTML = helpText;
+  <div style="color:#10b981;">version 1.01</div>
+  <div style="color:#6b7280;">Household Expense Tracker Shell</div>
+  <br>
+  <div style="color:#93c5fd;">Available commands:</div>
+
+  <div style="margin-top: 8px; display: flex; flex-direction: column; gap: 6px;">
+    <button onclick="alert('KOUNETSUHI clicked')" style="background-color:#f59e0b; color:white; border:none; border-radius:6px; padding:6px 12px; font-family:'Fira Code', monospace;">KOUNETSUHI</button>
+    <button onclick="alert('SYOUMOUHIN clicked')" style="background-color:#f59e0b; color:white; border:none; border-radius:6px; padding:6px 12px; font-family:'Fira Code', monospace;">SYOUMOUHIN</button>
+    <button onclick="alert('RYOURI clicked')" style="background-color:#f59e0b; color:white; border:none; border-radius:6px; padding:6px 12px; font-family:'Fira Code', monospace;">RYOURI</button>
+    <button onclick="alert('HELP clicked')" style="background-color:#f43f5e; color:white; border:none; border-radius:6px; padding:6px 12px; font-family:'Fira Code', monospace;">HELP</button>
+    <button onclick="alert('EXIT clicked')" style="background-color:#6366f1; color:white; border:none; border-radius:6px; padding:6px 12px; font-family:'Fira Code', monospace;">EXIT</button>
+  </div>
+
+  <br>
+  <div style="color:#6b7280;">
+    Type <span style="color:#22d3ee;">'COMMAND --help'</span> for more information on a specific command.
+  </div>
+`;
+document.getElementById('editableText').innerHTML = helpText;
   
     window.addEventListener('scroll', () => {
       const scrollY = window.scrollY;
