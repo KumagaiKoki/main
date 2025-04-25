@@ -259,13 +259,12 @@ function addWhiteBox({ title, subtitle, imageUrl, price, link, containerSelector
           object-fit: contain;
         ">
           </div>
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-              <div style="font-size: 0.85rem; color: #111;">
-                ${price}
-              </div>
-              <a href="${link}">
-                <img src="https://github.com/KumagaiKoki/main/blob/main/cart.png?raw=true" alt="Cart" style="width: 15px; height: 15px;">
-              </a>
+          <div style="display: flex; align-items: center; justify-content: flex-end; gap: 6px;">
+            <a href="${link}">
+              <img src="https://github.com/KumagaiKoki/main/blob/main/cart.png?raw=true" alt="Cart" style="width: 15px; height: 15px;">
+            </a>
+            <div style="font-size: 0.85rem; color: #111;">
+              ${price}
             </div>
           </div>
         </div>
