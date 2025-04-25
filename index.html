@@ -67,7 +67,7 @@
       display: none;
       margin-top: 4pt;
       width: 375px;
-      height: 1200px;
+      height: 375px;
       position: relative;
       background-color: transparent;
     }
@@ -163,12 +163,6 @@
       align-items: center;
       margin-top: -100px; /* 空白を解消するためにマイナスマージンを追加 */
     }
-    #subCategoryLabel {
-      color: white;
-      font-size: 1rem;
-      font-family: 'Rounded Mplus 1c', sans-serif;
-      margin-bottom: 12px;
-    }
     .white-scroll-container {
       display: flex;
       overflow-x: auto;
@@ -216,8 +210,7 @@
       </div>
     </div>
     <div id="subCategoryWrapper">
-      <div id="birthDayCounter" class="jp-text" style="margin-top: 20px; font-size: 1.2rem;"></div>
-      <div id="subCategoryLabel" class="jp-text">ベビー用品</div>
+      <div id="birthDayCounter" class="jp-text" font-size: 1.2rem;"></div>
       <div class="white-scroll-container" id="babyItemsContainer"></div>
     </div>
   </div>
@@ -297,25 +290,25 @@ function addWhiteBox({ title, subtitle, imageUrl, price, link, containerSelector
     let typingFinished = false;
 
     function getDaysSinceBirth() {
-    const wrapper = document.getElementById('subCategoryWrapper');
-    wrapper.style.display = 'flex';
-  
-    // 表示に十分な高さを確保
-    const extraHeight = wrapper.offsetTop + wrapper.scrollHeight + 100;
-    document.body.style.minHeight = `${extraHeight}px`;
-  
-    // 文字の位置調整
-    const hello = document.getElementById('type');
-  
-    // 生まれてからの日数を計算して表示
-    const birthDate = new Date(2025, 3, 17); // 2025年4月17日（※月は0始まり）
-    const today = new Date();
-    const diffTime = today.getTime() - birthDate.getTime();
-    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24)) + 1; // 当日を1日目とする
-  
-    const birthDayCounter = document.getElementById('birthDayCounter');
-    birthDayCounter.textContent = `智圭ちゃんが生まれて${diffDays}日目`;
-  }
+      const wrapper = document.getElementById('subCategoryWrapper');
+      wrapper.style.display = 'flex';
+    
+      // 表示に十分な高さを確保
+      const extraHeight = wrapper.offsetTop + wrapper.scrollHeight + 100;
+      document.body.style.minHeight = `${extraHeight}px`;
+    
+      // 文字の位置調整
+      const hello = document.getElementById('type');
+    
+      // 生まれてからの日数を計算して表示
+      const birthDate = new Date(2025, 3, 17); // 2025年4月17日（※月は0始まり）
+      const today = new Date();
+      const diffTime = today.getTime() - birthDate.getTime();
+      const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24)) + 1; // 当日を1日目とする
+    
+      const birthDayCounter = document.getElementById('birthDayCounter');
+      birthDayCounter.textContent = `智圭ちゃんが生まれて${diffDays}日目`;
+    }
     
     function showConsumables() {
       const wrapper = document.getElementById('subCategoryWrapper');
