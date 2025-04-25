@@ -239,8 +239,8 @@ function addWhiteBox({ title, subtitle, imageUrl, price, link, containerSelector
     ">
       <div>
       <div style="display: flex; align-items: center;">
-        <!-- 左側：タイトルとアイコンの縦並び -->
-        <div style="display: flex; flex-direction: column; align-items: center; margin-right: 8px;">
+        <!-- 左側：タイトルとアイコン -->
+        <div style="display: flex; flex-direction: column; align-items: flex-start; margin-right: 12px;">
           <div style="font-size: 1rem; font-weight: bold; color: black; margin-bottom: 8px;">
             ${title}
           </div>
@@ -251,7 +251,7 @@ function addWhiteBox({ title, subtitle, imageUrl, price, link, containerSelector
             </a>
           </div>
         </div>
-        <!-- 右側：テキスト情報 -->
+        <!-- 右側：サブタイトルと価格 -->
         <div style="display: flex; flex-direction: column; justify-content: center; gap: 12px;">
           <div style="font-size: 0.85rem; color: #333;">
             ${subtitle}
