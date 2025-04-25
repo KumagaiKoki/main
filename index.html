@@ -295,6 +295,28 @@ function addWhiteBox({ title, subtitle, imageUrl, price, link, containerSelector
     const subCategoryWrapper = document.getElementById("subCategoryWrapper");
     let typingFinished = false;
 
+    function calculateDaysSinceBirth() {
+    const wrapper = document.getElementById('subCategoryWrapper');
+    wrapper.style.display = 'flex';
+  
+    // 表示に十分な高さを確保
+    const extraHeight = wrapper.offsetTop + wrapper.scrollHeight + 100;
+    document.body.style.minHeight = `${extraHeight}px`;
+  
+    // 文字の位置調整
+    const hello = document.getElementById('type');
+    hello.style.marginTop = '100px';
+  
+    // 生まれてからの日数を計算して表示
+    const birthDate = new Date(2025, 3, 17); // 2025年4月17日（※月は0始まり）
+    const today = new Date();
+    const diffTime = today.getTime() - birthDate.getTime();
+    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24)) + 1; // 当日を1日目とする
+  
+    const birthDayCounter = document.getElementById('birthDayCounter');
+    birthDayCounter.textContent = `智圭ちゃんが生まれて${diffDays}日目`;
+  }
+    
     function showConsumables() {
       const wrapper = document.getElementById('subCategoryWrapper');
       wrapper.style.display = 'flex';
@@ -451,7 +473,7 @@ const helpText = `
   <span style="color:#93c5fd;">Available commands:</span>
 
   <span>&nbsp;&nbsp;&nbsp;</span><button style="all:unset; cursor:pointer; color:#f59e0b;" onclick="alert('KOUNETSUHI')">KOUNETSUHI</button>   <span style="color:#d1d5db;">Display utility costs such as electricity, gas, and water  </span>
-  <span>&nbsp;&nbsp;&nbsp;</span><button style="all:unset; cursor:pointer; color:#f59e0b;" onclick="prepareConsumablesDisplay(); showConsumables()">SYOUMOUHIN</button>   <span style="color:#d1d5db;">Display consumables and daily-use items</span>
+  <span>&nbsp;&nbsp;&nbsp;</span><button style="all:unset; cursor:pointer; color:#f59e0b;" onclick="calculateDaysSinceBirth(); showConsumables()">SYOUMOUHIN</button>   <span style="color:#d1d5db;">Display consumables and daily-use items</span>
   <span>&nbsp;&nbsp;&nbsp;</span><button style="all:unset; cursor:pointer; color:#f59e0b;" onclick="alert('RYOURI')">RYOURI</button>       <span style="color:#d1d5db;">Display the history of cooking recipes</span>
   <span>&nbsp;&nbsp;&nbsp;</span><button style="all:unset; cursor:pointer; color:#f43f5e;" onclick="alert('HELP')">HELP</button>       　<span style="color:#d1d5db;">Display this help text</span>
   <span>&nbsp;&nbsp;&nbsp;</span><button style="all:unset; cursor:pointer; color:#6366f1;" onclick="alert('EXIT')">EXIT</button>       　<span style="color:#d1d5db;">Exit the tracker shell</span>
