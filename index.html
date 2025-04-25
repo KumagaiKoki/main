@@ -238,24 +238,21 @@ function addWhiteBox({ title, subtitle, imageUrl, price, link, containerSelector
       font-family: 'Rounded Mplus 1c', sans-serif;
     ">
       <div>
-      <div style="display: flex; align-items: center;">
-        <!-- 左側：タイトルとアイコン -->
-        <div style="display: flex; flex-direction: column; align-items: flex-start; margin-right: 12px;">
-          <div style="font-size: 1rem; font-weight: bold; color: black; margin-bottom: 8px;">
-            ${title}
-          </div>
-          <div style="display: flex; flex-direction: column; align-items: center; gap: 6px;">
-            <img src="https://github.com/KumagaiKoki/main/blob/main/Spec.png?raw=true" alt="Spec" style="height: 18px;">
-            <a href="${link}">
-              <img src="https://github.com/KumagaiKoki/main/blob/main/Purchase.png?raw=true" alt="Purchase" style="height: 18px;">
-            </a>
-          </div>
+        <div style="font-size: 1rem; font-weight: bold; color: black;">
+          ${title}
         </div>
-        <!-- 右側：サブタイトルと価格 -->
-        <div style="display: flex; flex-direction: column; justify-content: center; gap: 12px;">
+        <!-- ✅ Spec＋仕様を左揃え＆縦中央 -->
+        <div style="display: flex; align-items: center; justify-content: flex-start; gap: 6px; margin-top: 4px;">
+          <img src="https://github.com/KumagaiKoki/main/blob/main/Spec.png?raw=true" alt="Spec" style="height: 18px;">
           <div style="font-size: 0.85rem; color: #333;">
             ${subtitle}
           </div>
+        </div>
+        <!-- ✅ カート＋価格を左揃え＆縦中央 -->
+        <div style="display: flex; align-items: center; justify-content: flex-start; gap: 8px; margin-top: 6px;">
+          <a href="${link}">
+            <img src="https://github.com/KumagaiKoki/main/blob/main/Purchase.png?raw=true" alt="Purchase" style="height: 18px;">
+          </a>
           <div style="font-size: 0.85rem; color: #111;">
             ${price}
           </div>
