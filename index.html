@@ -223,11 +223,11 @@
   <div id="birthDayCounter" class="jp-text" style="margin-top: 12px; font-size: 1rem; color: #10b981;"></div>
   
   <script>
-  function showConsumables() {
+  function prepareConsumablesDisplay() {
     const wrapper = document.getElementById('subCategoryWrapper');
     wrapper.style.display = 'flex';
   
-    // 表示に十分な高さ確保
+    // 表示に十分な高さを確保
     const extraHeight = wrapper.offsetTop + wrapper.scrollHeight + 100;
     document.body.style.minHeight = `${extraHeight}px`;
   
@@ -236,7 +236,7 @@
     hello.style.marginTop = '100px';
   
     // 生まれてからの日数を計算して表示
-    const birthDate = new Date(2025, 3, 19); // 2025年4月19日（※月は0始まり）
+    const birthDate = new Date(2025, 3, 17); // 2025年4月17日（※月は0始まり）
     const today = new Date();
     const diffTime = today.getTime() - birthDate.getTime();
     const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24)) + 1; // 当日を1日目とする
@@ -350,6 +350,7 @@ function addWhiteBox({ title, subtitle, imageUrl, price, link, containerSelector
 
 window.onload = () => {
     typeText();
+    prepareConsumablesDisplay();
 
     const sampleItems = [
       {
