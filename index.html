@@ -262,21 +262,30 @@ function addWhiteBox({ title, subtitle, imageUrl, price, link, containerSelector
           ">
         </div>
         <div style="display: flex; flex-direction: column; align-items: center; gap: 12px;">
-          <!-- 1つ目：Specアイコンとsubtitle -->
-          <div style="display: flex; align-items: center; gap: 8px;">
-            <img src="https://github.com/KumagaiKoki/main/blob/main/Spec.png?raw=true" alt="Spec" style="height: 18px;">
-            <div style="font-size: 0.85rem; color: #333;">
-              ${subtitle}
+
+          <!-- 1セット目 -->
+          <div style="display: flex; justify-content: center; align-items: center; width: 100%;">
+            <div style="display: flex; flex-direction: column; align-items: center;">
+              <img src="https://github.com/KumagaiKoki/main/blob/main/Spec.png?raw=true" alt="Spec" style="height: 18px;">
+            </div>
+            <div style="display: flex; flex-direction: column; align-items: flex-start; margin-left: 8px;">
+              <div style="font-size: 0.85rem; color: #333;">
+                ${subtitle}
+              </div>
             </div>
           </div>
         
-          <!-- 2つ目：Purchaseアイコンとprice -->
-          <div style="display: flex; align-items: center; gap: 8px;">
-            <a href="${link}">
-              <img src="https://github.com/KumagaiKoki/main/blob/main/Purchase.png?raw=true" alt="Purchase" style="height: 18px;">
-            </a>
-            <div style="font-size: 0.85rem; color: #111;">
-              ${price}
+          <!-- 2セット目 -->
+          <div style="display: flex; justify-content: center; align-items: center; width: 100%;">
+            <div style="display: flex; flex-direction: column; align-items: center;">
+              <a href="${link}">
+                <img src="https://github.com/KumagaiKoki/main/blob/main/Purchase.png?raw=true" alt="Purchase" style="height: 18px;">
+              </a>
+            </div>
+            <div style="display: flex; flex-direction: column; align-items: flex-start; margin-left: 8px;">
+              <div style="font-size: 0.85rem; color: #111;">
+                ${price}
+              </div>
             </div>
           </div>
         </div>
