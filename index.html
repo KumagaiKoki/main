@@ -236,6 +236,7 @@ function addWhiteBox({ title, subtitle, imageUrl, price, link, containerSelector
 
   const box = document.createElement('div');
   box.className = 'white-box';
+  box.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.15)'; // ★影を追加
   box.innerHTML = `
     <div style="
       padding: 16px;
