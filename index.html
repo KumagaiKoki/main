@@ -163,8 +163,9 @@
       align-items: center;
     }
     #birthDayCounter {
-　　　　width: 375px;
-      font-size: 1.6rem;
+　　　　width: 350px;
+      padding-left: 10px
+      font-size: 1.3rem;
       font-family: 'Rounded Mplus 1c', sans-serif;
       margin-top: 20px;
       font-weight: bold;
@@ -261,7 +262,7 @@ function addWhiteBox({ title, subtitle, imageUrl, price, link, containerSelector
             object-fit: contain;
           ">
         </div>
-        <div style="display: flex; flex-direction: column; gap: 8px; width: 100%;">
+        <div style="display: flex; flex-direction: column; gap: 4px; width: 100%;">
   
           <!-- 1セット目（Spec） -->
           <div style="display: flex; gap: 8px; align-items: center;">
@@ -324,11 +325,11 @@ function addWhiteBox({ title, subtitle, imageUrl, price, link, containerSelector
     
       const birthDayCounter = document.getElementById('birthDayCounter');
       birthDayCounter.innerHTML = `
-        智圭ちゃんが生まれて${Days}日目<br><br>
+        智圭ちゃんが生まれて${Days}日目。<br><br>
         3,000グラムの体重と<br>
         49センチの身長で<br>
-        2025年4月17日に産まれました<br><br>
-        ${Years}歳です。<br><br>
+        2025年4月17日に産まれました。<br><br>
+        今日で${Years}歳です。<br><br>
       `;
     }
     
