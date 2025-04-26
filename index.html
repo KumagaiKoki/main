@@ -225,6 +225,8 @@
       <div id="birthDayCounter" class="jp-text" font-size: 1.2rem;"></div>
       <div class="white-scroll-container" id="babyItemsContainer1"></div>
       <div class="white-scroll-container" id="babyItemsContainer2"></div>
+      <div class="white-scroll-container" id="babyItemsContainer3"></div>
+      <div class="white-scroll-container" id="babyItemsContainer4"></div>
     </div>
   </div>
   <script>
@@ -366,7 +368,7 @@ function addWhiteBox({ title, subtitle, imageUrl, price, link, containerSelector
 window.onload = () => {
     typeText();
 
-    const sampleItems1 = [
+    const babyItems1 = [
       {
         title: '紙おむつ',
         subtitle: '新生児用 (3-5kg) 66枚',
@@ -397,7 +399,7 @@ window.onload = () => {
       }
     ];
 
-  const sampleItems2 = [
+  const babyItems2 = [
       {
         title: 'シャンプ',
         subtitle: '350mL',
@@ -432,7 +434,9 @@ window.onload = () => {
         imageUrl: 'https://github.com/KumagaiKoki/main/blob/main/110.jpg?raw=true',
         price: '1017円 (1,271円/L)',
         link: 'https://www.yodobashi.com/product/100000001006947567/'
-      },
+      }
+    ];
+  const babyItems3 = [
       {
         title: '哺乳瓶',
         subtitle: '160mL (0ヶ月)',
@@ -460,7 +464,9 @@ window.onload = () => {
         imageUrl: 'https://github.com/KumagaiKoki/main/blob/main/112.jpg?raw=true',
         price: '326円',
         link: 'https://www.yodobashi.com/product/100000001007862182/'
-      },
+      }
+    ];
+  const babyItems4 = [
       {
         title: '綿棒',
         subtitle: '480本',
@@ -484,8 +490,10 @@ window.onload = () => {
       }
     ];
 
-    sampleItems1.forEach(item => addWhiteBox({ ...item, containerSelector: '#babyItemsContainer1' }));
-    sampleItems2.forEach(item => addWhiteBox({ ...item, containerSelector: '#babyItemsContainer2' }));
+    babyItems1.forEach(item => addWhiteBox({ ...item, containerSelector: '#babyItemsContainer1' }));
+    babyItems2.forEach(item => addWhiteBox({ ...item, containerSelector: '#babyItemsContainer2' }));
+    babyItems3.forEach(item => addWhiteBox({ ...item, containerSelector: '#babyItemsContainer3' }));
+    babyItems4.forEach(item => addWhiteBox({ ...item, containerSelector: '#babyItemsContainer4' }));
 
 const helpText = `
   <span style="color:#10b981;">version 1.01</span>
