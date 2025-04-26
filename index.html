@@ -223,7 +223,8 @@
     </div>
     <div id="subCategoryWrapper">
       <div id="birthDayCounter" class="jp-text" font-size: 1.2rem;"></div>
-      <div class="white-scroll-container" id="babyItemsContainer"></div>
+      <div class="white-scroll-container" id="babyItemsContainer1"></div>
+      <div class="white-scroll-container" id="babyItemsContainer2"></div>
     </div>
   </div>
   <script>
@@ -365,7 +366,7 @@ function addWhiteBox({ title, subtitle, imageUrl, price, link, containerSelector
 window.onload = () => {
     typeText();
 
-    const sampleItems = [
+    const sampleItems1 = [
       {
         title: '紙おむつ',
         subtitle: '新生児用 (3-5kg) 66枚',
@@ -393,7 +394,10 @@ window.onload = () => {
         imageUrl: 'https://github.com/KumagaiKoki/main/blob/main/104.jpg?raw=true',
         price: '324 (2.7円/枚)',
         link: 'https://www.yodobashi.com/product/100000001007753366/'
-      },
+      }
+    ];
+
+  const sampleItems2 = [
       {
         title: 'シャンプ',
         subtitle: '350mL',
@@ -480,7 +484,8 @@ window.onload = () => {
       }
     ];
 
-    sampleItems.forEach(item => addWhiteBox({ ...item, containerSelector: '#babyItemsContainer' }));
+    sampleItems1.forEach(item => addWhiteBox({ ...item, containerSelector: '#babyItemsContainer1' }));
+    sampleItems2.forEach(item => addWhiteBox({ ...item, containerSelector: '#babyItemsContainer2' }));
 
 const helpText = `
   <span style="color:#10b981;">version 1.01</span>
